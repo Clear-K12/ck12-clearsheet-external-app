@@ -13,7 +13,7 @@ import ALERTMESSAGES from "@constants/alertMessages";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-export const Contact = () => {
+export const RequestMoreInfo = () => {
   interface type {
     label: string;
     value: number;
@@ -229,8 +229,7 @@ export const Contact = () => {
       <form className="schoolpricingform" autoComplete="off">
         <div className="row">
           <div className="column">
-            <label>Name*</label>
-            <br />
+       
             <input
               type="text"
               placeholder="Name"
@@ -246,8 +245,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>Phone</label>
-            <br />
+          
             <input
               type="tel"
               placeholder="Phone"
@@ -266,8 +264,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>Email*</label>
-            <br />
+          
             <input
               type="email"
               placeholder="Email"
@@ -283,8 +280,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>Title*</label>
-            <br />
+          
             <Select
               name="roleId"
               value={selectedRole}
@@ -304,8 +300,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>State*</label>
-            <br />
+          
             <Select
               name="stateId"
               value={selectedState}
@@ -324,8 +319,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>District*</label>
-            <br />
+          
             <Select
               name="districtId"
               value={selectedDistrict}
@@ -346,8 +340,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>School*</label>
-            <br />
+           
             <Select
               name="schoolId"
               value={selectedSchool}
@@ -395,4 +388,4 @@ export const Contact = () => {
     </div>
   );
 };
-export default Contact;
+export default RequestMoreInfo;
