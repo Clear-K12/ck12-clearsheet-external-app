@@ -7,8 +7,8 @@ COMMONCONSTANT = {
     PRODUCTION: "PRODUCTION",
   },
   ROUTEPATH: {
-    // REQUESTMOREINFO: "/requestMoreInfo",
-    REQUESTMOREINFO: "/signup",
+    // CONTACT: "/contact",
+    SIGNUP: "/signup",
   },
   USERROLESIGNUP:[
     {

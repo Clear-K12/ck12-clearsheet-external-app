@@ -13,7 +13,7 @@ import ALERTMESSAGES from "@constants/alertMessages";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-export const RequestMoreInfo = () => {
+export const Contact = () => {
   interface type {
     label: string;
     value: number;
@@ -395,4 +395,4 @@ export const RequestMoreInfo = () => {
     </div>
   );
 };
-export default RequestMoreInfo;
+export default Contact;
