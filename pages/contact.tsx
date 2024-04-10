@@ -233,6 +233,7 @@ export const Contact = () => {
             <br />
             <input
               type="text"
+              placeholder="Name"
               name="name"
               value={requestMoreData.name}
               id="name"
@@ -249,6 +250,7 @@ export const Contact = () => {
             <br />
             <input
               type="tel"
+              placeholder="Phone"
               name="phone"
               id="phone"
               value={requestMoreData.phone}
@@ -268,6 +270,7 @@ export const Contact = () => {
             <br />
             <input
               type="email"
+              placeholder="Email"
               name="email"
               id="email"
               value={requestMoreData.email}
@@ -362,26 +365,27 @@ export const Contact = () => {
             )}
           </div>
         </div>
-        <div className="link">
+        {/* <div className="link">
           <a href="http://198.58.111.246:8080/test.underwatermath.com/contact-us/">
             <i>
               Can’t find your school or district, contact us here to have it
               added quickly.
             </i>
           </a>
-        </div>
+        </div> */}
 
-        <div className="row">
-          <div className="column">
+        <div className="row text-center">
+          
             <input
               type="button"
               name="submit"
               value="Submit"
-              className="button form-submit-btn"
+              className="button form-submit-btn "
               onClick={submit}
             />
-          </div>
-          <div className="column"></div>
+      
+          {/* <div className="column"></div> */}
+      
         </div>
 
         <div className="row">
