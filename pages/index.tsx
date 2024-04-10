@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
     const navigation = useRouter();
     useEffect(() => {
-      navigation.push(COMMONCONSTANT.ROUTEPATH.REQUESTMOREINFO);
+      navigation.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
     }, [])
     
     return <div>Loading...</div>;
