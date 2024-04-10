@@ -1,0 +1,876 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css");
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css");
+
+:root {
+    --sky-t1: translate3d(0, -140px, -800px) scale(3.7);
+    --clouds-t1: translate3d(0, -450px, -800px) scale(3.7);
+    --clouds-t2: translate3d(0, -500px, -800px) scale(3.7);
+    --lights-t1: translate3d(640px, -480px, -400px) rotate(0deg) scale(3);
+    --lights-t2: translate3d(640px, -480px, -400px) rotate(1deg) scale(3);
+
+    --horizon: 20vh;
+    --mountain-t1: translate3d(0, calc(var(--horizon) + 19%), -500px) scale(2.7);
+
+    --sea-t1: translate3d(0, calc(var(--horizon) + 30%), -400px) scale(2.4);
+    --sea-overlay-t1: translate3d(0, calc(var(--horizon) + 4%), -31px) scale(1.2);
+    --wave1-t1: translate3d(0, var(--horizon), -30px) scale(1.2) rotate(354deg);
+    --wave2-t1: translate3d(0, calc(var(--horizon) + 10px), -30px) scale(1.2) rotate(354deg);
+    --wave3-t1: translate3d(0, calc(var(--horizon) + 20px), -30px) scale(1.2) rotate(354deg);
+    --wave4-t1: translate3d(0, calc(var(--horizon) + 30px), -30px) scale(1.2) rotate(354deg);
+    --wave5-t1: translate3d(0, calc(var(--horizon) + 40px), -30px) scale(1.2) rotate(354deg);
+    --wave6-t1: translate3d(0, calc(var(--horizon) + 50px), -30px) scale(1.2) rotate(354deg);
+    --wave7-t1: translate3d(0, calc(var(--horizon) + 60px), -30px) scale(1.2) rotate(354deg);
+    --wave-front-t1: translate3d(0, calc(var(--horizon) + 130px), 0px) scale(1) rotate(354deg);
+}
+*{
+    box-sizing: border-box;
+}
+
+.site-wrapper {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    perspective: 300px;
+    display: block;
+    background: #0d68c7;
+}
+
+.loading {
+    height: 100vh;
+    background: #0d68c7;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: white;
+}
+
+.loader {
+    color: #ffffff;
+    font-size: 30px;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 72px auto;
+    position: relative;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+}
+
+@-webkit-keyframes load6 {
+    0% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+
+    5%,
+    95% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+
+    10%,
+    59% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+
+    20% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+
+    38% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+
+    100% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+}
+
+@keyframes load6 {
+    0% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+
+    5%,
+    95% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+
+    10%,
+    59% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+    }
+
+    20% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+    }
+
+    38% {
+        box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+    }
+
+    100% {
+        box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    }
+}
+
+@-webkit-keyframes round {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes round {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+.parallax-group {
+    position: relative;
+    width: 100vw;
+    height: 70vh;
+    transform-style: preserve-3d;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.sky {
+    background: url(https://assets.underwatermath.com/underwatermath/sky.png) no-repeat center;
+    background-size: cover;
+    transform: var(--sky-t1);
+    z-index: 1;
+}
+
+.clouds {
+    background: url(https://assets.underwatermath.com/underwatermath/clouds.png) no-repeat center;
+    background-size: cover;
+    transform: var(--clouds-t1);
+    animation: clouds-float infinite 10s;
+    animation-timing-function: linear;
+    z-index: 2;
+}
+
+.light {
+    background: url(https://assets.underwatermath.com/underwatermath/light.png) no-repeat center;
+    background-size: cover;
+    transform: var(--lights-t1);
+    z-index: 3;
+    animation: light-shine infinite 10s;
+    animation-timing-function: linear;
+}
+
+.mountain {
+    background: url(https://assets.underwatermath.com/underwatermath/mountain.png) no-repeat top;
+    background-size: cover;
+    transform: var(--mountain-t1);
+    z-index: 4;
+}
+
+.sea {
+    background: url(https://assets.underwatermath.com/underwatermath/sea.png) no-repeat center;
+    background-size: cover;
+    transform: var(--sea-t1);
+    z-index: 5;
+}
+
+.sea-overlay {
+    background: url(https://assets.underwatermath.com/underwatermath/sea.png) no-repeat center;
+    background-size: cover;
+    transform: var(--sea-overlay-t1);
+    z-index: 5;
+}
+
+.wave-common {
+    background: url(https://assets.underwatermath.com/underwatermath/waves02.png) repeat-x center;
+    animation-timing-function: linear;
+    animation-name: wave-common-scroll;
+    animation-iteration-count: infinite;
+}
+
+.wave-1 {
+    transform: var(--wave1-t1);
+    z-index: 6;
+    animation-duration: 11s;
+    animation-direction: reverse;
+}
+
+.wave-2 {
+    transform: var(--wave2-t1);
+    background-position-x: 17px;
+    z-index: 7;
+    animation-duration: 12s;
+}
+
+.wave-3 {
+    transform: var(--wave3-t1);
+    background-position-x: 130px;
+    z-index: 10;
+    animation-duration: 15s;
+    animation-direction: reverse;
+}
+
+.wave-4 {
+    transform: var(--wave4-t1);
+    background-position-x: 0;
+    z-index: 11;
+    animation-duration: 17s;
+}
+
+.wave-5 {
+    transform: var(--wave5-t1);
+    background-position-x: 25px;
+    z-index: 12;
+    animation-duration: 20s;
+    animation-direction: reverse;
+}
+
+
+.wave-6 {
+    transform: var(--wave6-t1);
+    background-position-x: 155px;
+    z-index: 13;
+    animation-duration: 22s;
+}
+
+.wave-7 {
+    transform: var(--wave7-t1);
+    background-position-x: 25px;
+    z-index: 14;
+    /* animation-duration: 25s;
+    animation-direction: reverse; */
+}
+
+.wave-front {
+    background: url(https://assets.underwatermath.com/underwatermath/waves01.png) repeat-x center;
+    background-size: 150%;
+    transform: var(--wave-front-t1);
+    z-index: 18;
+    /* animation-timing-function: linear;
+    animation-name: wave-front-scroll;
+    animation-iteration-count: infinite;
+    animation-duration: 5s;
+    animation-direction: reverse; */
+  /* filter: blur(10px); */
+
+}
+
+.site-title-section {
+    left: 50%;
+    top: 40%;
+    transform: translate3d(-50%, -50%, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    flex-direction: column;
+    width: 100%;
+    font-size: min(1.3vw, 16px);
+}
+
+
+
+
+
+@keyframes wave-front-scroll {
+    from {
+        background-position-x: 0px;
+    }
+
+    to {
+        background-position-x: 3210px;
+    }
+}
+
+@keyframes wave-common-scroll {
+    from {
+        background-position-x: 0px;
+    }
+
+    to {
+        background-position-x: 2538px;
+    }
+}
+
+
+@keyframes clouds-float {
+    0% {
+        transform: var(--clouds-t1);
+    }
+
+    50% {
+        transform: var(--clouds-t2);
+    }
+
+    100% {
+        transform: var(--clouds-t1);
+    }
+}
+
+
+@keyframes light-shine {
+    0% {
+        transform: var(--lights-t1);
+    }
+
+    50% {
+        transform: var(--lights-t2);
+    }
+
+    100% {
+        transform: var(--lights-t1);
+    }
+}
+
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: rgba(0, 46, 156, 0.8);
+    z-index: 99;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.site-header .header-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-container .site-logo img {
+    height: 160px;
+    position: relative;
+    top: 45px;
+}
+
+.site-title {
+    font-family: 'Secular One', sans-serif;
+    font-size: 6em;
+    color: white;
+    text-shadow: 0px 0px 25px rgb(21 79 175);
+}
+
+.site-subtitle {
+    margin-top: -15px;
+    font-family: 'Secular One', sans-serif;
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 0px 0px 15px rgb(21 79 175);
+}
+
+.site-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+}
+.site-nav-menu-btn {
+    display: none;
+}
+
+.site-nav-close-btn {
+    display: none;
+}
+
+.site-nav-menu {
+    display: none;
+}
+
+.header-container nav.site-nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+}
+
+.site-nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.button-menu li {
+    display: flex;
+    align-items: center;
+    background-color: #5EFFC5;
+    color: #1473F3;
+    border-radius: 30px;
+    padding: 0.5em 2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.button-menu li:nth-child(1) {
+    background-color: #51FFE8;
+}
+
+.button-menu li:nth-child(2) {
+    background-color: #3FFC6B;
+}
+
+.button-menu li a {
+    color: #0a47ae !important;
+}
+
+.content {
+    transform: translate3d(0, calc(var(--horizon) - 9vh), 0);
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    position: relative;
+    background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/underwatermath/underwater_plants.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png);
+    background-position: top, bottom, bottom;
+    background-size: contain, contain, cover;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    overflow: hidden;
+}
+
+.content-back {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png);
+    background-position: top, bottom;
+    background-size: contain, cover;
+    background-repeat: no-repeat, no-repeat;
+    /* filter: url("#turbulence-distant"); */
+}
+
+.content-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-image: url(https://assets.underwatermath.com/underwatermath/underwater_plants.png);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+   /* filter: url("#turbulence-near"); */
+}
+
+.fish01 {
+    background: url(https://assets.underwatermath.com/underwatermath/fish01.png);
+    width: 500px;
+    height: 500px;
+    z-index: 9;
+    position: relative;
+    bottom: 0;
+    top: 750px;
+    left: 30%;
+	z-index: 0;
+}
+
+.fish02 {
+    background: url(https://assets.underwatermath.com/underwatermath/fish02.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 400px;
+    z-index: 9;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    animation: fishAnimation1 60s linear infinite;
+	z-index: 0;
+}
+
+@keyframes fishAnimation1 {
+    0% {
+        left: -100px;
+        top: 50%;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 100%;
+    }
+
+    45% {
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 0;
+        left: 120vh;
+        top: 60%;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.bubble {
+    background: url(https://assets.underwatermath.com/underwatermath/bubble.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+    z-index: 9;
+    position: absolute;
+}
+
+.bubble1 {
+    left: 10%;
+    background-size: 100%;
+    animation: bubbleAnimation 15s linear infinite, bubbleSideMove 2s ease-in-out infinite alternate;
+}
+
+.bubble2 {
+    left: 20%;
+    background-size: 50%;
+    animation: bubbleAnimation 10s linear infinite, bubbleSideMove 1s ease-in-out infinite alternate;
+}
+
+.bubble3 {
+    left: 25%;
+    background-size: 70%;
+    animation: bubbleAnimation 12s linear infinite, bubbleSideMove 1.5s ease-in-out infinite alternate;
+}
+
+.bubble4 {
+    left: 55%;
+    background-size: 60%;
+    animation: bubbleAnimation 20s linear infinite, bubbleSideMove 1.2s ease-in-out infinite alternate;
+}
+
+.bubble5 {
+    left: 60%;
+    background-size: 30%;
+    animation: bubbleAnimation 11s linear infinite, bubbleSideMove 2.2s ease-in-out infinite alternate;
+}
+
+.bubble6 {
+    left: 90%;
+    background-size: 10%;
+    animation: bubbleAnimation 13s linear infinite, bubbleSideMove 2.1s ease-in-out infinite alternate;
+}
+
+@keyframes bubbleAnimation {
+    0% {
+        bottom: -50px;
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 100vh;
+        opacity: 0;
+    }
+}
+
+@keyframes bubbleSideMove {
+    0% {
+        margin-left: 0px;
+    }
+
+    100% {
+        margin-left: 50px;
+    }
+}
+
+
+.content .page-container {
+    
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    z-index: 1;
+}
+
+.page-container .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.page-container .page.start {
+    align-items: flex-start;
+}
+
+.page-container .item {
+    width: 80%;
+    max-width: 1000px;
+    color: white;
+}
+
+.social-icons a {
+    background: rgb(255 255 255);
+    padding: 0.1rem;
+    border-radius: 60px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	transition: ease-in-out 0.5s;
+    border: 1px solid transparent;
+}
+.social-icons a:hover{
+	    background: transparent;
+    border: 1px solid #fff;
+}
+.social-icons img {
+    height: 20px;
+}
+.footer-nav{
+    background: rgb(0 0 0 / 20%);
+	position: relative;
+	    display: flex;
+}
+.footer-nav .footer-nav-div{
+	
+    display: flex;
+    flex-direction: row;
+        padding: 3rem 0 1rem;
+	gap: 5rem;
+	margin:auto;
+}
+.footer-nav .footer-left .site-logo img{
+	width: 200px;
+}
+.footer-nav .footer-right{
+	display: flex;
+        gap: 7rem;
+}
+.footer-nav .footer-right ul{
+	    list-style-type: none;
+}
+.footer-nav .footer-right ul li {
+       margin-bottom: 2.5rem;
+}
+.footer-nav .footer-right ul li a {
+    color: #fff;
+    display: block;
+    text-decoration: none;
+	    font-size: 0.9em;
+	text-transform:uppercase;
+	transition:0.5s ease-in-out;
+}
+.footer-nav .footer-right ul li a:hover {
+    color: #51ffe8;
+}
+.footer-nav .footer-right .social-icons{
+	display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.copyright {
+    position: relative;
+    width: 100%;
+    color: white;
+    text-align: center;
+    background: rgb(0 0 0 / 42%);
+    padding: 1rem 0;
+    font-size: 14px;
+}
+body {
+    overflow: hidden;
+}
+.signupContainer {
+    border-radius: 5px;
+    box-shadow: 0px 4px 5px #242424;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    background: rgb(52 65 157 / 40%);
+}
+
+
+.singupSection input, 
+.singupSection select {
+    padding: 10px;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    background-color: rgb(0 0 0 / 20%);
+    border: 1px solid #eee;
+    color: #fff;
+}
+.singupSection label{
+    color:#fff;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.pageTitle {
+    font-size: 24px;
+    color: #212529;
+    text-align: right;
+    display: inline-block;
+    width:100%;
+}
+.singupSection .info {
+    font-size: 13px;
+    color: #c6dbff;
+    margin-top: 5px;
+}
+
+.extrafield {
+    margin-top: 15px;
+    border-top: 1px solid #000;
+    padding-top: 15px;
+}
+
+span.info-link {text-decoration: underline;color: #fff;
+cursor: pointer;}
+.signupContainerInner .loginFooter button.btn.btn-primary{
+    background-color: #51FFE8;
+    color: #0a47ae;
+    font-weight: 700;
+    font-weight: 700;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.singupSection .wrapper .form-group {
+    margin-bottom: 15px;
+}
+.singupSection button.btn.btn-primary.previousBtn {
+    margin-right: 15px;
+}
+
+.singupSection [disabled] {
+    opacity: .5;
+}
+
+.singupSection [disabled]:hover {
+    cursor: no-drop;
+}
+.captcha {
+    margin-bottom: 10px;
+}
+
+@media all and (max-width:1100px) {
+    .header-container nav.site-nav ul {
+        flex-direction: column;
+        padding-top: 50px;
+        gap: 0px;
+        padding-left: 0;
+    }
+    .header-container nav.site-nav ul li {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: stretch;
+        border-bottom: 1px solid #1473F3;
+    }
+    .site-nav ul li a {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .site-nav-close-btn {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 50px;
+        height: 50px;
+        color: white;
+        text-decoration: none;
+        font-size: 2.5em;
+        text-align: center;
+    }
+.header-container .site-logo img {
+    height: 100px;
+    top: 0px;
+}
+.site-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(50vw, 100vw);
+    max-height: 100vh;
+    height: auto;
+    background: rgb(20 64 135);
+    flex-direction: column;
+    padding: 0;
+    padding-bottom: 50px;
+}
+.menu-header-menu-start-container {
+    width: 100%;
+}
+.button-menu ul {
+    padding-top: 20px !important;
+    gap: 10px !important;
+}
+}
+@media (max-width: 500px){
+.site-nav {
+    width: 100vw;
+    height: 100vh;
+}
+}
+h3.heading span {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: #174791;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    box-shadow: 0 0 4px #000;
+    margin-left: 5px;
+}
+
+h3.heading {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #51ffe8;
+    text-align: center;
+    width: 100%;
+}
