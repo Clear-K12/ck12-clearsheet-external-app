@@ -32,7 +32,6 @@
     overflow-y: auto;
     perspective: 300px;
     display: block;
-    background: #0d68c7;
 }
 
 .loading {
@@ -712,30 +711,103 @@
 }
 body {
     overflow: hidden;
+    background-color: #F5FBFF;
+}
+:root {
+    --line-border-fill: #F413D8;
+    --line-border-empty: #F413D8;
+    --progress-zIndex: -1;
+  }
+  
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+    position: relative;
+    width: 350px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  
+  .progress-container::before {
+    background-color: var(--line-border-empty);
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 20%;
+    transform: translateY(-50%);
+    width: 100%;
+    z-index: var(--progress-zIndex);
+  }
+  
+  .progress {
+    background-color: var(--line-border-fill);
+    height: 4px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.4s ease;
+    width: 0%;
+    z-index: var(--progress-zIndex);
+  }
+  
+  .circle {
+    align-items: center;
+    background-color: #fff;
+    border:2px solid #798089;
+    border-radius: 50%;
+    color: #798089;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    transition: 0.4 ease;
+    width: 32px;
+    margin-bottom: 8px;
+  }
+  
+  .circle.active {
+    border-color: var(--line-border-fill);
+    color: var(--line-border-fill);
+  }
+.success{
+    border-color: var(--line-border-fill);
+    color: var(--line-border-fill);
+    background-color: var(--line-border-fill);
 }
 .signupContainer {
+    max-width:800px;
+    margin: 0 auto;
+    width: 100%; 
+}
+
+.signup-box {
     border-radius: 5px;
-    box-shadow: 0px 4px 5px #242424;
-    padding: 20px;
-    max-width: 600px;
+    padding: 24px;
     margin: 0 auto;
     width: 100%;
-    background: rgb(52 65 157 / 40%);
+    border: 1px #D9D9D9 solid;
+    background-color: #fff;
+
+}
+
+
+.loginFooter{
+    margin-top: 20px;
 }
 
 
 .singupSection input, 
 .singupSection select {
     padding: 10px;
-    display: block;
     width: 100%;
     border-radius: 5px;
-    background-color: rgb(0 0 0 / 20%);
-    border: 1px solid #eee;
-    color: #fff;
+    border: 1px solid #CFCFCF;
 }
 .singupSection label{
-    color:#fff;
+
     margin-bottom: 5px;
     display: inline-block;
 }
@@ -748,32 +820,44 @@ body {
 }
 .singupSection .info {
     font-size: 13px;
-    color: #c6dbff;
+    color: rgb(0 0 0 / 64%);
     margin-top: 5px;
 }
 
 .extrafield {
     margin-top: 15px;
-    border-top: 1px solid #000;
+    border-top: 1px solid #d3d3d3;
     padding-top: 15px;
 }
 
-span.info-link {text-decoration: underline;color: #fff;
-cursor: pointer;}
+span.info-link {
+    text-decoration: underline;
+    color: #BB33AA;
+    cursor: pointer;
+}
+
 .signupContainerInner .loginFooter button.btn.btn-primary{
-    background-color: #51FFE8;
-    color: #0a47ae;
-    font-weight: 700;
+    background-color: #151617;
+    color: #fff;
     font-weight: 700;
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    width: 200px;
 }
+
+.css-tj5bde-Svg  path{
+    fill:#ccc;
+}
+
 .singupSection .wrapper .form-group {
     margin-bottom: 15px;
+    flex-grow: 1;
 }
+
+
 .singupSection button.btn.btn-primary.previousBtn {
     margin-right: 15px;
 }
@@ -787,6 +871,16 @@ cursor: pointer;}
 }
 .captcha {
     margin-bottom: 10px;
+}
+
+.css-1i0qyv-control {
+    background-color: #fff !important;
+    width: 100%;
+    height: 50px;
+}
+.css-7crn4c-singleValue,
+.css-qx5h3x-placeholder{
+    color: #8d8d8d !important;
 }
 
 @media all and (max-width:1100px) {
@@ -873,4 +967,12 @@ h3.heading {
     color: #51ffe8;
     text-align: center;
     width: 100%;
+}
+
+.step-2 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 10px;
 }

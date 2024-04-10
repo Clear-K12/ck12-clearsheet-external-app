@@ -375,6 +375,7 @@ const Signup = () => {
   return (
     <>
       <Head>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
         <link
           href="/static/css/signup.css"
           rel="stylesheet"
@@ -385,18 +386,48 @@ const Signup = () => {
       <ToastContainer />
       <div className="site-wrapper">
         <div className="content content-div">
+  
           <div className="page-container inner-page-container-div">
+            
             <div className="signupContainer">
               <div className="signupContainerInner">
                 <div className="loginTop d-flex justify-content-center align-items-center m-auto">
                   <div className="singupSection w-100">
                     <form>
+                   
                       {!submitButton ? (
+
+                       
                         <div className="wrapper d-flex flex-wrap">
-                          <h3 className="heading">
+
+                           {/* <h3 className="heading">
                             Step <span className="stepnumber">1</span>
-                          </h3>
-                          <div className="form-group w-100 pr-2">
+                          </h3>  */}
+
+                        
+                              <div className="w-100">
+                                <div className="progress-container">
+                                  <div className="progress" id="progress"></div>
+                                  <div className="d-flex flex-column justify-content-center">
+                                  <div className="circle active">1</div>
+                                  <p>Step 1</p>
+                                  </div>
+                                  <div className="d-flex flex-column step-2 ">
+                                  <div className="circle">2</div>
+                                  <p>Step 2</p>
+                                  </div>
+                                
+                                </div>
+                              </div>
+                           
+
+                          
+                          <div className="signup-box">
+                          <div className="form-row w-100 ">
+
+                        
+
+                          <div className="form-group col-md-6 ">
                             <label>First Name</label>
                             <input
                               type="text"
@@ -414,7 +445,8 @@ const Signup = () => {
                               ""
                             )}
                           </div>
-                          <div className="form-group w-100 ">
+
+                          <div className="form-group col-md-6">
                             <label>Last Name</label>
                             <input
                               type="text"
@@ -432,49 +464,56 @@ const Signup = () => {
                               ""
                             )}
                           </div>
-                          <div className="form-group w-100">
-                            <label>State</label>
-                            <div className="">
-                              <Select
-                                name="stateId"
-                                value={selectedState}
-                                options={selectoptions}
-                                onChange={handle_dropdown}
-                                placeholder="Select State"
-                                id="stateId"
-                                styles={colourStyles}
-                              />
-                              {note != "" ? (
-                                <div className="info">{note}</div>
-                              ) : null}
-                              {validationError.stateId ? (
-                                <span className="validation-error">
-                                  {validationError.stateId}
-                                </span>
-                              ) : null}
-                            </div>
+
                           </div>
-                          <div className="form-group w-100">
-                            <label>District</label>
-                            <div className="">
-                              <Select
-                                name="districtId"
-                                value={selectedDistrict}
-                                options={districtOptions}
-                                onChange={handle_dropdown}
-                                placeholder="Select District"
-                                styles={colourStyles}
-                              />
-                              {validationError.districtId ? (
-                                <span className="validation-error">
-                                  {validationError.districtId}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </div>
-                          <div className="form-group w-100">
+
+
+                         <div className="form-row w-100">
+                              <div className="form-group  col-md-6">
+                                <label>State</label>
+                                <div className="">
+                                  <Select
+                                    name="stateId"
+                                    value={selectedState}
+                                    options={selectoptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select State"
+                                    id="stateId"
+                                    styles={colourStyles}
+                                  />
+                                  {note != "" ? (
+                                    <div className="info">{note}</div>
+                                  ) : null}
+                                  {validationError.stateId ? (
+                                    <span className="validation-error">
+                                      {validationError.stateId}
+                                    </span>
+                                  ) : null}
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>District</label>
+                                <div className="">
+                                  <Select
+                                    name="districtId"
+                                    value={selectedDistrict}
+                                    options={districtOptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select District"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.districtId ? (
+                                    <span className="validation-error">
+                                      {validationError.districtId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                </div>
+                         </div>
+                            <div className="form-row w-100">
+                          <div className="form-group col-md-12">
                             <label>School </label>
                             <div className="">
                               <Select
@@ -508,7 +547,7 @@ const Signup = () => {
                             ) : null}
                             {showExtraFieldFlag ? (
                               <div className="extrafield">
-                                <div className="form-group w-100">
+                                <div className="form-group ">
                                   <label>District Name</label>
                                   <input
                                     type="text"
@@ -526,7 +565,8 @@ const Signup = () => {
                                     ""
                                   )}
                                 </div>
-                                <div className="form-group w-100">
+                                <div className="form-row w-100" >
+                                <div className="form-group col-md-12 ">
                                   <label>School Name</label>
                                   <input
                                     type="text"
@@ -544,6 +584,8 @@ const Signup = () => {
                                     ""
                                   )}
                                 </div>
+                                </div>
+                              
                                 <div className="form-group w-100">
                                   <label>Street Address</label>
                                   <input
@@ -561,6 +603,7 @@ const Signup = () => {
                                   ) : (
                                     ""
                                   )}
+                              
                                 </div>
                                 {showExtraFieldFlag ? (
                                   <div className="info">
@@ -577,14 +620,35 @@ const Signup = () => {
                               </div>
                             ) : null}
                           </div>
+                          </div>
                         </div>
+                        </div>
+
                       ) : (
-                        <div>
+                        <div >
                           <div className="wrapper d-flex flex-wrap">
-                            <h3 className="heading">
-                              Step <span className="stepnumber">2</span>
-                            </h3>
-                            <div className="form-group w-100">
+                            
+                            <div className="w-100">
+                                <div className="progress-container">
+                                  <div className="progress" id="progress"></div>
+                                  <div className="d-flex flex-column">
+                                  <div className="circle success ">
+                                    <img src="../check.png" alt="" />
+                                  </div>
+                                  <p>Step 1</p>
+                                  </div>
+                                  <div className="d-flex flex-column step-2">
+                                  <div className="circle active">2</div>
+                                  <p>Step 2</p>
+                                  </div>
+                                
+                                </div>
+                              </div>
+                            <div className="signup-box">
+
+                              <div className="form-row w-100 ">
+                           
+                            <div className="form-group col-md-6">
                               <label>Role</label>
                               <div className="">
                                 <Select
@@ -606,7 +670,7 @@ const Signup = () => {
                               </div>
                             </div>
 
-                            <div className="form-group w-100">
+                            <div className="form-group col-md-6">
                               <label>Email</label>
                               <input
                                 type="text"
@@ -630,7 +694,9 @@ const Signup = () => {
                                 ""
                               )}
                             </div>
-                            <div className="form-group w-100 ">
+                            </div>
+                            <div className="form-row w-100 ">
+                            <div className="form-group col-md-6">
                               <label>Password</label>
                               <input
                                 type="password"
@@ -651,7 +717,7 @@ const Signup = () => {
                                 ""
                               )}
                             </div>
-                            <div className="form-group w-100 ">
+                            <div className="form-group col-md-6">
                               <label>Confirm password </label>
                               <input
                                 type="password"
@@ -669,7 +735,8 @@ const Signup = () => {
                                 ""
                               )}
                             </div>
-                          </div>
+                            </div>
+                        
                           <div className="captcha">
                             <ReCAPTCHA
                               ref={recaptchaRef}
@@ -677,10 +744,12 @@ const Signup = () => {
                               onChange={onChange}
                             />
                           </div>
+                          </div>
+                          </div>
                         </div>
                       )}
                       <div className="row loginFooter">
-                        <div className="col-6">
+                        <div className="col-12 text-center">
                           {!submitButton ? (
                             <button
                               type="button"
