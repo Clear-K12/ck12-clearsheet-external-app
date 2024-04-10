@@ -400,19 +400,19 @@ const Signup = () => {
                        
                         <div className="wrapper d-flex flex-wrap">
 
-                           <h3 className="heading">
+                           {/* <h3 className="heading">
                             Step <span className="stepnumber">1</span>
-                          </h3> 
+                          </h3>  */}
 
                         
                               <div className="w-100">
                                 <div className="progress-container">
                                   <div className="progress" id="progress"></div>
-                                  <div className="d-flex flex-column">
+                                  <div className="d-flex flex-column justify-content-center">
                                   <div className="circle active">1</div>
                                   <p>Step 1</p>
                                   </div>
-                                  <div className="d-flex flex-column">
+                                  <div className="d-flex flex-column step-2 ">
                                   <div className="circle">2</div>
                                   <p>Step 2</p>
                                   </div>
@@ -427,7 +427,7 @@ const Signup = () => {
 
                         
 
-                          <div className="form-group  ">
+                          <div className="form-group col-md-6 ">
                             <label>First Name</label>
                             <input
                               type="text"
@@ -446,7 +446,7 @@ const Signup = () => {
                             )}
                           </div>
 
-                          <div className="form-group ">
+                          <div className="form-group col-md-6">
                             <label>Last Name</label>
                             <input
                               type="text"
@@ -469,7 +469,7 @@ const Signup = () => {
 
 
                          <div className="form-row w-100">
-                              <div className="form-group  ">
+                              <div className="form-group  col-md-6">
                                 <label>State</label>
                                 <div className="">
                                   <Select
@@ -491,7 +491,7 @@ const Signup = () => {
                                   ) : null}
                                 </div>
                               </div>
-                              <div className="form-group ">
+                              <div className="form-group col-md-6">
                                 <label>District</label>
                                 <div className="">
                                   <Select
@@ -512,8 +512,8 @@ const Signup = () => {
                                 </div>
                                 </div>
                          </div>
-
-                          <div className="form-group w-100">
+                            <div className="form-row w-100">
+                          <div className="form-group col-md-12">
                             <label>School </label>
                             <div className="">
                               <Select
@@ -620,24 +620,24 @@ const Signup = () => {
                               </div>
                             ) : null}
                           </div>
+                          </div>
                         </div>
                         </div>
 
                       ) : (
                         <div >
                           <div className="wrapper d-flex flex-wrap">
-                            <h3 className="heading">
-                              Step <span className="stepnumber">2</span>
-                              
-                            </h3>
+                            
                             <div className="w-100">
                                 <div className="progress-container">
                                   <div className="progress" id="progress"></div>
                                   <div className="d-flex flex-column">
-                                  <div className="circle ">1</div>
+                                  <div className="circle success ">
+                                    <img src="../check.png" alt="" />
+                                  </div>
                                   <p>Step 1</p>
                                   </div>
-                                  <div className="d-flex flex-column">
+                                  <div className="d-flex flex-column step-2">
                                   <div className="circle active">2</div>
                                   <p>Step 2</p>
                                   </div>
@@ -648,7 +648,7 @@ const Signup = () => {
 
                               <div className="form-row w-100 ">
                            
-                            <div className="form-group ">
+                            <div className="form-group col-md-6">
                               <label>Role</label>
                               <div className="">
                                 <Select
@@ -670,7 +670,7 @@ const Signup = () => {
                               </div>
                             </div>
 
-                            <div className="form-group ">
+                            <div className="form-group col-md-6">
                               <label>Email</label>
                               <input
                                 type="text"
@@ -696,7 +696,7 @@ const Signup = () => {
                             </div>
                             </div>
                             <div className="form-row w-100 ">
-                            <div className="form-group ">
+                            <div className="form-group col-md-6">
                               <label>Password</label>
                               <input
                                 type="password"
@@ -736,13 +736,14 @@ const Signup = () => {
                               )}
                             </div>
                             </div>
-                          </div>
+                        
                           <div className="captcha">
                             <ReCAPTCHA
                               ref={recaptchaRef}
                               sitekey={Configuration.siteKey}
                               onChange={onChange}
                             />
+                          </div>
                           </div>
                           </div>
                         </div>

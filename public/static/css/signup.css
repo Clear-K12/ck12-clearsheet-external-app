@@ -715,7 +715,7 @@ body {
 }
 :root {
     --line-border-fill: #F413D8;
-    --line-border-empty: #798089;
+    --line-border-empty: #F413D8;
     --progress-zIndex: -1;
   }
   
@@ -736,7 +736,7 @@ body {
     height: 2px;
     left: 0;
     position: absolute;
-    top: 24%;
+    top: 20%;
     transform: translateY(-50%);
     width: 100%;
     z-index: var(--progress-zIndex);
@@ -765,13 +765,18 @@ body {
     justify-content: center;
     transition: 0.4 ease;
     width: 32px;
+    margin-bottom: 8px;
   }
   
   .circle.active {
     border-color: var(--line-border-fill);
     color: var(--line-border-fill);
   }
-
+.success{
+    border-color: var(--line-border-fill);
+    color: var(--line-border-fill);
+    background-color: var(--line-border-fill);
+}
 .signupContainer {
     max-width:800px;
     margin: 0 auto;
@@ -788,9 +793,7 @@ body {
 
 }
 
-.form-row{
-    gap: 20px;
-}
+
 .loginFooter{
     margin-top: 20px;
 }
@@ -964,4 +967,12 @@ h3.heading {
     color: #51ffe8;
     text-align: center;
     width: 100%;
+}
+
+.step-2 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 10px;
 }
