@@ -711,7 +711,7 @@
 }
 body {
     overflow: hidden;
-    background-color: #F5FBFF;
+    background: none;
 }
 :root {
     --line-border-fill: #F413D8;
