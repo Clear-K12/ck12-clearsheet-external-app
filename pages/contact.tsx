@@ -358,14 +358,14 @@ export const RequestMoreInfo = () => {
             )}
           </div>
         </div>
-        {/* <div className="link">
+        <div className="link">
           <a href="http://198.58.111.246:8080/test.underwatermath.com/contact-us/">
             <i>
               Can’t find your school or district, contact us here to have it
               added quickly.
             </i>
           </a>
-        </div> */}
+        </div> 
 
         <div className="row text-center">
           
