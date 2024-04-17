@@ -620,7 +620,7 @@ const Signup = () => {
                                 ) : null}
                               </div>
                             ) : null}
-                          </div>
+                          </div>  
                           </div>
                         </div>
                         </div>
