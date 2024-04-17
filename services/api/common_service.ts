@@ -90,7 +90,7 @@ export const CommonService = {
       axios.post(APICONSTANT.USERREGISTER,data).then((resp: any) => {
       resolve(resp.data)
     }).catch((err:any)=>{
-      reject(err.response.data);
+      reject(err.response?.data);
     });
   });
   return promise;

@@ -45,6 +45,7 @@ const Signup = () => {
     schoolName: "",
     districtName: "",
     streetAddress: "",
+    productId: 2
   };
   const [submitButton, showSubmitStep] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
@@ -257,7 +258,7 @@ const Signup = () => {
           }
         })
         .catch((res: any) => {
-          if (res.errors.Email) {
+          if (res.errors?.Email) {
             ToastrService.error(res.errors.Email);
           } else {
             ToastrService.error("Something went wrong.");
