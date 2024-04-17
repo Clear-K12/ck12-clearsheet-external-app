@@ -39,5 +39,6 @@ export interface UserRegisterData{
     confirm_password:string,
     schoolName: string,
     districtName: string,
-    streetAddress: string
+    streetAddress: string,
+    productId: number
 }
