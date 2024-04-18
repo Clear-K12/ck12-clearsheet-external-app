@@ -28,6 +28,7 @@ export const RequestMoreInfo = () => {
     stateId: 0,
     districtId: 0,
     schoolId: 0,
+    productId:2
   };
   const [selectedState, setSelectedState] = useState(null);
 

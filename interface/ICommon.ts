@@ -26,6 +26,7 @@ export interface ReqInsertData{
     stateId:number,
     districtId:number,
     schoolId:number,
+    productId:number
 }
 export interface UserRegisterData{
     firstName:string,
