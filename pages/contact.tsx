@@ -13,7 +13,7 @@ import ALERTMESSAGES from "@constants/alertMessages";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-export const Contact = () => {
+export const RequestMoreInfo = () => {
   interface type {
     label: string;
     value: number;
@@ -28,6 +28,7 @@ export const Contact = () => {
     stateId: 0,
     districtId: 0,
     schoolId: 0,
+    productId:2
   };
   const [selectedState, setSelectedState] = useState(null);
 
@@ -229,8 +230,7 @@ export const Contact = () => {
       <form className="schoolpricingform" autoComplete="off">
         <div className="row">
           <div className="column">
-            <label>Name*</label>
-            <br />
+       
             <input
               type="text"
               placeholder="Name"
@@ -246,8 +246,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>Phone</label>
-            <br />
+          
             <input
               type="tel"
               placeholder="Phone"
@@ -266,8 +265,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>Email*</label>
-            <br />
+          
             <input
               type="email"
               placeholder="Email"
@@ -283,8 +281,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>Title*</label>
-            <br />
+          
             <Select
               name="roleId"
               value={selectedRole}
@@ -304,8 +301,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>State*</label>
-            <br />
+          
             <Select
               name="stateId"
               value={selectedState}
@@ -324,8 +320,7 @@ export const Contact = () => {
             )}
           </div>
           <div className="column">
-            <label>District*</label>
-            <br />
+          
             <Select
               name="districtId"
               value={selectedDistrict}
@@ -346,8 +341,7 @@ export const Contact = () => {
 
         <div className="row">
           <div className="column">
-            <label>School*</label>
-            <br />
+           
             <Select
               name="schoolId"
               value={selectedSchool}
@@ -365,14 +359,14 @@ export const Contact = () => {
             )}
           </div>
         </div>
-        {/* <div className="link">
+        <div className="link">
           <a href="http://198.58.111.246:8080/test.underwatermath.com/contact-us/">
             <i>
               Can’t find your school or district, contact us here to have it
               added quickly.
             </i>
           </a>
-        </div> */}
+        </div> 
 
         <div className="row text-center">
           
@@ -395,4 +389,4 @@ export const Contact = () => {
     </div>
   );
 };
-export default Contact;
+export default RequestMoreInfo;

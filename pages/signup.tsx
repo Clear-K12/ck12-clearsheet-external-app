@@ -253,7 +253,7 @@ const Signup = () => {
             //  This is a temporary function. This is used to bypass the email verification process.
             setTimeout(() => {
               setShowMessageModal(false);
-              window.location.href = Configuration.LoginUrl+'?tabIndex=1';
+              window.parent.location.href = Configuration.LoginUrl+'?tabIndex=1';
             }, 5000);
           }
         })
@@ -620,7 +620,7 @@ const Signup = () => {
                                 ) : null}
                               </div>
                             ) : null}
-                          </div>
+                          </div>  
                           </div>
                         </div>
                         </div>
