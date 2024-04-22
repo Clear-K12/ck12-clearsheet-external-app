@@ -191,6 +191,9 @@ form.schoolpricingform  input[type="button"] {
   fill: #777A7E !important;
 }
 
+.css-7crn4c-singleValue{
+  color: #37383a !important;
+}
 .link a {
   color: #fff;
   text-decoration: underline;
