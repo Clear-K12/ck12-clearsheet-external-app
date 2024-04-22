@@ -541,14 +541,15 @@ const Signup = () => {
                                   className="info-link"
                                   onClick={showExtraField}
                                 >
-                                  click here to request
+                                  click here 
                                 </span>{" "}
-                                we add it
+                                to add it
                               </div>
                             ) : null}
                             {showExtraFieldFlag ? (
                               <div className="extrafield">
-                                <div className="form-group ">
+                            <div className="form-row w-100" >
+                                <div className="form-group col-md-6 ">
                                   <label>District Name</label>
                                   <input
                                     type="text"
@@ -566,8 +567,8 @@ const Signup = () => {
                                     ""
                                   )}
                                 </div>
-                                <div className="form-row w-100" >
-                                <div className="form-group col-md-12 ">
+                               
+                                <div className="form-group col-md-6 ">
                                   <label>School Name</label>
                                   <input
                                     type="text"
@@ -586,8 +587,8 @@ const Signup = () => {
                                   )}
                                 </div>
                                 </div>
-                              
-                                <div className="form-group w-100">
+                                <div className="form-row w-100" >
+                                <div className="form-group col-md-12">
                                   <label>Street Address</label>
                                   <input
                                     type="text"
@@ -606,6 +607,9 @@ const Signup = () => {
                                   )}
                               
                                 </div>
+                                </div>
+
+
                                 {showExtraFieldFlag ? (
                                   <div className="info">
                                     If you find your school,{" "}
@@ -613,9 +617,9 @@ const Signup = () => {
                                       className="info-link"
                                       onClick={showExtraField}
                                     >
-                                      click here to request
+                                      click here
                                     </span>{" "}
-                                    remove this field.
+                                    to remove this field.
                                   </div>
                                 ) : null}
                               </div>
