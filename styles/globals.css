@@ -87,7 +87,7 @@ a {
   text-decoration: none;
 }
 form.schoolpricingform {
-  width: 750px;
+  max-width: 750px;
   margin: 0 auto;
 }
 .schoolpricingform {
@@ -201,6 +201,9 @@ form.schoolpricingform  input[type="button"] {
   .schoolpricingform .row {
     flex-direction: column;
   }
+  form.schoolpricingform {
+    padding: 0 20px;
+}
 }
 
 @media (prefers-color-scheme: dark) {
