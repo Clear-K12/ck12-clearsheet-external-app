@@ -29,7 +29,6 @@
 .site-wrapper {
     height: 100vh;
     overflow-x: hidden;
-    overflow-y: auto;
     perspective: 300px;
     display: block;
 }
@@ -709,7 +708,7 @@
     font-size: 14px;
 }
 body {
-    overflow: hidden;
+
     background: none; 
 }
 :root {
