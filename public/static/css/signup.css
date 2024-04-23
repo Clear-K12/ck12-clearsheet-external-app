@@ -28,7 +28,6 @@
 
 .site-wrapper {
     height: 100vh;
-    overflow-x: hidden;
     perspective: 300px;
     display: block;
 }
