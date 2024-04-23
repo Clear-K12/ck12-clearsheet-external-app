@@ -251,10 +251,10 @@ const Signup = () => {
             setShowMessageModal(true);
 
             //  This is a temporary function. This is used to bypass the email verification process.
-            setTimeout(() => {
-              setShowMessageModal(false);
-              window.parent.location.href = Configuration.LoginUrl+'?tabIndex=1';
-            }, 5000);
+            // setTimeout(() => {
+            //   setShowMessageModal(false);
+            //   window.parent.location.href = Configuration.LoginUrl+'?tabIndex=1';
+            // }, 5000);
           }
         })
         .catch((res: any) => {
