@@ -359,27 +359,15 @@ export const RequestMoreInfo = () => {
             )}
           </div>
         </div>
-       {/*-- <div className="link">
-          <a href="http://198.58.111.246:8080/test.underwatermath.com/contact-us/">
-            <i>
-              Can’t find your school or district, contact us here to have it
-              added quickly.
-            </i>
-          </a>
-          </div>--*/}
 
-        <div className="row text-center">
-          
+        <div className="row text-center">          
             <input
               type="button"
               name="submit"
               value="Submit"
               className="button form-submit-btn "
               onClick={submit}
-            />
-      
-          {/* <div className="column"></div> */}
-      
+            />      
         </div>
 
         <div className="row">

@@ -249,12 +249,6 @@ const Signup = () => {
             }
             document.getElementById("firstName")?.focus();
             setShowMessageModal(true);
-
-            //  This is a temporary function. This is used to bypass the email verification process.
-            // setTimeout(() => {
-            //   setShowMessageModal(false);
-            //   window.parent.location.href = Configuration.LoginUrl+'?tabIndex=1';
-            // }, 5000);
           }
         })
         .catch((res: any) => {
@@ -383,7 +377,7 @@ const Signup = () => {
           key="signupcss"
         ></link>
       </Head>
-      {showLoader && <Loader />}
+      {/* {showLoader && <Loader />} */}
       <ToastContainer />
       <div className="site-wrapper">
         <div className="content content-div">
@@ -796,9 +790,9 @@ const Signup = () => {
             showMessageModal={showMessageModal}
             setShowMessageModal={setShowMessageModal}
             showPropsMessage={true}
-            title={"Congratulations!"}
+            title={"Verify Your Email"}
             message={
-              "Deep-sea adventurer! You've successfully registered for Underwater Math. Get ready to dive into the world of math and discover its hidden treasures. We're excited to have you aboard! You will now be redirected to the login page where you can start your journey. Thank you for choosing Underwater Math."
+              "Welcome to ClearSheets. You are almost ready to stop grading papers and to start your Worksheet Revolution! We sent you an email, please check your email and click the verify email link we sent. Check your spam folder if you do not find the email."
             }
           />
         </div>
