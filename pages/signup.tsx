@@ -249,12 +249,6 @@ const Signup = () => {
             }
             document.getElementById("firstName")?.focus();
             setShowMessageModal(true);
-
-            //  This is a temporary function. This is used to bypass the email verification process.
-            setTimeout(() => {
-              setShowMessageModal(false);
-              window.parent.location.href = Configuration.LoginUrl+'?tabIndex=1';
-            }, 5000);
           }
         })
         .catch((res: any) => {
@@ -383,7 +377,7 @@ const Signup = () => {
           key="signupcss"
         ></link>
       </Head>
-      {showLoader && <Loader />}
+      {/* {showLoader && <Loader />} */}
       <ToastContainer />
       <div className="site-wrapper">
         <div className="content content-div">
@@ -541,14 +535,15 @@ const Signup = () => {
                                   className="info-link"
                                   onClick={showExtraField}
                                 >
-                                  click here to request
+                                  click here 
                                 </span>{" "}
-                                we add it
+                                to add it
                               </div>
                             ) : null}
                             {showExtraFieldFlag ? (
                               <div className="extrafield">
-                                <div className="form-group ">
+                            <div className="form-row w-100" >
+                                <div className="form-group col-md-6 ">
                                   <label>District Name</label>
                                   <input
                                     type="text"
@@ -566,8 +561,8 @@ const Signup = () => {
                                     ""
                                   )}
                                 </div>
-                                <div className="form-row w-100" >
-                                <div className="form-group col-md-12 ">
+                               
+                                <div className="form-group col-md-6 ">
                                   <label>School Name</label>
                                   <input
                                     type="text"
@@ -586,8 +581,8 @@ const Signup = () => {
                                   )}
                                 </div>
                                 </div>
-                              
-                                <div className="form-group w-100">
+                                <div className="form-row w-100" >
+                                <div className="form-group col-md-12">
                                   <label>Street Address</label>
                                   <input
                                     type="text"
@@ -606,6 +601,9 @@ const Signup = () => {
                                   )}
                               
                                 </div>
+                                </div>
+
+
                                 {showExtraFieldFlag ? (
                                   <div className="info">
                                     If you find your school,{" "}
@@ -613,9 +611,9 @@ const Signup = () => {
                                       className="info-link"
                                       onClick={showExtraField}
                                     >
-                                      click here to request
+                                      click here
                                     </span>{" "}
-                                    remove this field.
+                                    to remove this field.
                                   </div>
                                 ) : null}
                               </div>
@@ -792,9 +790,9 @@ const Signup = () => {
             showMessageModal={showMessageModal}
             setShowMessageModal={setShowMessageModal}
             showPropsMessage={true}
-            title={"Congratulations!"}
+            title={"Verify Your Email"}
             message={
-              "Deep-sea adventurer! You've successfully registered for Underwater Math. Get ready to dive into the world of math and discover its hidden treasures. We're excited to have you aboard! You will now be redirected to the login page where you can start your journey. Thank you for choosing Underwater Math."
+              "Welcome to ClearSheets. You are almost ready to stop grading papers and to start your Worksheet Revolution! We sent you an email, please check your email and click the verify email link we sent. Check your spam folder if you do not find the email."
             }
           />
         </div>

@@ -28,8 +28,6 @@
 
 .site-wrapper {
     height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
     perspective: 300px;
     display: block;
 }
@@ -709,7 +707,7 @@
     font-size: 14px;
 }
 body {
-    overflow: hidden;
+
     background: none; 
 }
 :root {
@@ -950,12 +948,47 @@ span.info-link {
     gap: 10px !important;
 }
 }
+
+@media (max-width:991px){
+    .signup-box {
+        width: 90%;
+    }
+}
+
 @media (max-width: 500px){
 .site-nav {
     width: 100vw;
     height: 100vh;
 }
+.singupSection label {
+    font-size: 14px;
 }
+.singupSection input, .singupSection select {
+    padding: 7px 10px;
+}
+.css-1i0qyv-control {
+    height: 40px;
+}
+.singupSection .wrapper .form-group {
+    margin-bottom: 8px;
+    flex-grow: 1;
+}
+.form-row>.col, .form-row>[class*=col-] {
+    padding-right: 0;
+    padding-left: 5px;
+}
+.signup-box {
+    padding: 14px;
+}
+.singupSection button.btn.btn-primary.previousBtn {
+     margin-right: 0; 
+    margin-bottom: 16px;
+}
+.progress-container {
+    max-width: 280px;
+}
+}
+
 h3.heading span {
     border-radius: 50%;
     width: 30px;
@@ -985,5 +1018,8 @@ h3.heading {
 }
 
 .css-8mmkcg{
+    fill: #777A7E !important;
+}
+.css-tj5bde-Svg {
     fill: #777A7E !important;
 }

@@ -79,11 +79,7 @@
   margin: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+
 
 
 a {
@@ -91,7 +87,7 @@ a {
   text-decoration: none;
 }
 form.schoolpricingform {
-  width: 750px;
+  max-width: 750px;
   margin: 0 auto;
 }
 .schoolpricingform {
@@ -185,6 +181,15 @@ form.schoolpricingform  input[type="button"] {
 .css-tj5bde-Svg {
   fill: #777A7E !important;
 }
+
+
+.css-8mmkcg{
+  fill: #777A7E !important;
+}
+
+.css-7crn4c-singleValue{
+  color: #37383a !important;
+}
 .link a {
   color: #fff;
   text-decoration: underline;
@@ -196,6 +201,9 @@ form.schoolpricingform  input[type="button"] {
   .schoolpricingform .row {
     flex-direction: column;
   }
+  form.schoolpricingform {
+    padding: 0 20px;
+}
 }
 
 @media (prefers-color-scheme: dark) {
