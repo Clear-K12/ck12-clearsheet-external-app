@@ -13,7 +13,7 @@ switch (hostname) {
     case "kind-cliff-0a7d75210.2.azurestaticapps.net":
         configuration = prod.configuration;
         break;
-    case "prodcluwmexteranlapp.z13.web.core.windows.net":
+    case "prodclcsexternalapp.z19.web.core.windows.net":
         configuration = prod.configuration;
         break;  
     case "wonderful-ocean-04a3d8110.2.azurestaticapps.net":
