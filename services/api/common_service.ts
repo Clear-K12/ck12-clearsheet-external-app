@@ -12,8 +12,8 @@ export const CommonService = {
     get_elementary_school_list,
     insertRequestMoreInfo,
     get_role_list,
-    user_registration
-    
+    user_registration,
+    add_subscription
   };
   function get_district_list(stateid:number){
     let promise = new Promise((resolve, reject) => {
@@ -94,4 +94,15 @@ export const CommonService = {
     });
   });
   return promise;
+  }
+  function add_subscription(request_obj:any) {
+    console.log("service",request_obj)
+    let promise = new Promise((resolve, reject) => {
+      axios.post(APICONSTANT.ADDSUBSCRIPTION,request_obj).then(resp => {
+        resolve(resp.data)
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise as Promise<boolean>;
   }

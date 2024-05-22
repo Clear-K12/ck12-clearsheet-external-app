@@ -21,6 +21,7 @@ import { helper } from "utility/helper";
 import CommonMessageModal from "@components/modal/common/commonMessageModal";
 import COMMONCONSTANT from "@constants/commonConstant";
 import { useRouter } from "next/router";
+import Subscription from "@components/subscription";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -66,6 +67,7 @@ const Signup = () => {
   const [districtEmailExt, SetdistrictEmailExt] = useState<string>();
   const [signupData, setSignupData] = useState<UserRegisterData>(initial_data);
   const [showMessageModal, setShowMessageModal] = useState<boolean>(false);
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
@@ -247,8 +249,7 @@ const Signup = () => {
             } else {
               ToastrService.success(ALERTMESSAGES.Registration);
             }
-            document.getElementById("firstName")?.focus();
-            setShowMessageModal(true);
+            setCurrentStep(currentStep + 1);
           }
         })
         .catch((res: any) => {
@@ -295,6 +296,7 @@ const Signup = () => {
       showSubmitStep(true);
       document.getElementById("firstName")?.focus();
       document.getElementById("roleId")?.focus();
+      setCurrentStep(currentStep + 1);
     }
   };
   const reset_form = () => {
@@ -305,7 +307,7 @@ const Signup = () => {
     setDistrictOptions([]);
     setSelectschoolOption([]);
     Setnote("");
-    setSignupData({ ...initial_data });
+    //setSignupData({ ...initial_data });
   };
   const onChange = (e: any) => {
     SetCaptchaValue(e);
@@ -367,10 +369,15 @@ const Signup = () => {
     }
     setShowExtraFieldFlag(value);
   };
+
+  const after_license = () => {
+    document.getElementById("firstName")?.focus();
+    setShowMessageModal(true);
+  }
   return (
     <>
       <Head>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
         <link
           href="/static/css/signup.css"
           rel="stylesheet"
@@ -381,89 +388,77 @@ const Signup = () => {
       <ToastContainer />
       <div className="site-wrapper">
         <div className="content content-div">
-  
+
           <div className="page-container inner-page-container-div">
-            
+
             <div className="signupContainer">
               <div className="signupContainerInner">
                 <div className="loginTop d-flex justify-content-center align-items-center m-auto">
                   <div className="singupSection w-100">
-                    <form>
-                   
-                      {!submitButton ? (
-
-                       
-                        <div className="wrapper d-flex flex-wrap">
-
-                           {/* <h3 className="heading">
-                            Step <span className="stepnumber">1</span>
-                          </h3>  */}
-
-                        
-                              <div className="w-100">
-                                <div className="progress-container">
-                                  <div className="progress" id="progress"></div>
-                                  <div className="d-flex flex-column justify-content-center">
-                                  <div className="circle active">1</div>
-                                  <p>Step 1</p>
-                                  </div>
-                                  <div className="d-flex flex-column step-2 ">
-                                  <div className="circle">2</div>
-                                  <p>Step 2</p>
-                                  </div>
-                                
-                                </div>
-                              </div>
-                           
-
-                          
+                    
+                      <div className="wrapper d-flex flex-wrap">
+                        <div className="w-100">
+                          <div className="progress-container">
+                            <div className={`progress ${currentStep === 2 ? 'w50' : currentStep === 3 ? 'w100' : ""}`} id="progress"></div>
+                            <div className="d-flex flex-column justify-content-center">
+                              <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
+                              <p>Step 1</p>
+                            </div>
+                            <div className="d-flex flex-column step-2 ">
+                              <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
+                              <p>Step 2</p>
+                            </div>
+                            <div className="d-flex flex-column step-2 ">
+                              <div className="circle">3</div>
+                              <p>Step 3</p>
+                            </div>
+                          </div>
+                        </div>
+                        {currentStep === 1 ? (
                           <div className="signup-box">
-                          <div className="form-row w-100 ">
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6 ">
+                                <label>First Name</label>
+                                <input
+                                  type="text"
+                                  name="firstName"
+                                  id="firstName"
+                                  value={signupData.firstName}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.firstName ? (
+                                  <span className="validation-error">
+                                    {validationError.firstName}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
 
-                        
+                              <div className="form-group col-md-6">
+                                <label>Last Name</label>
+                                <input
+                                  type="text"
+                                  name="lastName"
+                                  id="lastName"
+                                  value={signupData.lastName}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.lastName ? (
+                                  <span className="validation-error">
+                                    {validationError.lastName}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
 
-                          <div className="form-group col-md-6 ">
-                            <label>First Name</label>
-                            <input
-                              type="text"
-                              name="firstName"
-                              id="firstName"
-                              value={signupData.firstName}
-                              onChange={handle_filter}
-                              autoComplete="off"
-                            />
-                            {validationError.firstName ? (
-                              <span className="validation-error">
-                                {validationError.firstName}
-                              </span>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-
-                          <div className="form-group col-md-6">
-                            <label>Last Name</label>
-                            <input
-                              type="text"
-                              name="lastName"
-                              id="lastName"
-                              value={signupData.lastName}
-                              onChange={handle_filter}
-                              autoComplete="off"
-                            />
-                            {validationError.lastName ? (
-                              <span className="validation-error">
-                                {validationError.lastName}
-                              </span>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-
-                          </div>
+                            </div>
 
 
-                         <div className="form-row w-100">
+                            <div className="form-row w-100">
                               <div className="form-group  col-md-6">
                                 <label>State</label>
                                 <div className="">
@@ -505,163 +500,208 @@ const Signup = () => {
                                     ""
                                   )}
                                 </div>
-                                </div>
-                         </div>
-                            <div className="form-row w-100">
-                          <div className="form-group col-md-12">
-                            <label>School </label>
-                            <div className="">
-                              <Select
-                                name="schoolId"
-                                value={selectedSchool}
-                                options={selectschoolOption}
-                                onChange={handle_dropdown}
-                                placeholder="Select School"
-                                styles={colourStyles}
-                                isDisabled={showExtraFieldFlag}
-                              />
-                              {validationError.schoolId ? (
-                                <span className="validation-error">
-                                  {validationError.schoolId}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            {!showExtraFieldFlag ? (
-                              <div className="info">
-                                Don’t see your school or district,{" "}
-                                <span
-                                  className="info-link"
-                                  onClick={showExtraField}
-                                >
-                                  click here 
-                                </span>{" "}
-                                to add it
                               </div>
-                            ) : null}
-                            {showExtraFieldFlag ? (
-                              <div className="extrafield">
-                            <div className="form-row w-100" >
-                                <div className="form-group col-md-6 ">
-                                  <label>District Name</label>
-                                  <input
-                                    type="text"
-                                    name="districtName"
-                                    id="districtName"
-                                    value={signupData.districtName}
-                                    onChange={handle_filter}
-                                    disabled
+                            </div>
+                            <div className="form-row w-100">
+                              <div className="form-group col-md-12">
+                                <label>School </label>
+                                <div className="">
+                                  <Select
+                                    name="schoolId"
+                                    value={selectedSchool}
+                                    options={selectschoolOption}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select School"
+                                    styles={colourStyles}
+                                    isDisabled={showExtraFieldFlag}
                                   />
-                                  {validationError.districtName ? (
+                                  {validationError.schoolId ? (
                                     <span className="validation-error">
-                                      {validationError.districtName}
+                                      {validationError.schoolId}
                                     </span>
                                   ) : (
                                     ""
                                   )}
                                 </div>
-                               
-                                <div className="form-group col-md-6 ">
-                                  <label>School Name</label>
-                                  <input
-                                    type="text"
-                                    name="schoolName"
-                                    id="schoolName"
-                                    value={signupData.schoolName}
-                                    onChange={handle_filter}
-                                    autoComplete="off"
-                                  />
-                                  {validationError.schoolName ? (
-                                    <span className="validation-error">
-                                      {validationError.schoolName}
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                                </div>
-                                <div className="form-row w-100" >
-                                <div className="form-group col-md-12">
-                                  <label>Street Address</label>
-                                  <input
-                                    type="text"
-                                    name="streetAddress"
-                                    id="streetAddress"
-                                    value={signupData.streetAddress}
-                                    onChange={handle_filter}
-                                    autoComplete="off"
-                                  />
-                                  {validationError.streetAddress ? (
-                                    <span className="validation-error">
-                                      {validationError.streetAddress}
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
-                              
-                                </div>
-                                </div>
-
-
-                                {showExtraFieldFlag ? (
+                                {!showExtraFieldFlag ? (
                                   <div className="info">
-                                    If you find your school,{" "}
+                                    Don’t see your school or district,{" "}
                                     <span
                                       className="info-link"
                                       onClick={showExtraField}
                                     >
                                       click here
                                     </span>{" "}
-                                    to remove this field.
+                                    to add it
+                                  </div>
+                                ) : null}
+                                {showExtraFieldFlag ? (
+                                  <div className="extrafield">
+                                    <div className="form-row w-100" >
+                                      <div className="form-group col-md-6 ">
+                                        <label>District Name</label>
+                                        <input
+                                          type="text"
+                                          name="districtName"
+                                          id="districtName"
+                                          value={signupData.districtName}
+                                          onChange={handle_filter}
+                                          disabled
+                                        />
+                                        {validationError.districtName ? (
+                                          <span className="validation-error">
+                                            {validationError.districtName}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+
+                                      <div className="form-group col-md-6 ">
+                                        <label>School Name</label>
+                                        <input
+                                          type="text"
+                                          name="schoolName"
+                                          id="schoolName"
+                                          value={signupData.schoolName}
+                                          onChange={handle_filter}
+                                          autoComplete="off"
+                                        />
+                                        {validationError.schoolName ? (
+                                          <span className="validation-error">
+                                            {validationError.schoolName}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="form-row w-100" >
+                                      <div className="form-group col-md-12">
+                                        <label>Street Address</label>
+                                        <input
+                                          type="text"
+                                          name="streetAddress"
+                                          id="streetAddress"
+                                          value={signupData.streetAddress}
+                                          onChange={handle_filter}
+                                          autoComplete="off"
+                                        />
+                                        {validationError.streetAddress ? (
+                                          <span className="validation-error">
+                                            {validationError.streetAddress}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+
+                                      </div>
+                                    </div>
+
+
+                                    {showExtraFieldFlag ? (
+                                      <div className="info">
+                                        If you find your school,{" "}
+                                        <span
+                                          className="info-link"
+                                          onClick={showExtraField}
+                                        >
+                                          click here
+                                        </span>{" "}
+                                        to remove this field.
+                                      </div>
+                                    ) : null}
                                   </div>
                                 ) : null}
                               </div>
-                            ) : null}
-                          </div>  
-                          </div>
-                        </div>
-                        </div>
+                            </div>
+                          </div>) : currentStep === 2 ?
+                          (<div className="signup-box">
 
-                      ) : (
-                        <div >
-                          <div className="wrapper d-flex flex-wrap">
-                            
-                            <div className="w-100">
-                                <div className="progress-container">
-                                  <div className="progress" id="progress"></div>
-                                  <div className="d-flex flex-column">
-                                  <div className="circle success ">
-                                    <img src="../check.png" alt="" />
-                                  </div>
-                                  <p>Step 1</p>
-                                  </div>
-                                  <div className="d-flex flex-column step-2">
-                                  <div className="circle active">2</div>
-                                  <p>Step 2</p>
-                                  </div>
-                                
+                            <div className="form-row w-100 ">
+
+                              <div className="form-group col-md-6">
+                                <label>Role</label>
+                                <div className="">
+                                  <Select
+                                    name="roleId"
+                                    value={selectedRole}
+                                    options={roleOptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select Title"
+                                    id="roleId"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.roleId ? (
+                                    <span className="validation-error">
+                                      {validationError.roleId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
                               </div>
-                            <div className="signup-box">
 
-                              <div className="form-row w-100 ">
-                           
-                            <div className="form-group col-md-6">
-                              <label>Role</label>
-                              <div className="">
-                                <Select
-                                  name="roleId"
-                                  value={selectedRole}
-                                  options={roleOptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select Title"
-                                  id="roleId"
-                                  styles={colourStyles}
+                              <div className="form-group col-md-6">
+                                <label>Email</label>
+                                <input
+                                  type="text"
+                                  name="email"
+                                  id="email"
+                                  value={signupData.email}
+                                  onChange={handle_filter}
+                                  onBlur={(e) => {
+                                    checkEmailExtension(
+                                      signupData.email,
+                                      districtEmailExt
+                                    );
+                                  }}
+                                  autoComplete="off"
                                 />
-                                {validationError.roleId ? (
+                                {validationError.email ? (
                                   <span className="validation-error">
-                                    {validationError.roleId}
+                                    {validationError.email}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6">
+                                <label>Password</label>
+                                <input
+                                  type="password"
+                                  name="password"
+                                  id="password"
+                                  value={signupData.password}
+                                  onChange={handle_filter}
+                                  onBlur={(e) => {
+                                    checkPassword(signupData.password);
+                                  }}
+                                  autoComplete="off"
+                                />
+                                {validationError.password ? (
+                                  <span className="validation-error">
+                                    {validationError.password}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>Confirm password </label>
+                                <input
+                                  type="password"
+                                  name="confirm_password"
+                                  id="confirm_password"
+                                  value={signupData.confirm_password}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.confirm_password ? (
+                                  <span className="validation-error">
+                                    {validationError.confirm_password}
                                   </span>
                                 ) : (
                                   ""
@@ -669,118 +709,55 @@ const Signup = () => {
                               </div>
                             </div>
 
-                            <div className="form-group col-md-6">
-                              <label>Email</label>
-                              <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                value={signupData.email}
-                                onChange={handle_filter}
-                                onBlur={(e) => {
-                                  checkEmailExtension(
-                                    signupData.email,
-                                    districtEmailExt
-                                  );
-                                }}
-                                autoComplete="off"
+                            <div className="captcha">
+                              <ReCAPTCHA
+                                ref={recaptchaRef}
+                                sitekey={Configuration.siteKey}
+                                onChange={onChange}
                               />
-                              {validationError.email ? (
-                                <span className="validation-error">
-                                  {validationError.email}
-                                </span>
-                              ) : (
-                                ""
-                              )}
                             </div>
-                            </div>
-                            <div className="form-row w-100 ">
-                            <div className="form-group col-md-6">
-                              <label>Password</label>
-                              <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                value={signupData.password}
-                                onChange={handle_filter}
-                                onBlur={(e) => {
-                                  checkPassword(signupData.password);
-                                }}
-                                autoComplete="off"
-                              />
-                              {validationError.password ? (
-                                <span className="validation-error">
-                                  {validationError.password}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label>Confirm password </label>
-                              <input
-                                type="password"
-                                name="confirm_password"
-                                id="confirm_password"
-                                value={signupData.confirm_password}
-                                onChange={handle_filter}
-                                autoComplete="off"
-                              />
-                              {validationError.confirm_password ? (
-                                <span className="validation-error">
-                                  {validationError.confirm_password}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            </div>
-                        
-                          <div className="captcha">
-                            <ReCAPTCHA
-                              ref={recaptchaRef}
-                              sitekey={Configuration.siteKey}
-                              onChange={onChange}
-                            />
-                          </div>
-                          </div>
-                          </div>
-                        </div>
-                      )}
-                      <div className="row loginFooter">
-                        <div className="col-12 text-center">
-                          {!submitButton ? (
-                            <button
-                              type="button"
-                              className="btn btn-primary "
-                              onClick={next}
-                            >
-                              Next
-                            </button>
-                          ) : (
-                            <div>
-                              <button
-                                type="button"
-                                className="btn btn-primary previousBtn"
-                                onClick={() => {
-                                  showSubmitStep(false);
-                                }}
-                              >
-                                Previous
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={submit}
-                                disabled={captchaValue ? false : true}
-                              >
-                                Submit
-                              </button>
-                            </div>
-                          )}
-                        </div>
+                          </div>) : currentStep === 3 &&
+                          <Subscription after_license={after_license} signupData={signupData}/>
+                        }
                       </div>
-                    </form>
+                      {currentStep < 3 &&
+                        <div className="row loginFooter">
+                          <div className="col-12 text-center">
+                            {!submitButton ? (
+                              <button
+                                type="button"
+                                className="btn btn-primary "
+                                onClick={next}
+                              >
+                                Next
+                              </button>
+                            ) : (
+                              <div>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary previousBtn"
+                                  onClick={() => {
+                                    showSubmitStep(false);
+                                    setCurrentStep(currentStep-1)
+                                  }}
+                                >
+                                  Previous
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary"
+                                  onClick={submit}
+                                  disabled={captchaValue ? false : true}
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      }
+
+                  
                   </div>
                 </div>
               </div>

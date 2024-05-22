@@ -9,6 +9,7 @@ APICONSTANT = {
   INSERTREQUESTMOREINFO:Configuration.CrmUrl+"/api/Lead",
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
   USERREGISTER:Configuration.StudentUrl+"api/Users/UserRegister",
+  ADDSUBSCRIPTION:Configuration.StudentUrl+"api/Subscription/UserRegisterSubscription"
 }
 
 export default APICONSTANT;

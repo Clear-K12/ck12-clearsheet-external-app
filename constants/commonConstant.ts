@@ -9,6 +9,7 @@ COMMONCONSTANT = {
   ROUTEPATH: {
     // CONTACT: "/contact",
     SIGNUP: "/signup",
+    PAYMENT:"/payment"
   },
   USERROLESIGNUP:[
     {
