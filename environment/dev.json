@@ -5,6 +5,8 @@
     "StudentUrl":"https://localhost:44388/",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
-    "LoginUrl": "https://devclclearsheet.z19.web.core.windows.net/login"
+    "LoginUrl": "https://devclclearsheet.z19.web.core.windows.net/login",
+    "StripePublicKey":"pk_test_51PIVHwSD0o3O8hYFe9YuUxxzmHlVFJihrgxQWmHHCYQgdJTcxWSSDruasPxhx6QOLv4TGwnXAlVEVXqLEPFbQEsc001D7LZVyw",
+    "SiteUrl":"http://localhost:3000"
   }
 }

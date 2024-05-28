@@ -13,6 +13,7 @@ export const CommonService = {
     insertRequestMoreInfo,
     get_role_list,
     user_registration,
+    get_client_secret,
     add_subscription
   };
   function get_district_list(stateid:number){
@@ -95,8 +96,19 @@ export const CommonService = {
   });
   return promise;
   }
+  function get_client_secret(){
+    let promise = new Promise((resolve, reject) => {
+      axios.get(
+        APICONSTANT.GET_CLIENT_SECRET
+      ).then(resp => {
+        resolve(resp.data)
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise as Promise<string>;
+  }
   function add_subscription(request_obj:any) {
-    console.log("service",request_obj)
     let promise = new Promise((resolve, reject) => {
       axios.post(APICONSTANT.ADDSUBSCRIPTION,request_obj).then(resp => {
         resolve(resp.data)

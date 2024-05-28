@@ -9,7 +9,8 @@ APICONSTANT = {
   INSERTREQUESTMOREINFO:Configuration.CrmUrl+"/api/Lead",
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
   USERREGISTER:Configuration.StudentUrl+"api/Users/UserRegister",
-  ADDSUBSCRIPTION:Configuration.StudentUrl+"api/Subscription/UserRegisterSubscription"
+  ADDSUBSCRIPTION:Configuration.StudentUrl+"api/Subscription/UserRegisterSubscription",
+  GET_CLIENT_SECRET:"https://localhost:44388/api/Subscription/GetIntent"
 }
 
 export default APICONSTANT;

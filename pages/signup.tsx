@@ -21,7 +21,8 @@ import { helper } from "utility/helper";
 import CommonMessageModal from "@components/modal/common/commonMessageModal";
 import COMMONCONSTANT from "@constants/commonConstant";
 import { useRouter } from "next/router";
-import Subscription from "@components/subscription";
+import Subscription from "@components/subscriptiontab";
+import SubscriptionTab from "@components/subscriptiontab";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -369,11 +370,6 @@ const Signup = () => {
     }
     setShowExtraFieldFlag(value);
   };
-
-  const after_license = () => {
-    document.getElementById("firstName")?.focus();
-    setShowMessageModal(true);
-  }
   return (
     <>
       <Head>
@@ -717,7 +713,7 @@ const Signup = () => {
                               />
                             </div>
                           </div>) : currentStep === 3 &&
-                          <Subscription after_license={after_license} signupData={signupData}/>
+                          <SubscriptionTab signupData={signupData}/>
                         }
                       </div>
                       {currentStep < 3 &&
@@ -755,9 +751,7 @@ const Signup = () => {
                             )}
                           </div>
                         </div>
-                      }
-
-                  
+                      }                  
                   </div>
                 </div>
               </div>

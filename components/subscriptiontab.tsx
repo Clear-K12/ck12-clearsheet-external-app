@@ -2,36 +2,32 @@ import COMMONCONSTANT from "@constants/commonConstant"
 import { ToastrService } from "@services/Toastr"
 import { Security } from "guard/security"
 import Head from "next/head"
-import Link from "next/link"
 import { useRouter } from "next/router"
 type Props = {
-  after_license:()=>void,
   signupData:any
 }
-const Subscription = ({after_license,signupData}:Props) => {
+const SubscriptionTab = ({signupData}:Props) => {
   const navigation = useRouter();
   const set_free = () => {
     ToastrService.success("Free licenese assigned")
     setTimeout(()=>{
-      after_license();
+      navigation.push(COMMONCONSTANT.ROUTEPATH.SIGNUP)
     },1000)
   }
 
-  const upgrade_pro = (e:any) => {
-    e.preventDefault();
-    let obj = {
-      userId : 0,
-      firstName:signupData.firstName,
-      lastName:signupData.lastName,
-      email:signupData.email,
-      subscriptionId:2
-    }
-    console.log(obj)
+  const activate_pro = () => {
+    console.log(signupData);
+    localStorage.setItem('userdata',JSON.stringify(signupData));
     navigation.push({
-      pathname:'./payment',
-      query:{cc:Security.encryption(JSON.stringify({userData:obj}))}
-    })
+      pathname: COMMONCONSTANT.ROUTEPATH.SUBSCRIPTION,
+      query: {
+        cc: JSON.stringify({
+          'paying': 'payingsubscription'
+        })
+      }
+    }, COMMONCONSTANT.ROUTEPATH.SUBSCRIPTION);
   }
+
   return (
     <>
       <Head>
@@ -87,7 +83,7 @@ const Subscription = ({after_license,signupData}:Props) => {
                         <span className="pink-text">1st Month Free</span>.
                         <br /> Everything in free, plus more.
                       </p>                      
-                      <button className="btn upgrade-btn cursor-pointer" onClick={upgrade_pro}>
+                      <button className="btn upgrade-btn cursor-pointer" onClick={activate_pro}>
                         Upgrade to Clearly a Prooo
                       </button>                      
                     </div>
@@ -327,7 +323,7 @@ const Subscription = ({after_license,signupData}:Props) => {
                   </div>
                   <div>
                     <div className="plan-name text-center mb-2">Clearly a Pro</div>
-                    <button className=" btn outline-btn ">Get Started</button>
+                    <button className=" btn outline-btn " onClick={activate_pro}>Get Started</button>
                   </div>
                 </div>
               </div>
@@ -338,4 +334,4 @@ const Subscription = ({after_license,signupData}:Props) => {
     </>
   )
 }
-export default Subscription
+export default SubscriptionTab
