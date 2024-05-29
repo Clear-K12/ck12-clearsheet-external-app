@@ -712,7 +712,7 @@ body {
 }
 :root {
     --line-border-fill: #F413D8;
-    --line-border-empty: #F413D8;
+    --line-border-empty: #797979;
     --progress-zIndex: -1;
   }
   
@@ -737,17 +737,16 @@ body {
     transform: translateY(-50%);
     width: 100%;
     z-index: var(--progress-zIndex);
-  }
+}
   
   .progress {
     background-color: var(--line-border-fill);
     height: 4px;
     left: 0;
     position: absolute;
-    top: 50%;
+    top: 20%;
     transform: translateY(-50%);
-    transition: 0.4s ease;
-    width: 0%;
+    transition: 0.4s ease;    
     z-index: var(--progress-zIndex);
   }
   
@@ -1022,4 +1021,13 @@ h3.heading {
 }
 .css-tj5bde-Svg {
     fill: #777A7E !important;
+}
+.w50{
+    width: 50%;
+}
+.w100{
+    width: 100%;
+}
+.cursor-pointer{
+    cursor: pointer;
 }
