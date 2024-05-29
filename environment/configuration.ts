@@ -5,7 +5,8 @@ export class Config {
         public StudentUrl: string = "",
         public httpUrl: string = "",
         public siteKey: string = "",
-        public LoginUrl: string = ""
-
+        public LoginUrl: string = "",
+        public StripePublicKey:string="",
+        public SiteUrl:string=""
     ) { }
 }

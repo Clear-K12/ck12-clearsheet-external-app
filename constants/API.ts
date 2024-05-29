@@ -8,7 +8,9 @@ APICONSTANT = {
   ELEMENTARYSCHOOLLIST:Configuration.CrmUrl+"/api/School/GetElementrySchools",
   INSERTREQUESTMOREINFO:Configuration.CrmUrl+"/api/Lead",
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
-  USERREGISTER:Configuration.StudentUrl+"api/Users/UserRegister",
+  USERREGISTER:Configuration.StudentUrl+"/api/Users/UserRegister",
+  ADDSUBSCRIPTION:Configuration.StudentUrl+"/api/Subscription/UserRegisterSubscription",
+  GET_CLIENT_SECRET:Configuration.StudentUrl+"/api/Subscription/GetIntent"
 }
 
 export default APICONSTANT;
