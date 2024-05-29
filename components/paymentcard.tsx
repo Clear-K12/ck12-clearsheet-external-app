@@ -41,7 +41,7 @@ const PaymentCard = () => {
         // Elements instance
         elements,
         confirmParams: {
-          return_url: 'http://localhost:3000/subscriptionsuccess',
+          return_url: Configuration.SiteUrl+'subscriptionsuccess',
         },
         clientSecret: resp
       });
@@ -59,6 +59,10 @@ const PaymentCard = () => {
     <>
       {showLoader ? <Loader /> :
         <>
+          <div className="plan-heading text-center mt-4">
+            <label htmlFor="">Subscription for </label>
+            <h4 className='text-center fw-600'>Clearly a Pro </h4>
+          </div>
           <form id="payment-form" onSubmit={handle_submit}>
             <PaymentElement id="payment-element" options={paymentElementOptions} />
             <button disabled={isLoading || !stripe || !elements} id="submit">

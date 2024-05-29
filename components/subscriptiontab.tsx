@@ -77,7 +77,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                         <br /> Everything in free, plus more.
                       </p>                      
                       <button className="btn upgrade-btn cursor-pointer" onClick={activate_pro}>
-                        Upgrade to Clearly a Prooo
+                        Upgrade to Clearly a Pro
                       </button>                      
                     </div>
                   </div>

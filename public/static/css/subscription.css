@@ -421,9 +421,10 @@ display: none;
   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
   padding: 40px;
-  width: 50%;
+  max-width: 500px;
+  width: 100%;
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top:30px;
 }
 
 button#submit{
@@ -494,4 +495,28 @@ button#submit{
   transform-origin: 0px 10.2px;
   -webkit-animation: loading 2s infinite ease;
   animation: loading 2s infinite ease;
+}
+
+@keyframes loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.text-center{
+  text-align: center;
+}
+
+.plan-heading{
+  margin-top: 20px;
+  line-height:24px;
+}
+
+.plan-heading h4{
+font-size: 20px;
 }

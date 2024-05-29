@@ -16,7 +16,6 @@ const SubscriptionSuccess = () => {
   const { setup_intent } = router.query;
   useEffect(() => {
     let user_data = localStorage.getItem('userdata');
-    console.log(user_data,setup_intent)
     if (user_data && setup_intent) {
       let user_parse = JSON.parse(user_data);
       let reqobj = {
@@ -29,7 +28,7 @@ const SubscriptionSuccess = () => {
       CommonService.add_subscription(reqobj).then(async () => {
         setTimeout(() => {
           router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
-        }, 2000);
+        }, 500);
       }).catch((e)=>{
         ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");
       });

@@ -15,14 +15,14 @@ const Subscription = () => {
   };
   const options: any = {
     mode: 'subscription',
-    amount: 9,
+    amount: 900,
     currency: 'usd',
     appearance,
   };
 
   useEffect(() => {
     if (!(router && router.query && router.query.cc)) {
-      router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
+    router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
     }
   }, [router.query])
 

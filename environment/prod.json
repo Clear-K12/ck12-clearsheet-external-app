@@ -2,11 +2,11 @@
   "configuration": {
     "CrmUrl":"https://prod-ck12-crm-api.azurewebsites.net/" ,
     "ImageUrl":"https://prod-ck12-clearsheet-api.azurewebsites.net/",
-    "StudentUrl":"https://prod-ck12-clearsheet-api.azurewebsites.net/",
+    "StudentUrl":"https://prod-ck12-clearsheet-api.azurewebsites.net",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://cs.cleark12.com/login",
-    "StripePublicKey":"",
-    "SiteUrl":""
+    "StripePublicKey":"pk_test_51P4PRn1nkYoNSGoCkVdAwmw6RAzQlrlt1GJA7U70pUIlrpUBaFN0REZMVeguwiZveUvlZbTdZEXXlDd6f5oLYNgI00CyNATj6C",
+    "SiteUrl":"https://www.clearsheets.net/"
   }
 }
