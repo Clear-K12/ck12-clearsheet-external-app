@@ -1,17 +1,22 @@
+import ALERTMESSAGES from "@constants/alertMessages"
+import Head from "next/head"
 import { Modal } from "react-bootstrap"
 
 const SubscriptionSuccessModal = () => {
     return (
         <>
-        <h1>Clearly a Pro (Full Featured) Subscription Activated</h1>
-            {/* <Modal show={true}>
+            <Modal show={true}>
                 <Modal.Header>
-                    <Modal.Title>Subscription</Modal.Title>
+                    <Modal.Title>Subscription Success</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Clearly a Pro (Full Featured) Subscription Activated</Modal.Body>
+                <Modal.Body><strong>Clearly a Pro (Full Featured) Subscription Activated</strong>
+                    <div className="mt-2">
+                        {ALERTMESSAGES.VERIFYEMAIL}
+                    </div>
+                </Modal.Body>
                 <Modal.Footer>
                 </Modal.Footer>
-            </Modal> */}
+            </Modal>
         </>
     )
 }

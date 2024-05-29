@@ -1,18 +1,23 @@
 
-import SubscriptionSuccessModal from "@components/modal/common/subscriptionsuccessModal";
 import ALERTMESSAGES from "@constants/alertMessages";
 import COMMONCONSTANT from "@constants/commonConstant";
 import { ToastrService } from "@services/Toastr";
 import { CommonService } from "@services/api/common_service";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import { ToastContainer } from "react-toastify";
+const DynamicSubscriptionModal = dynamic(()=>import('@components/modal/common/subscriptionsuccessModal'),{
+  ssr:false
+})
 const SubscriptionSuccess = () => {
   const router = useRouter();
   const { setup_intent } = router.query;
   useEffect(() => {
     let user_data = localStorage.getItem('userdata');
-    if (user_data) {
+    console.log(user_data,setup_intent)
+    if (user_data && setup_intent) {
       let user_parse = JSON.parse(user_data);
       let reqobj = {
         subscriptionId: 2,
@@ -22,17 +27,23 @@ const SubscriptionSuccess = () => {
         intent: setup_intent
       }
       CommonService.add_subscription(reqobj).then(async () => {
-        // setTimeout(() => {
-        //   router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
-        // }, 2000);
+        setTimeout(() => {
+          router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
+        }, 2000);
+      }).catch((e)=>{
+        ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");
       });
-    } else {
-      ToastrService.error(ALERTMESSAGES.DEFAULT);
-    }
-  }, []);
+    } 
+  }, [setup_intent]);
   return (
     <>
-      <SubscriptionSuccessModal />
+      <Head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+      </Head>
+      <div>
+        <DynamicSubscriptionModal />
+      </div>
+      <ToastContainer limit={1}/>
     </>
   )
 }

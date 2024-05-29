@@ -4,19 +4,12 @@ import { Security } from "guard/security"
 import Head from "next/head"
 import { useRouter } from "next/router"
 type Props = {
-  signupData:any
+  signupData:any,
+  after_set_free:()=>void
 }
-const SubscriptionTab = ({signupData}:Props) => {
+const SubscriptionTab = ({signupData,after_set_free}:Props) => {
   const navigation = useRouter();
-  const set_free = () => {
-    ToastrService.success("Free licenese assigned")
-    setTimeout(()=>{
-      navigation.push(COMMONCONSTANT.ROUTEPATH.SIGNUP)
-    },1000)
-  }
-
   const activate_pro = () => {
-    console.log(signupData);
     localStorage.setItem('userdata',JSON.stringify(signupData));
     navigation.push({
       pathname: COMMONCONSTANT.ROUTEPATH.SUBSCRIPTION,
@@ -59,7 +52,7 @@ const SubscriptionTab = ({signupData}:Props) => {
                         Lifetime access. <br />
                         No credit card needed.
                       </p>
-                      <button className="btn getstarted-btn cursor-pointer">
+                      <button className="btn getstarted-btn cursor-pointer" onClick={after_set_free}>
                         Get Started
                       </button>
                     </div>
@@ -319,7 +312,7 @@ const SubscriptionTab = ({signupData}:Props) => {
                   <div> &nbsp;</div>
                   <div>
                     <div className="plan-name text-center mb-2">Free</div>
-                    <button className=" btn outline-btn" onClick={set_free}>Get Started</button>
+                    <button className=" btn outline-btn" onClick={after_set_free}>Get Started</button>
                   </div>
                   <div>
                     <div className="plan-name text-center mb-2">Clearly a Pro</div>
