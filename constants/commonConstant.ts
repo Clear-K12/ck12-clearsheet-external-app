@@ -10,7 +10,8 @@ COMMONCONSTANT = {
     // CONTACT: "/contact",
     SIGNUP: "/signup",
     PAYMENT:"/payment",
-    SUBSCRIPTION:"/subscription"
+    SUBSCRIPTION:"/subscription",
+    AFTERSUBSCRIPTION:"https://clearsheets.net"
   },
   USERROLESIGNUP:[
     {

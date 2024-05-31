@@ -406,6 +406,7 @@ const Signup = () => {
 
                     <div className="wrapper d-flex flex-wrap">
                       <div className="w-100">
+                      <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
                         <div className="progress-container">
                           <div className={`progress ${currentStep === 2 ? 'w50' : currentStep === 3 ? 'w100' : ""}`} id="progress"></div>
                           <div className="d-flex flex-column justify-content-center">
