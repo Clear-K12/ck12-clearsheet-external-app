@@ -10,15 +10,12 @@ type Props = {
 const SubscriptionTab = ({signupData,after_set_free}:Props) => {
   const navigation = useRouter();
   const activate_pro = () => {
-    localStorage.setItem('userdata',JSON.stringify(signupData));
     navigation.push({
       pathname: COMMONCONSTANT.ROUTEPATH.SUBSCRIPTION,
       query: {
-        cc: JSON.stringify({
-          'paying': 'payingsubscription'
-        })
+        cc: Security.encryption(JSON.stringify({signupData:signupData}))
       }
-    }, COMMONCONSTANT.ROUTEPATH.SUBSCRIPTION);
+    });
   }
 
   return (
@@ -308,7 +305,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                     </span>
                   </div>
                 </div>
-                <div className=" upgrade-btn-row">
+                {/* <div className=" upgrade-btn-row">
                   <div> &nbsp;</div>
                   <div>
                     <div className="plan-name text-center mb-2">Free</div>
@@ -318,7 +315,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                     <div className="plan-name text-center mb-2">Clearly a Pro</div>
                     <button className=" btn outline-btn " onClick={activate_pro}>Get Started</button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
