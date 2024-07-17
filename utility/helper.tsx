@@ -1,7 +1,10 @@
+import COMMONCONSTANT from "@constants/commonConstant";
+
 export const helper = {
   check_email_reg,
   get_user_role_id,
-  check_password
+  check_password,
+  check_email_extension
 };
 
 function check_email_reg(value: any) {
@@ -24,10 +27,30 @@ function get_user_role_id(role: string) {
     return roles[role];
   }
 }
-function check_password(value:any){
-  const reg= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/;
-  if(reg.test(value)){
+function check_password(value: any) {
+  const reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/;
+  if (reg.test(value)) {
     return true
   }
   return false
 }
+
+function check_email_extension(current_email: string, validEmailExt: any) {
+  let ext = current_email.split("@");
+  if (ext.length >= 2) {
+    if (validEmailExt == null || validEmailExt == "") {
+      let arr = COMMONCONSTANT.COMMONEMAILLIST;
+      let emailext = ext[1].trim().toLocaleLowerCase();
+      if (arr.includes(emailext)) {
+        return "Personal email is not allowed.";
+      } else {
+        return 'Please select district first'
+      }
+    } else {
+      return "We are currently only available to elementary school teachers and administrators, please enter your valid school email address with the district you are signing up under.";
+    }
+  }else{
+    return "Please enter valid email";
+  }
+
+};
