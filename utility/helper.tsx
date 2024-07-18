@@ -36,18 +36,21 @@ function check_password(value: any) {
 }
 
 function check_email_extension(current_email: string, validEmailExt: any) {
+  console.log("sdsd",validEmailExt)
   let ext = current_email.split("@");
   if (ext.length >= 2) {
     if (validEmailExt == null || validEmailExt == "") {
+      return "Please select district first";
+    } else {
       let arr = COMMONCONSTANT.COMMONEMAILLIST;
       let emailext = ext[1].trim().toLocaleLowerCase();
       if (arr.includes(emailext)) {
         return "Personal email is not allowed.";
-      } else {
-        return 'Please select district first'
+      } else if(emailext !== validEmailExt){
+        return 'We are currently only available to elementary school teachers and administrators, please enter your valid school email address with the district you are signing up under.'
+      }else{
+        return "";
       }
-    } else {
-      return "We are currently only available to elementary school teachers and administrators, please enter your valid school email address with the district you are signing up under.";
     }
   }else{
     return "Please enter valid email";
