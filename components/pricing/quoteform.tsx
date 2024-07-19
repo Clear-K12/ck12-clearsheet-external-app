@@ -188,8 +188,8 @@ const QuoteForm = () => {
             <div className={`cursor-pointer tab ${formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ? 'active' : ''}`} onClick={() => set_quote(COMMONCONSTANT.QUOTETYPE.DISTRICT)}>District Quote</div>
           </div>
         </div>
-        <div className="q-form-wrapper ">
-          <div className="signup-box singupSection">
+        <div>
+          <div className="singupSection">
             <form onSubmit={submit_form}>
               <div className="form-row">
                 <div className="form-group col-md-6 ">

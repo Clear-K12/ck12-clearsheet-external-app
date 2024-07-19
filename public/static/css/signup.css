@@ -1041,11 +1041,13 @@ h3.heading {
 .tabGroup {
     margin-top: 10px;
     gap: 15px;
+    position: relative;
 }
 
 .tabBx {
     background-color: #FFF3FC;
     padding: 18px 24px 0;
+    /* border-bottom: 1px solid #d9d9d9; */
 
 }
 
@@ -1077,6 +1079,7 @@ h3.heading {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 5px;
+    border-top: 0;
 }
 
 .signupContainer .q-form-wrapper {
