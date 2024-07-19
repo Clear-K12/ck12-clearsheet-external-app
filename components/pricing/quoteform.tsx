@@ -1,3 +1,4 @@
+import Loader from "@components/common/loader";
 import COMMONCONSTANT from "@constants/commonConstant";
 import { DistrictList, RoleList, SchoolList, StateList } from "@interface/ICommon"
 import { CommonService } from "@services/api/common_service";
@@ -28,6 +29,7 @@ const QuoteForm = () => {
   const [validationError, setValidationError] = useState({ name: '', email: '', schoolId: '', noOfStudent: '', roleId: '', districtName: '', schoolName: '', streetAddress: '', noOfSchool: '', districtId: '' });
   const [showExtraFieldFlag, setShowExtraFieldFlag] = useState<boolean>(false);
   const [showDistrictExtraFieldFlag, setShowDistrictExtraFieldFlag] = useState<boolean>(false);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   useEffect(() => {
     CommonService.get_state_list().then((resp) => {
       setStates(resp);
@@ -63,6 +65,7 @@ const QuoteForm = () => {
   }
 
   const submit_form = (e: React.ChangeEvent<HTMLFormElement>) => {
+    setShowLoader(true);
     let anyerror = false;
     e.preventDefault();
     if (formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL) {
@@ -118,7 +121,7 @@ const QuoteForm = () => {
       validationError.email = 'Email is required';
     }
     let checkemail = helper.check_email_extension(formData.email, emailExt);
-    if (checkemail !== '') {
+    if (checkemail !== '' && !showDistrictExtraFieldFlag) {
       anyerror = true;
       validationError.email = checkemail;
     }
@@ -128,14 +131,17 @@ const QuoteForm = () => {
     }
     setValidationError({ ...validationError });
     if (!anyerror) {
-      CommonService.add_school_district_quote(formData).then(()=>{
+      CommonService.add_school_district_quote(formData).then(() => {
         ToastrService.success("Thanks for showing interest.Admin will contact you soon....");
         setShowExtraFieldFlag(false);
         setShowDistrictExtraFieldFlag(false);
-        setTimeout(()=>{
+        setShowLoader(false);
+        setTimeout(() => {
           setFormData(intialValues);
-        },1000);
+        }, 1000);
       })
+    } else {
+      setShowLoader(false);
     }
   }
 
@@ -153,239 +159,268 @@ const QuoteForm = () => {
     if (value) {
       formData.districtId = 0
       setFormData({ ...formData });
+      setValidationError({ ...validationError, districtId: '', email: '' });
     }
     setShowDistrictExtraFieldFlag(value);
   }
-  return (
-    <div className="q-form-wrapper signupContainer">
-      <div className="cursor-pointer" onClick={() => setFormData({ ...formData, 'quoteType': COMMONCONSTANT.QUOTETYPE.SCHOOL })}>School Quote</div>
-      <div className="cursor-pointer" onClick={() => setFormData({ ...formData, 'quoteType': COMMONCONSTANT.QUOTETYPE.DISTRICT })}>District Quote</div>
-      <div className="q-form-wrapper ">
-        <div className="signup-box singupSection">
-          <form onSubmit={submit_form}>
-            <div className="form-row">
-              <div className="form-group col-md-6 ">
-                <label>Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  onChange={handle_change}
-                  value={formData.name}
-                />
-                <div className="validation-error">{validationError.name}</div>
-              </div>
-              <div className="form-group col-md-6 ">
-                <label>Role</label>
-                <select className="form-control" name="roleId" onChange={handle_change} value={formData.roleId}>
-                  <option value="">Select Role</option>
-                  {roles.map((item) => (
-                    <option key={item.roleId + "role"} value={item.roleId}>{item.roleName}</option>
-                  ))}
-                </select>
-                <div className="validation-error">{validationError.roleId}</div>
-              </div>
-              <div className="form-group col-md-6 ">
-                <label>State</label>
-                <select className="form-control" name="stateId" onChange={handle_change} value={formData.stateId}>
-                  <option value="">Select State</option>
-                  {states.map((item) => (
-                    <option key={item.stateId + "state"} value={item.stateId}>{item.stateName}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group col-md-6 ">
-                <label>District</label>
-                <select className="form-control" name="districtId" onChange={handle_change} value={formData.districtId}>
-                  <option value="">Select District</option>
-                  {districts.map((item) => (
-                    <option key={item.districtId + "district"} value={item.districtId}>{item.districtName}</option>
-                  ))}
-                </select>
-                <div className="validation-error">{validationError.districtId}</div>
-              </div>
-              {formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL && <div className="form-group col-md-6 ">
-                <label>Schools</label>
-                <select className="form-control" name="schoolId" onChange={handle_change} disabled={showExtraFieldFlag} value={formData.schoolId}>
-                  <option value="">Select School</option>
-                  {schools.map((item) => (
-                    <option key={item.schoolId + "school"} value={item.schoolId}>{item.schoolName}</option>
-                  ))}
-                </select>
-                <div className="validation-error">{validationError.schoolId}</div>
-              </div>}
-              <div className="form-group col-md-6 ">
-                <label>Email</label>
-                <input
-                  type="text"
-                  name="email"
-                  value={formData.email}
-                  onChange={handle_change}
-                  onBlur={() => setValidationError({ ...validationError, 'email': helper.check_email_extension(formData.email, emailExt) })}
-                />
-                <div className="validation-error">{validationError.email}</div>
-              </div>
-              {formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ?
-                <div className="form-group col-md-6 ">
-                  <label>No of Students</label>
-                  <input
-                    type="text"
-                    value={formData.noOfStudent}
-                    name="noOfStudent"
-                    onChange={handle_change}
-                  />
-                  <div className="validation-error">{validationError.noOfStudent}</div>
-                </div> :
-                <div className="form-group col-md-6 ">
-                  <label>No of Schools</label>
-                  <input
-                    type="text"
-                    name="noOfSchool"
-                    value={formData.noOfSchool}
-                    onChange={handle_change}
-                  />
-                  <div className="validation-error">{validationError.noOfSchool}</div>
-                </div>
-              }
 
-            </div>
-            {!showExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ?
-              <div className="info">
-                Don’t see your school,{" "}
-                <span
-                  className="info-link"
-                  onClick={showExtraField}
-                >
-                  click here
-                </span>{" "}
-                to add it
+  const set_quote = (type: number) => {
+    formData.quoteType = type;
+    if (type === COMMONCONSTANT.QUOTETYPE.DISTRICT) {
+      formData.districtId = 0;
+      formData.districtName = '';
+      formData.noOfStudent = 0;
+    }else{
+      formData.noOfSchool = 0;
+      formData.schoolName = '';
+      formData.streetAddress = '';
+    }
+    setFormData({ ...formData })
+  }
+  return (
+    <>
+      {showLoader && <Loader />}
+      <div className="q-form-wrapper signupContainer">
+        <div className="tabBx">
+          <div className="tabTitle">Would you like a Quote is for your school or district? </div>
+          <div className="tabGroup d-flex align-items-center">
+            <div className={`cursor-pointer tab ${formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ? 'active' : ''}`} onClick={() => set_quote(COMMONCONSTANT.QUOTETYPE.SCHOOL)}>School Quote</div>
+            <div className={`cursor-pointer tab ${formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ? 'active' : ''}`} onClick={() => set_quote(COMMONCONSTANT.QUOTETYPE.DISTRICT)}>District Quote</div>
+          </div>
+        </div>
+        <div className="q-form-wrapper ">
+          <div className="signup-box singupSection">
+            <form onSubmit={submit_form}>
+              <div className="form-row">
+                <div className="form-group col-md-6 ">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    onChange={handle_change}
+                    value={formData.name}
+                  />
+                  <div className="validation-error">{validationError.name}</div>
+                </div>
+                <div className="form-group col-md-6 ">
+                  <label>Role</label>
+                  <select className="form-control" name="roleId" onChange={handle_change} value={formData.roleId}>
+                    <option value="">Select Role</option>
+                    {roles.map((item) => (
+                      <option key={item.roleId + "role"} value={item.roleId}>{item.roleName}</option>
+                    ))}
+                  </select>
+                  <div className="validation-error">{validationError.roleId}</div>
+                </div>
+                <div className="form-group col-md-6 ">
+                  <label>State</label>
+                  <select className="form-control" name="stateId" onChange={handle_change} value={formData.stateId}>
+                    <option value="">Select State</option>
+                    {states.map((item) => (
+                      <option key={item.stateId + "state"} value={item.stateId}>{item.stateName}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group col-md-6 ">
+                  <label>District</label>
+                  <select className="form-control" name="districtId" onChange={handle_change} value={formData.districtId}>
+                    <option value="">Select District</option>
+                    {districts.map((item) => (
+                      <option key={item.districtId + "district"} value={item.districtId}>{item.districtName}</option>
+                    ))}
+                  </select>
+                  <div className="validation-error">{validationError.districtId}</div>
+                </div>
+                {formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL && <div className="form-group col-md-6 ">
+                  <label>Schools</label>
+                  <select className="form-control" name="schoolId" onChange={handle_change} disabled={showExtraFieldFlag} value={formData.schoolId}>
+                    <option value="">Select School</option>
+                    {schools.map((item) => (
+                      <option key={item.schoolId + "school"} value={item.schoolId}>{item.schoolName}</option>
+                    ))}
+                  </select>
+                  <div className="validation-error">{validationError.schoolId}</div>
+                </div>}
+                <div className="form-group col-md-6 ">
+                  <label>Email</label>
+                  <input
+                    type="text"
+                    name="email"
+                    value={formData.email}
+                    onChange={handle_change}
+                    onBlur={() => {
+                      if (!showDistrictExtraFieldFlag) {
+                        setValidationError({ ...validationError, 'email': helper.check_email_extension(formData.email, emailExt) })
+                      } else {
+                        setValidationError({ ...validationError, 'email': '' });
+                      }
+                    }
+                    }
+                  />
+                  <div className="validation-error">{validationError.email}</div>
+                </div>
+                {formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ?
+                  <div className="form-group col-md-6 ">
+                    <label>No of Students</label>
+                    <input
+                      type="text"
+                      value={formData.noOfStudent}
+                      name="noOfStudent"
+                      onChange={handle_change}
+                    />
+                    <div className="validation-error">{validationError.noOfStudent}</div>
+                  </div> :
+                  <div className="form-group col-md-6 ">
+                    <label>No of Schools</label>
+                    <input
+                      type="text"
+                      name="noOfSchool"
+                      value={formData.noOfSchool}
+                      onChange={handle_change}
+                    />
+                    <div className="validation-error">{validationError.noOfSchool}</div>
+                  </div>
+                }
+
               </div>
-              : !showDistrictExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ?
+              {!showExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ?
                 <div className="info">
-                  Don’t see your district,{" "}
+                  Don’t see your school,{" "}
                   <span
                     className="info-link"
-                    onClick={show_district_extra_field}
+                    onClick={showExtraField}
                   >
                     click here
                   </span>{" "}
                   to add it
                 </div>
-                : null}
-            {showExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ? (
-              <div className="extrafield">
-                <div className="form-row w-100" >
-                  <div className="form-group col-md-6 ">
-                    <label>District Name</label>
-                    <input
-                      type="text"
-                      name="districtName"
-                      id="districtName"
-                      value={formData.districtName}
-                      onChange={handle_change}
-                      disabled
-                    />
-                    {validationError.districtName ? (
-                      <span className="validation-error">
-                        {validationError.districtName}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="form-group col-md-6 ">
-                    <label>School Name</label>
-                    <input
-                      type="text"
-                      name="schoolName"
-                      id="schoolName"
-                      value={formData.schoolName}
-                      onChange={handle_change}
-                      autoComplete="off"
-                    />
-                    {validationError.schoolName ? (
-                      <span className="validation-error">
-                        {validationError.schoolName}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                <div className="form-row w-100" >
-                  <div className="form-group col-md-12">
-                    <label>Street Address</label>
-                    <input
-                      type="text"
-                      name="streetAddress"
-                      id="streetAddress"
-                      value={formData.streetAddress}
-                      onChange={handle_change}
-                      autoComplete="off"
-                    />
-                    {validationError.streetAddress ? (
-                      <span className="validation-error">
-                        {validationError.streetAddress}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-
-                  </div>
-                </div>
-                {showExtraFieldFlag ? (
+                : !showDistrictExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ?
                   <div className="info">
-                    If you find your school,{" "}
-                    <span
-                      className="info-link"
-                      onClick={showExtraField}
-                    >
-                      click here
-                    </span>{" "}
-                    to remove this field.
-                  </div>
-                ) : null}
-              </div>
-            ) : showDistrictExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ?
-              <div className="extrafield">
-                <div className="form-row w-100" >
-                  <div className="form-group col-md-6 ">
-                    <label>District Name</label>
-                    <input
-                      type="text"
-                      name="districtName"
-                      id="districtName"
-                      value={formData.districtName}
-                      onChange={handle_change}
-                      disabled
-                    />
-                    {validationError.districtName ? (
-                      <span className="validation-error">
-                        {validationError.districtName}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                {showDistrictExtraFieldFlag ? (
-                  <div className="info">
-                    If you find your district,{" "}
+                    Don’t see your district,{" "}
                     <span
                       className="info-link"
                       onClick={show_district_extra_field}
                     >
                       click here
                     </span>{" "}
-                    to remove this field.
+                    to add it
                   </div>
-                ) : null}
-              </div>
-              : null}
-            <button type="submit" className="btn btn-primary">Submit</button>
-          </form>
+                  : null}
+              {showExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ? (
+                <div className="extrafield">
+                  <div className="form-row w-100" >
+                    <div className="form-group col-md-6 ">
+                      <label>District Name</label>
+                      <input
+                        type="text"
+                        name="districtName"
+                        id="districtName"
+                        value={formData.districtName}
+                        onChange={handle_change}
+                        disabled
+                      />
+                      {validationError.districtName ? (
+                        <span className="validation-error">
+                          {validationError.districtName}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 ">
+                      <label>School Name</label>
+                      <input
+                        type="text"
+                        name="schoolName"
+                        id="schoolName"
+                        value={formData.schoolName}
+                        onChange={handle_change}
+                        autoComplete="off"
+                      />
+                      {validationError.schoolName ? (
+                        <span className="validation-error">
+                          {validationError.schoolName}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                  <div className="form-row w-100" >
+                    <div className="form-group col-md-12">
+                      <label>Street Address</label>
+                      <input
+                        type="text"
+                        name="streetAddress"
+                        id="streetAddress"
+                        value={formData.streetAddress}
+                        onChange={handle_change}
+                        autoComplete="off"
+                      />
+                      {validationError.streetAddress ? (
+                        <span className="validation-error">
+                          {validationError.streetAddress}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+
+                    </div>
+                  </div>
+                  {showExtraFieldFlag ? (
+                    <div className="info">
+                      If you find your school,{" "}
+                      <span
+                        className="info-link"
+                        onClick={showExtraField}
+                      >
+                        click here
+                      </span>{" "}
+                      to remove this field.
+                    </div>
+                  ) : null}
+                </div>
+              ) : showDistrictExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ?
+                <div className="extrafield">
+                  <div className="form-row w-100" >
+                    <div className="form-group col-md-6 ">
+                      <label>District Name</label>
+                      <input
+                        type="text"
+                        name="districtName"
+                        id="districtName"
+                        value={formData.districtName}
+                        onChange={handle_change}
+                      />
+                      {validationError.districtName ? (
+                        <span className="validation-error">
+                          {validationError.districtName}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                  {showDistrictExtraFieldFlag ? (
+                    <div className="info">
+                      If you find your district,{" "}
+                      <span
+                        className="info-link"
+                        onClick={show_district_extra_field}
+                      >
+                        click here
+                      </span>{" "}
+                      to remove this field.
+                    </div>
+                  ) : null}
+                </div>
+                : null}
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 export default QuoteForm

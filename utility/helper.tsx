@@ -36,7 +36,6 @@ function check_password(value: any) {
 }
 
 function check_email_extension(current_email: string, validEmailExt: any) {
-  console.log("sdsd",validEmailExt)
   let ext = current_email.split("@");
   if (ext.length >= 2) {
     if (validEmailExt == null || validEmailExt == "") {
