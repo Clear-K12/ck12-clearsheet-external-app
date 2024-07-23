@@ -1031,3 +1031,85 @@ h3.heading {
 .cursor-pointer{
     cursor: pointer;
 }
+.tabTitle {
+    font-size: 18px;
+    color: #363636;
+    font-weight: 600;
+    text-align: center;
+}
+
+.tabGroup {
+    margin-top: 10px;
+    gap: 15px;
+    position: relative;
+}
+
+.tabBx {
+    background-color: #FFF3FC;
+    padding: 18px 24px 0;
+    /* border-bottom: 1px solid #d9d9d9; */
+
+}
+
+.tabBx .tab {
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    height: 49px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 6px 6px 0px 0px;
+    color: #777A7E;
+    font-size: 18px;
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.tabBx .tab.active {
+    color: #F61BDA;
+    border-width: 1.2px 1.2px 0px 1.2px;
+    border-style: solid;
+    border-color: #CFCFCF;
+    border-bottom: none;
+    font-weight: 600;
+    text-wrap: nowrap;
+}
+
+.singupSection form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    border-top: 0;
+}
+
+.signupContainer .q-form-wrapper {
+    border-top: 1px #D9D9D9 solid;
+    margin-top: -2px;
+}
+
+.q-form-wrapper {
+    border: 1px #D9D9D9 solid;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.q-form-wrapper form .btn-primary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    margin: 0 auto;
+    width: 180px;
+    height: 48px;
+    background: #000000;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 10px;
+    border: none;
+}
+
+.q-form-wrapper select.form-control:not([size]):not([multiple]) {
+    height: 46px;
+}

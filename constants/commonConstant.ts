@@ -35,7 +35,11 @@ COMMONCONSTANT = {
       "name": "Teacher"
     }
   ],
-  COMMONEMAILLIST:["gmail.com","yahoo.com","hotmail.com","aol.com","hotmail.fr","hotmail.co.uk","msn.com","outlook.com","ymail.com"]
+  COMMONEMAILLIST:["gmail.com","yahoo.com","hotmail.com","aol.com","hotmail.fr","hotmail.co.uk","msn.com","outlook.com","ymail.com"],
+  QUOTETYPE:{
+    "SCHOOL":1,
+    "DISTRICT":2
+  }
 };
 
 export default COMMONCONSTANT;

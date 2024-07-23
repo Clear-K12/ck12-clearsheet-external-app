@@ -10,7 +10,8 @@ APICONSTANT = {
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
   USERREGISTER:Configuration.StudentUrl+"/api/Users/UserRegister",
   ADDSUBSCRIPTION:Configuration.StudentUrl+"/api/Subscription/UserRegisterSubscription",
-  GET_CLIENT_SECRET:Configuration.StudentUrl+"/api/Subscription/GetIntent"
+  GET_CLIENT_SECRET:Configuration.StudentUrl+"/api/Subscription/GetIntent",
+  ADD_SCHOOL_DISTRICT_QUOTE:Configuration.StudentUrl+"/api/WebsiteQuote"
 }
 
 export default APICONSTANT;
