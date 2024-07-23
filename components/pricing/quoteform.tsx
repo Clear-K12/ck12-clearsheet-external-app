@@ -135,6 +135,7 @@ const QuoteForm = () => {
         ToastrService.success("Thanks for showing interest.Admin will contact you soon....");
         setShowExtraFieldFlag(false);
         setShowDistrictExtraFieldFlag(false);
+        setDistircts([]);
         setShowLoader(false);
         setTimeout(() => {
           setFormData(intialValues);

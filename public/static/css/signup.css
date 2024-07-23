@@ -1073,11 +1073,12 @@ h3.heading {
     border-color: #CFCFCF;
     border-bottom: none;
     font-weight: 600;
+    text-wrap: nowrap;
 }
 
 .singupSection form {
     border: 1px solid #ddd;
-    padding: 15px;
+    padding: 20px;
     border-radius: 5px;
     border-top: 0;
 }
