@@ -28,7 +28,9 @@ export const RequestMoreInfo = () => {
     stateId: 0,
     districtId: 0,
     schoolId: 0,
-    productId:2
+    productId:2,
+    comment:"",
+    schoolName:""
   };
   const [selectedState, setSelectedState] = useState(null);
 
@@ -164,7 +166,7 @@ export const RequestMoreInfo = () => {
         schoolId: 0,
       });
     } else if (e.name === "schoolId") {
-      setRequestMoreData({ ...requestMoreData, [e.name]: e.value });
+      setRequestMoreData({ ...requestMoreData, [e.name]: e.value,schoolName:e.label });
       setSelectedSchool(e);
     }
     delete validationError[e.name];
@@ -357,6 +359,11 @@ export const RequestMoreInfo = () => {
             ) : (
               ""
             )}
+          </div>
+        </div>
+        <div className="row">
+          <div className="column">
+            <textarea name="comment" value={requestMoreData.comment} placeholder="Comment (optional)" maxLength={2000}/>
           </div>
         </div>
 

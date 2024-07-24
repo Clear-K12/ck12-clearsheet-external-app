@@ -11,7 +11,8 @@ APICONSTANT = {
   USERREGISTER:Configuration.StudentUrl+"/api/Users/UserRegister",
   ADDSUBSCRIPTION:Configuration.StudentUrl+"/api/Subscription/UserRegisterSubscription",
   GET_CLIENT_SECRET:Configuration.StudentUrl+"/api/Subscription/GetIntent",
-  ADD_SCHOOL_DISTRICT_QUOTE:Configuration.StudentUrl+"/api/WebsiteQuote"
+  ADD_SCHOOL_DISTRICT_QUOTE:"https://localhost:44388/api/WebsiteQuote"
 }
 
 export default APICONSTANT;
+

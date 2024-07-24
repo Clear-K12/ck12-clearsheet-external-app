@@ -37,8 +37,16 @@ COMMONCONSTANT = {
   ],
   COMMONEMAILLIST:["gmail.com","yahoo.com","hotmail.com","aol.com","hotmail.fr","hotmail.co.uk","msn.com","outlook.com","ymail.com"],
   QUOTETYPE:{
-    "SCHOOL":1,
-    "DISTRICT":2
+    "SCHOOL":4,
+    "DISTRICT":5
+  },
+  ROLES:{
+    7:'District Admin',
+    8:'Instructional Coach',
+    9:'Parent',
+    1:'School Admin',
+    3:'Student',
+    2:'Teacher'
   }
 };
 
