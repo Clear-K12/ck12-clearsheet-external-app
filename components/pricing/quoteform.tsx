@@ -52,7 +52,8 @@ const QuoteForm = () => {
       })
     }
     if (e.target.name === 'districtId') {
-      setEmailExt(districts.find((item) => item.districtId === parseInt(e.target.value))?.email);
+      let emailext = districts.find((item) => item.districtId === parseInt(e.target.value))?.email;
+      setEmailExt(emailext);
       let districtname = districts.find((item) => item.districtId === parseInt(e.target.value))?.districtName;
       if (districtname) {
         formData.districtName = districtname;
@@ -60,6 +61,11 @@ const QuoteForm = () => {
       CommonService.get_school_list(parseInt(e.target.value)).then((resp) => {
         setSchools(resp);
       })
+      let checkemail = helper.check_email_extension(formData.email, emailext);
+      if (checkemail !== '' && !showDistrictExtraFieldFlag && formData.email) {        
+        validationError.email = checkemail;
+        setValidationError({...validationError});
+      }
     }
     if(e.target.name === 'schoolId'){
       let schoolname = schools.find((item)=>item.schoolId === parseInt(e.target.value))?.schoolName;

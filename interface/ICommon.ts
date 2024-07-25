@@ -28,7 +28,8 @@ export interface ReqInsertData{
     schoolId:number,
     productId:number,
     comment: string,
-    schoolName:string
+    schoolName:string,
+    districtName:string
 }
 export interface UserRegisterData{
     firstName:string,

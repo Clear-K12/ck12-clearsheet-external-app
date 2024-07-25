@@ -30,7 +30,8 @@ export const RequestMoreInfo = () => {
     schoolId: 0,
     productId:2,
     comment:"",
-    schoolName:""
+    schoolName:"",
+    districtName:""
   };
   const [selectedState, setSelectedState] = useState(null);
 
@@ -163,6 +164,7 @@ export const RequestMoreInfo = () => {
       setRequestMoreData({
         ...requestMoreData,
         [e.name]: e.value,
+        districtName:e.label,
         schoolId: 0,
       });
     } else if (e.name === "schoolId") {
@@ -363,7 +365,7 @@ export const RequestMoreInfo = () => {
         </div>
         <div className="row">
           <div className="column">
-            <textarea name="comment" value={requestMoreData.comment} placeholder="Comment (optional)" maxLength={2000}/>
+            <textarea name="comment" cols={4} value={requestMoreData.comment} onChange={handle_filter} placeholder="Comment (optional)" maxLength={2000}/>
           </div>
         </div>
 
