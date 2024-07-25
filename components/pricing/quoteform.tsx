@@ -18,7 +18,8 @@ const QuoteForm = () => {
     schoolName: "",
     streetAddress: "",
     quoteType: COMMONCONSTANT.QUOTETYPE.SCHOOL,
-    noOfSchool: 0
+    noOfSchool: 0,
+    comment:""
   }
   const [roles, setRoles] = useState<RoleList[]>([]);
   const [states, setStates] = useState<StateList[]>([]);
@@ -39,18 +40,20 @@ const QuoteForm = () => {
 
   const get_roles = () => {
     CommonService.get_role_list().then((resp) => {
-      setRoles(resp);
+      let respfilter = resp.filter((item)=>item.roleName !== 'Student' && item.roleName !== 'Parent');
+      setRoles(respfilter);
     })
   }
 
-  const handle_change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handle_change = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     if (e.target.name === 'stateId') {
       CommonService.get_district_list(parseInt(e.target.value)).then((resp) => {
         setDistircts(resp);
       })
     }
     if (e.target.name === 'districtId') {
-      setEmailExt(districts.find((item) => item.districtId === parseInt(e.target.value))?.email);
+      let emailext = districts.find((item) => item.districtId === parseInt(e.target.value))?.email;
+      setEmailExt(emailext);
       let districtname = districts.find((item) => item.districtId === parseInt(e.target.value))?.districtName;
       if (districtname) {
         formData.districtName = districtname;
@@ -58,6 +61,17 @@ const QuoteForm = () => {
       CommonService.get_school_list(parseInt(e.target.value)).then((resp) => {
         setSchools(resp);
       })
+      let checkemail = helper.check_email_extension(formData.email, emailext);
+      if (checkemail !== '' && !showDistrictExtraFieldFlag && formData.email) {        
+        validationError.email = checkemail;
+        setValidationError({...validationError});
+      }
+    }
+    if(e.target.name === 'schoolId'){
+      let schoolname = schools.find((item)=>item.schoolId === parseInt(e.target.value))?.schoolName;
+      if(schoolname){
+        formData.schoolName = schoolname;
+      }
     }
     setFormData({ ...formData, [e.target.name]: e.target.value });
     validationError[e.target.name as keyof typeof validationError] = "";
@@ -132,7 +146,7 @@ const QuoteForm = () => {
     setValidationError({ ...validationError });
     if (!anyerror) {
       CommonService.add_school_district_quote(formData).then(() => {
-        ToastrService.success("Thanks for showing interest.Admin will contact you soon....");
+        ToastrService.success("Thanks for your interest. We will reach out soon to fulfill your quote request.");
         setShowExtraFieldFlag(false);
         setShowDistrictExtraFieldFlag(false);
         setDistircts([]);
@@ -149,7 +163,8 @@ const QuoteForm = () => {
   const showExtraField = () => {
     let value = !showExtraFieldFlag;
     if (value) {
-      formData.schoolId = 0
+      formData.schoolId = 0;
+      formData.schoolName = "";
       setFormData({ ...formData });
     }
     setShowExtraFieldFlag(value);
@@ -171,19 +186,20 @@ const QuoteForm = () => {
       formData.districtId = 0;
       formData.districtName = '';
       formData.noOfStudent = 0;
-    }else{
+    } else {
       formData.noOfSchool = 0;
       formData.schoolName = '';
       formData.streetAddress = '';
     }
     setFormData({ ...formData })
   }
+
   return (
     <>
       {showLoader && <Loader />}
       <div className="q-form-wrapper signupContainer">
         <div className="tabBx">
-          <div className="tabTitle">Would you like a Quote is for your school or district? </div>
+          <div className="tabTitle">Would you like a quote for your school or district? </div>
           <div className="tabGroup d-flex align-items-center">
             <div className={`cursor-pointer tab ${formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ? 'active' : ''}`} onClick={() => set_quote(COMMONCONSTANT.QUOTETYPE.SCHOOL)}>School Quote</div>
             <div className={`cursor-pointer tab ${formData.quoteType === COMMONCONSTANT.QUOTETYPE.DISTRICT ? 'active' : ''}`} onClick={() => set_quote(COMMONCONSTANT.QUOTETYPE.DISTRICT)}>District Quote</div>
@@ -208,7 +224,7 @@ const QuoteForm = () => {
                   <select className="form-control" name="roleId" onChange={handle_change} value={formData.roleId}>
                     <option value="">Select Role</option>
                     {roles.map((item) => (
-                      <option key={item.roleId + "role"} value={item.roleId}>{item.roleName}</option>
+                      <option key={item.roleId + "role"} value={item.roleId}>{COMMONCONSTANT.ROLES[item.roleId]}</option>
                     ))}
                   </select>
                   <div className="validation-error">{validationError.roleId}</div>
@@ -264,7 +280,7 @@ const QuoteForm = () => {
                   <div className="form-group col-md-6 ">
                     <label>No of Students</label>
                     <input
-                      type="text"
+                      type="number"
                       value={formData.noOfStudent}
                       name="noOfStudent"
                       onChange={handle_change}
@@ -274,7 +290,7 @@ const QuoteForm = () => {
                   <div className="form-group col-md-6 ">
                     <label>No of Schools</label>
                     <input
-                      type="text"
+                      type="number"
                       name="noOfSchool"
                       value={formData.noOfSchool}
                       onChange={handle_change}
@@ -282,7 +298,10 @@ const QuoteForm = () => {
                     <div className="validation-error">{validationError.noOfSchool}</div>
                   </div>
                 }
-
+                 <div className="form-group col-md-12">
+                    <label>Comment (optional)</label>
+                    <textarea className="form-control" maxLength={2000} name="comment" value={formData.comment} onChange={handle_change}/>                    
+                  </div>
               </div>
               {!showExtraFieldFlag && formData.quoteType === COMMONCONSTANT.QUOTETYPE.SCHOOL ?
                 <div className="info">

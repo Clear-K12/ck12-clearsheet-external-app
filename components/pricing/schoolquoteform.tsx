@@ -40,7 +40,6 @@ const SchoolQuoteForm = () => {
       })
     }
     if(e.target.name === 'districtId'){
-      console.log("dsd",districts.find((item)=>item.districtId === parseInt(e.target.value))?.email)
       setEmailExt(districts.find((item)=>item.districtId === parseInt(e.target.value))?.email);
       CommonService.get_school_list(parseInt(e.target.value)).then((resp)=>{
         setSchools(resp);

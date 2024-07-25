@@ -26,7 +26,10 @@ export interface ReqInsertData{
     stateId:number,
     districtId:number,
     schoolId:number,
-    productId:number
+    productId:number,
+    comment: string,
+    schoolName:string,
+    districtName:string
 }
 export interface UserRegisterData{
     firstName:string,
