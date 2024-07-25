@@ -128,7 +128,8 @@ form.schoolpricingform  input[type="button"] {
   margin: 0 auto;
 }
 .schoolpricingform .column > input:not([type="submit"]),
-.schoolpricingform .column > select {
+.schoolpricingform .column > select,
+.schoolpricingform .column > textarea {
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   color: #37383a;
@@ -145,6 +146,12 @@ form.schoolpricingform  input[type="button"] {
   display: flex;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .02);
   border: 1px #ccc solid;
+}
+.schoolpricingform .column > textarea {
+  padding: 11px;
+  height: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  resize: none;
 }
 
 .schoolpricingform .column label {
