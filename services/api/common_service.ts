@@ -2,6 +2,7 @@ import APICONSTANT from "@constants/API";
 import { DistrictList, RoleList, SchoolList, StateList } from "@interface/ICommon";
 import axios from "axios";
 import {setupInterceptorsTo} from "../api_Interceptors";
+import { Configuration } from "@environment/startUp";
 setupInterceptorsTo(axios);
 
 export const CommonService = {
@@ -29,7 +30,7 @@ export const CommonService = {
   }
   function get_state_listByActive(isActive:boolean){
     let promise = new Promise((resolve, reject) => {
-        axios.get(APICONSTANT.STATELIST+"?isActive="+isActive).then((resp: any) => {
+        axios.get(APICONSTANT.STATELIST+"?isActive="+isActive+'&productId='+Configuration.ProductId).then((resp: any) => {
         resolve(resp.data)
       }).catch((err:any)=>{
         reject(err);
@@ -59,7 +60,7 @@ export const CommonService = {
   }
   function get_elementary_school_list(stateId:number,districtId:number){
     let promise = new Promise((resolve, reject) => {
-        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId}).then((resp: any) => {
+        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId,productiId:Configuration.ProductId}).then((resp: any) => {
         resolve(resp.data.elementrySchools)
       }).catch((err:any)=>{
         reject(err);

@@ -7,6 +7,7 @@ export class Config {
         public siteKey: string = "",
         public LoginUrl: string = "",
         public StripePublicKey:string="",
-        public SiteUrl:string=""
+        public SiteUrl:string="",
+        public ProductId:number=0
     ) { }
 }

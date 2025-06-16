@@ -47,6 +47,10 @@ COMMONCONSTANT = {
     1:'School Admin',
     3:'Student',
     2:'Teacher'
+  },
+  TRIALCONSTANT:{
+    TRIAL:'Trial',
+    FULL:'Full'
   }
 };
 

@@ -1,12 +1,13 @@
 {
   "configuration": {    
-    "CrmUrl": "https://dev-ck12-crm-api.azurewebsites.net",
+    "CrmUrl": "https://dev-ck12-crm-api-f7awdshuemhrgkg6.centralus-01.azurewebsites.net",
     "ImageUrl": "https://devstorageassets.blob.core.windows.net/clearlearning",
     "StudentUrl":"https://dev-ck12-clearssheet-api.azurewebsites.net",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://devclclearsheet.z19.web.core.windows.net/login",
     "StripePublicKey":"pk_test_51P4PRn1nkYoNSGoCkVdAwmw6RAzQlrlt1GJA7U70pUIlrpUBaFN0REZMVeguwiZveUvlZbTdZEXXlDd6f5oLYNgI00CyNATj6C",
-    "SiteUrl":"https://devclcsexternalapp.z19.web.core.windows.net/"
+    "SiteUrl":"https://devclcsexternalapp.z19.web.core.windows.net/",
+    "ProductId":2
   }
 }
