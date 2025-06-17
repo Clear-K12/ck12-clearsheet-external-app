@@ -69,14 +69,12 @@ const VerifyEmail = () => {
         </div>
 
         <div className="verification-content">
-          <p className="intro-text">You're In! Just One Last Click...</p>
+          <p className="intro-text">{"Verify your email."}</p>
 
-          <h1>You've got the keys<br />to ClearSheets Beta... almost.</h1>
+          <h1>{"You've got the keys"}<br />to ClearSheets Beta... almost.</h1>
 
           <p className="instructions">
-            Check your email and click the verify email link
-            to unlock everything we've got — full access, no
-            holding back.
+            {"Check your email and click the verify email link to unlock everything we've got — full access, no         holding back."}
           </p>
 
           <div className="support-box">

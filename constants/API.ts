@@ -3,11 +3,9 @@ let APICONSTANT: any = {};
 
 APICONSTANT = {
   DISTRICTLIST: Configuration.CrmUrl + "/api/District/GetDistrictForSignup",
-  // STATELIST:Configuration.CrmUrl + "/api/State",
-  STATELIST:"https://localhost:44393/api/State",
+  STATELIST:Configuration.CrmUrl + "/api/State",
   SCHOOLLIST:Configuration.CrmUrl+"/api/School/GetSchoolNames",
-  // ELEMENTARYSCHOOLLIST:Configuration.CrmUrl+"/api/School/GetElementrySchools",
-  ELEMENTARYSCHOOLLIST:"https://localhost:44393/api/School/GetElementrySchools",
+  ELEMENTARYSCHOOLLIST:Configuration.CrmUrl+"/api/School/GetElementrySchools",
   INSERTREQUESTMOREINFO:Configuration.CrmUrl+"/api/Lead",
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
   USERREGISTER:Configuration.StudentUrl+"/api/Users/UserRegister",

@@ -414,8 +414,8 @@ const Signup = () => {
 
                     <div className="wrapper d-flex flex-wrap">
                       <div className="w-100">
-                        {trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL ? <div className="mt-5"></div>
-                        
+                        {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3 
+                        ? <div className="mt-5"></div>                        
                           :
                           <>
                             <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
