@@ -7,6 +7,7 @@
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://cs.cleark12.com/login",
     "StripePublicKey":"pk_test_51P4PRn1nkYoNSGoCkVdAwmw6RAzQlrlt1GJA7U70pUIlrpUBaFN0REZMVeguwiZveUvlZbTdZEXXlDd6f5oLYNgI00CyNATj6C",
-    "SiteUrl":"https://prodclcsexternalapp.z19.web.core.windows.net/"
+    "SiteUrl":"https://prodclcsexternalapp.z19.web.core.windows.net/",
+    "ProductId":2
   }
 }

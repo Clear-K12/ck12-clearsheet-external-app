@@ -2,6 +2,7 @@ export interface StateList{
     stateId:number,
     stateName:string,
     note:string,
+    trialName:string
 }
 export interface DistrictList{
     districtId:number,
