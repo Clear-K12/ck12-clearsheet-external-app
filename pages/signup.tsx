@@ -23,6 +23,8 @@ import COMMONCONSTANT from "@constants/commonConstant";
 import { useRouter } from "next/router";
 import Subscription from "@components/subscriptiontab";
 import SubscriptionTab from "@components/subscriptiontab";
+import ITrialData from "@interface/ITrialData";
+import VerifyEmail from "@components/verifyemail";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -32,6 +34,7 @@ const Signup = () => {
     name: string;
     email?: string;
     note?: string;
+    trialName?: string;
   }
   let rowkey = 0;
   let initial_data: UserRegisterData = {
@@ -69,6 +72,7 @@ const Signup = () => {
   const [signupData, setSignupData] = useState<UserRegisterData>(initial_data);
   const [showMessageModal, setShowMessageModal] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [trialData, setTrialData] = useState<ITrialData>({ trialName: "" });
 
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
@@ -104,6 +108,7 @@ const Signup = () => {
           value: item.stateId,
           name: "stateId",
           note: item.note,
+          trialName: item.trialName,
         };
         state_option_list.push(stateoptions);
         setSelectOptions(state_option_list);
@@ -162,6 +167,8 @@ const Signup = () => {
         [e.name]: e.value,
         districtId: 0,
       });
+      const foundOption = selectoptions?.find((item: type) => item.value === e.value);
+      setTrialData({ trialName: foundOption?.trialName || "" });
     } else if (e.name === "districtId") {
       setSelectedDistrict(e);
       setSelectedSchool(null);
@@ -382,6 +389,7 @@ const Signup = () => {
 
     }, 2000)
   }
+  console.log(trialData)
   return (
     <>
       <Head>
@@ -406,22 +414,28 @@ const Signup = () => {
 
                     <div className="wrapper d-flex flex-wrap">
                       <div className="w-100">
-                      <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
-                        <div className="progress-container">
-                          <div className={`progress ${currentStep === 2 ? 'w50' : currentStep === 3 ? 'w100' : ""}`} id="progress"></div>
-                          <div className="d-flex flex-column justify-content-center">
-                            <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
-                            <p>Step 1</p>
-                          </div>
-                          <div className="d-flex flex-column step-2 ">
-                            <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
-                            <p>Step 2</p>
-                          </div>
-                          <div className="d-flex flex-column step-2 ">
-                            <div className="circle">3</div>
-                            <p>Step 3</p>
-                          </div>
-                        </div>
+                        {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3 
+                        ? <div className="mt-5"></div>                        
+                          :
+                          <>
+                            <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
+                            <div className="progress-container">
+                              <div className={`progress ${currentStep === 2 ? 'w50' : currentStep === 3 ? 'w100' : ""}`} id="progress"></div>
+                              <div className="d-flex flex-column justify-content-center">
+                                <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
+                                <p>Step 1</p>
+                              </div>
+                              <div className="d-flex flex-column step-2 ">
+                                <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
+                                <p>Step 2</p>
+                              </div>
+                              <div className="d-flex flex-column step-2 ">
+                                <div className="circle">3</div>
+                                <p>Step 3</p>
+                              </div>
+                            </div>
+                          </>
+                        }
                       </div>
                       {currentStep === 1 ? (
                         <div className="signup-box">
@@ -725,8 +739,9 @@ const Signup = () => {
                               onChange={onChange}
                             />
                           </div>
-                        </div>) : currentStep === 3 &&
-                        <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
+                        </div>) : currentStep === 3 && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL)?
+                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
+                          : <VerifyEmail />
                       }
                     </div>
                     {currentStep < 3 &&
