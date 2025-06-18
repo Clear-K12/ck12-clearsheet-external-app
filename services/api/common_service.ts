@@ -60,7 +60,7 @@ export const CommonService = {
   }
   function get_elementary_school_list(stateId:number,districtId:number){
     let promise = new Promise((resolve, reject) => {
-        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId,productiId:Configuration.ProductId}).then((resp: any) => {
+        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId,productId:Configuration.ProductId}).then((resp: any) => {
         resolve(resp.data.elementrySchools)
       }).catch((err:any)=>{
         reject(err);
