@@ -11,7 +11,7 @@ const VerifyEmail = () => {
           key="signupcss"
         ></link>
       </Head>
-      <div className="text-center w-100"><img src={Configuration.ImageUrl+'/ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
+      <div className="text-center w-100"><img src={Configuration.ImageUrl+'ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
       <div className="verification-container mt-4">
         <div className="illustration-container">
           <div className="app-img">

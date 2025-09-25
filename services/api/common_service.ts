@@ -20,7 +20,7 @@ export const CommonService = {
   };
   function get_district_list(stateid:number){
     let promise = new Promise((resolve, reject) => {
-        axios.get(APICONSTANT.DISTRICTLIST+'?stateId='+stateid).then((resp: any) => {
+        axios.get(APICONSTANT.DISTRICTLIST+'?stateId='+stateid+'&productId='+Configuration.ProductId).then((resp: any) => {
         resolve(resp.data)
       }).catch((err:any)=>{
         reject(err);
@@ -60,7 +60,7 @@ export const CommonService = {
   }
   function get_elementary_school_list(stateId:number,districtId:number){
     let promise = new Promise((resolve, reject) => {
-        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId,productiId:Configuration.ProductId}).then((resp: any) => {
+        axios.post(APICONSTANT.ELEMENTARYSCHOOLLIST,{stateId:stateId,districtId:districtId,productId:Configuration.ProductId}).then((resp: any) => {
         resolve(resp.data.elementrySchools)
       }).catch((err:any)=>{
         reject(err);
