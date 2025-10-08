@@ -45,5 +45,7 @@ export interface UserRegisterData{
     schoolName: string,
     districtName: string,
     streetAddress: string,
-    productId: number
+    productId: number,
+    gradeId?: number,
+    typeOfClassroom?: string
 }

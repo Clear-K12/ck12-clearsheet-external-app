@@ -3,6 +3,7 @@ import { DistrictList, RoleList, SchoolList, StateList } from "@interface/ICommo
 import axios from "axios";
 import {setupInterceptorsTo} from "../api_Interceptors";
 import { Configuration } from "@environment/startUp";
+import { IProductStateGrades, IProductStateGradesRequest } from "@interface/IProductStateGrades";
 setupInterceptorsTo(axios);
 
 export const CommonService = {
@@ -16,7 +17,8 @@ export const CommonService = {
     user_registration,
     get_client_secret,
     add_subscription,
-    add_school_district_quote
+    add_school_district_quote,
+    GetProductStateGrades
   };
   function get_district_list(stateid:number){
     let promise = new Promise((resolve, reject) => {
@@ -129,4 +131,14 @@ export const CommonService = {
       })
     })
     return promise as Promise<boolean>;
+  }
+  function GetProductStateGrades(request_obj: IProductStateGradesRequest){
+    let promise = new Promise((resolve, reject) => {
+      axios.post(APICONSTANT.GETPRODUCTSTATEGRADES,request_obj).then(resp => {
+        resolve(resp.data)
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    return promise as Promise<IProductStateGrades[]>;
   }

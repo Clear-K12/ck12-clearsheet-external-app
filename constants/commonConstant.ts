@@ -48,6 +48,14 @@ COMMONCONSTANT = {
     3:'Student',
     2:'Teacher'
   },
+  USERROLES:{
+    SCHOOLADMIN:1,
+    TEACHER:2,
+    STUDENT:3,
+    DISTRICTADMIN:7,
+    INSTRUCTIONALCOACH:8,
+    PARENT:9 
+  },
   TRIALCONSTANT:{
     TRIAL:'Trial',
     FULL:'Full'

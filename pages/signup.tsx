@@ -25,6 +25,8 @@ import Subscription from "@components/subscriptiontab";
 import SubscriptionTab from "@components/subscriptiontab";
 import ITrialData from "@interface/ITrialData";
 import VerifyEmail from "@components/verifyemail";
+import UserLead from "@components/userlead";
+import { IProductStateGrades } from "@interface/IProductStateGrades";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -36,6 +38,11 @@ const Signup = () => {
     note?: string;
     trialName?: string;
   }
+  interface gradeType {
+    label: string;
+    value: number;
+    name: string;
+  }
   let rowkey = 0;
   let initial_data: UserRegisterData = {
     firstName: "",
@@ -43,14 +50,15 @@ const Signup = () => {
     stateId: 0,
     districtId: 0,
     schoolId: 0,
-    roleId: 0,
+    roleId: 2,
     email: "",
     password: "",
     confirm_password: "",
     schoolName: "",
     districtName: "",
     streetAddress: "",
-    productId: 2
+    productId: 2,
+    typeOfClassroom: "selfcontained"
   };
   const [submitButton, showSubmitStep] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
@@ -71,8 +79,11 @@ const Signup = () => {
   const [districtEmailExt, SetdistrictEmailExt] = useState<string>();
   const [signupData, setSignupData] = useState<UserRegisterData>(initial_data);
   const [showMessageModal, setShowMessageModal] = useState<boolean>(false);
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(3);
   const [trialData, setTrialData] = useState<ITrialData>({ trialName: "" });
+  const [gradeOptions, setGradeOptions] = useState<type[]>();
+  const [selectedGrade, setSelectedGrade] = useState(null);
+  const [selectedTypeOfClassroom, setSelectedTypeOfClassroom] = useState(null);
 
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
@@ -169,6 +180,7 @@ const Signup = () => {
       });
       const foundOption = selectoptions?.find((item: type) => item.value === e.value);
       setTrialData({ trialName: foundOption?.trialName || "" });
+      getGradeOptions(e.value);
     } else if (e.name === "districtId") {
       setSelectedDistrict(e);
       setSelectedSchool(null);
@@ -201,6 +213,14 @@ const Signup = () => {
     } else if (e.name === "schoolId") {
       setSignupData({ ...signupData, [e.name]: e.value });
       setSelectedSchool(e);
+    }
+    if (e.name === "gradeId") {
+      setSelectedGrade(e);
+      setSignupData({ ...signupData, [e.name]: e.value });
+    }
+    if (e.name === "typeOfClassroom") {
+      setSelectedTypeOfClassroom(e);
+      setSignupData({ ...signupData, [e.name]: e.value });
     }
     delete validationError[e.name];
   };
@@ -244,6 +264,8 @@ const Signup = () => {
         delete data["schoolName"];
         delete data["districtName"];
       }
+      console.log(data);
+      return;
       setShowLoader(true);
       CommonService.user_registration(data)
         .then((resp: any) => {
@@ -252,11 +274,11 @@ const Signup = () => {
             setShowLoader(false);
             showSubmitStep(false);
             setShowExtraFieldFlag(false);
-            if (showExtraFieldFlag) {
-              ToastrService.success(ALERTMESSAGES.Registration_Info);
-            } else {
-              ToastrService.success(ALERTMESSAGES.Registration);
-            }
+            // if (showExtraFieldFlag) {
+            //   ToastrService.success(ALERTMESSAGES.Registration_Info);
+            // } else {
+            //   ToastrService.success(ALERTMESSAGES.Registration);
+            // }
             setCurrentStep(currentStep + 1);
           }
         })
@@ -270,6 +292,7 @@ const Signup = () => {
         });
     }
   };
+
   const next = () => {
     let errors: any = {};
     if (!signupData.firstName) {
@@ -389,7 +412,19 @@ const Signup = () => {
 
     }, 2000)
   }
-  console.log(trialData)
+
+  const getGradeOptions = (stateId: number) => {
+    CommonService.GetProductStateGrades({ stateId: stateId, productId: signupData.productId }).then((resp: IProductStateGrades[]) => {
+      let grades = resp.map((item: IProductStateGrades) => ({
+        label: item.grade,
+        value: item.gradeId,
+        name: "gradeId"
+      }));
+      setGradeOptions(grades);
+    });
+  }
+
+  console.log(signupData);
   return (
     <>
       <Head>
@@ -414,13 +449,13 @@ const Signup = () => {
 
                     <div className="wrapper d-flex flex-wrap">
                       <div className="w-100">
-                        {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3 
-                        ? <div className="mt-5"></div>                        
+                        {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3
+                          ? <div className="mt-5"></div>
                           :
                           <>
                             <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
                             <div className="progress-container">
-                              <div className={`progress ${currentStep === 2 ? 'w50' : currentStep === 3 ? 'w100' : ""}`} id="progress"></div>
+                              <div className={`progress ${currentStep > 1 ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER) ? 'w100' : '' : ''}`} id="progress"></div>
                               <div className="d-flex flex-column justify-content-center">
                                 <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
                                 <p>Step 1</p>
@@ -429,10 +464,12 @@ const Signup = () => {
                                 <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
                                 <p>Step 2</p>
                               </div>
-                              <div className="d-flex flex-column step-2 ">
-                                <div className="circle">3</div>
-                                <p>Step 3</p>
-                              </div>
+                              {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
+                                <div className="d-flex flex-column step-2 ">
+                                  <div className="circle">3</div>
+                                  <p>Step 3</p>
+                                </div>
+                              }
                             </div>
                           </>
                         }
@@ -640,31 +677,7 @@ const Signup = () => {
                           </div>
                         </div>) : currentStep === 2 ?
                         (<div className="signup-box">
-
                           <div className="form-row w-100 ">
-
-                            <div className="form-group col-md-6">
-                              <label>Role</label>
-                              <div className="">
-                                <Select
-                                  name="roleId"
-                                  value={selectedRole}
-                                  options={roleOptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select Title"
-                                  id="roleId"
-                                  styles={colourStyles}
-                                />
-                                {validationError.roleId ? (
-                                  <span className="validation-error">
-                                    {validationError.roleId}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-
                             <div className="form-group col-md-6">
                               <label>Email</label>
                               <input
@@ -689,7 +702,76 @@ const Signup = () => {
                                 ""
                               )}
                             </div>
+                            <div className="form-group col-md-6">
+                              <label>Role</label>
+                              <div className="">
+                                <Select
+                                  name="roleId"
+                                  value={selectedRole}
+                                  options={roleOptions}
+                                  onChange={handle_dropdown}
+                                  placeholder="Select Title"
+                                  id="roleId"
+                                  styles={colourStyles}
+                                />
+                                {validationError.roleId ? (
+                                  <span className="validation-error">
+                                    {validationError.roleId}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
                           </div>
+
+                          {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6">
+                                <label>Which Grade do you teach?</label>
+                                <div className="">
+                                  <Select
+                                    name="gradeId"
+                                    value={selectedGrade}
+                                    options={gradeOptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select Title"
+                                    id="gradeId"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.gradeId ? (
+                                    <span className="validation-error">
+                                      {validationError.roleId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>What type of classroom do you teach?</label>
+                                <div className="">
+                                  <Select
+                                    name="typeOfClassroom"
+                                    value={selectedTypeOfClassroom}
+                                    options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: "selfcontained", name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: "departmentalized ", name: "typeOfClassroom" }]}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select Type of Classroom"
+                                    id="typeOfClassroom"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.gradeId ? (
+                                    <span className="validation-error">
+                                      {validationError.roleId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          }
+
                           <div className="form-row w-100 ">
                             <div className="form-group col-md-6">
                               <label>Password</label>
@@ -739,9 +821,11 @@ const Signup = () => {
                               onChange={onChange}
                             />
                           </div>
-                        </div>) : currentStep === 3 && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL)?
+                        </div>) : currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER
+                          // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
+                          ?
                           <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                          : <VerifyEmail />
+                          : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
                       }
                     </div>
                     {currentStep < 3 &&

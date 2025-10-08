@@ -17,7 +17,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
       }
     });
   }
-
+console.log(signupData,"kdksdfl");
   return (
     <>
       <Head>
@@ -46,8 +46,9 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                       <h5 className="f-16 fw-600">Free <span className="fw-300">(Limited Features)</span></h5>
                       <span className="g-price">$0</span>
                       <p className="grey-text">
-                        Lifetime access. <br />
-                        No credit card needed.
+                      3 Free Lessons Up Front <br />
+                      1 Free Lesson Monthly Thereafter.<br />
+                      Full Access to Most Features
                       </p>
                       <button className="btn getstarted-btn cursor-pointer" onClick={after_set_free}>
                         Get Started
@@ -63,7 +64,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                           alt=""
                           style={{ width: "30px" }}
                         />
-                        Clearly a Pro  <span className="fw-300">(Full Featured)</span>
+                        ClearSheets Pro
                       </h5>
                       <span className="p-price">
                         $9 <sub>/month</sub>
@@ -71,8 +72,10 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                       <p className="grey-text">
                         Billed monthly.{" "}
                         <span className="pink-text">1st Month Free</span>.
-                        <br /> Everything in free, plus more.
-                      </p>                      
+                        <br />Unlimited Lessons, Full Featured.
+                        <br />
+                        {signupData.typeOfClassroom === "selfcontained" ? "All subjects for 1 Class and 30 Students":"One Subject for up to 125 Students"}                       
+                      </p>                     
                       <button className="btn upgrade-btn cursor-pointer" onClick={activate_pro}>
                         Upgrade to Clearly a Pro
                       </button>                      
@@ -82,7 +85,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
               </div>
             </div>
 
-            <div className="clearsheet-launch-section mb-3">
+            {/* <div className="clearsheet-launch-section mb-3">
               <div className="cls-header">
                 <h1 className="text-center mb-0">ClearSheets Launch Special</h1>
                 <p className="text-center">For a limited time only.</p>
@@ -105,9 +108,9 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="compare-feature-section">
+            {/* <div className="compare-feature-section">
               <div className="py-3">
                 <h4 className="text-center f-18 fw-600">
                   Compare features with Clearly a Pro Plan
@@ -304,7 +307,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                       Included
                     </span>
                   </div>
-                </div>
+                </div> */}
                 {/* <div className=" upgrade-btn-row">
                   <div> &nbsp;</div>
                   <div>
@@ -316,8 +319,8 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                     <button className=" btn outline-btn " onClick={activate_pro}>Get Started</button>
                   </div>
                 </div> */}
-              </div>
-            </div>
+              {/* </div>
+            </div> */}
           </div>
         </div>
       </div>
