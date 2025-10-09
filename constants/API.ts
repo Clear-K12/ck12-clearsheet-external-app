@@ -8,11 +8,14 @@ APICONSTANT = {
   ELEMENTARYSCHOOLLIST:Configuration.CrmUrl+"/api/School/GetElementrySchools",
   INSERTREQUESTMOREINFO:Configuration.CrmUrl+"/api/Lead",
   ROLELIST:Configuration.CrmUrl+"/api/Lead/GetLeadRoles",
-  USERREGISTER:"https://localhost:44388/api/Users/UserRegister",
+  USERREGISTER:Configuration.StudentUrl+"/api/Users/UserRegister",
   ADDSUBSCRIPTION:Configuration.StudentUrl+"/api/Subscription/UserRegisterSubscription",
   GET_CLIENT_SECRET:Configuration.StudentUrl+"/api/Subscription/GetIntent",
   ADD_SCHOOL_DISTRICT_QUOTE:Configuration.StudentUrl+"/api/WebsiteQuote",
-  GETPRODUCTSTATEGRADES:"https://localhost:44388/api/Users/GetProductStateGrades"
+  GETPRODUCTSTATEGRADES:Configuration.StudentUrl+"/api/Users/GetProductStateGrades",
+  ResendEmail:Configuration.StudentUrl+"/api/Users/ResendEmail",
+  GET_SCHOOL_LICENSE:"https://localhost:44393/api/School/GetSchoolLicense",
+  GET_SCHOOL_PAID_ACCOUNT:Configuration.StudentUrl+"/api/Subscription/GetSchoolPaidAccount",
 }
 
 export default APICONSTANT;

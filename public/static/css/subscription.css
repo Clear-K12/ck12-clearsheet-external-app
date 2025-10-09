@@ -520,3 +520,53 @@ button#submit{
 .plan-heading h4{
 font-size: 20px;
 }
+
+#payment-form>label {
+  font-size: 0.93rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #30313d;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  display: block;
+}
+
+#payment-form .Error {
+  margin-top: 0.25rem;
+  color: #df1b41;
+  font-size: 0.93rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+#payment-form>Input,
+#payment-form>Input.invalid {
+  padding: 0.75rem;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+#payment-form>Input.invalid {
+  color: #df1b41;
+  border-color: #df1b41;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02), 0 0 0 1px #df1b41;
+  margin-bottom: 0;
+}
+
+#payment-form>Input:focus,
+#payment-form>Input.invalid:focus {
+  outline: 0;
+  border-color: #0570de;
+  box-shadow: 0 0 0 .2rem rgba(13, 110, 253, .25);
+}
+
+#payment-form>Input::placeholder{
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.45px;
+  opacity: 0.9;
+}

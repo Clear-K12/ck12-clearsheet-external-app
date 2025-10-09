@@ -11,7 +11,8 @@ COMMONCONSTANT = {
     SIGNUP: "/signup",
     PAYMENT:"/payment",
     SUBSCRIPTION:"/subscription",
-    AFTERSUBSCRIPTION:"https://clearsheets.net"
+    AFTERSUBSCRIPTION:"https://clearsheets.net",
+    VERIFY:"/verify"
   },
   USERROLESIGNUP:[
     {
@@ -59,6 +60,10 @@ COMMONCONSTANT = {
   TRIALCONSTANT:{
     TRIAL:'Trial',
     FULL:'Full'
+  },
+  CLASSROOMTYPE:{
+    SELFCONTAINED:'selfcontained',
+    DEPARTMENTALIZED:'departmentalized'
   }
 };
 

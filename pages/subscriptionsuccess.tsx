@@ -30,9 +30,10 @@ const SubscriptionSuccess = () => {
           intent: setup_intent
         }
         CommonService.add_subscription(reqobj).then(async () => {
-          setTimeout(() => {
-            window.location.href = COMMONCONSTANT.ROUTEPATH.AFTERSUBSCRIPTION;
-          }, 1000);
+          // setTimeout(() => {
+          //   window.location.href = COMMONCONSTANT.ROUTEPATH.AFTERSUBSCRIPTION;
+          // }, 1000);
+          router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
         }).catch((e)=>{
           ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");
         });

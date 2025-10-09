@@ -16,7 +16,8 @@ const PaymentCard = (props: any) => {
   const stripe: any = useStripe();
   const elements: any = useElements();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [validationError,setValidationError] = useState<{cardHolderName:string}>({cardHolderName:''})
+  const [extraFields,setExtraFields] = useState<{cardHolderName:string}>({cardHolderName:''});
   const handle_submit = async (event: any) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -26,8 +27,8 @@ const PaymentCard = (props: any) => {
     setIsLoading(true);
 
     const { error: submitError } = await elements.submit();
-    if (submitError) {
-      ToastrService.error(ALERTMESSAGES.DEFAULT);
+    const isError = isValidate();
+    if (submitError || isError) {
       setIsLoading(false);
       return;
     }
@@ -38,6 +39,11 @@ const PaymentCard = (props: any) => {
         elements,
         confirmParams: {
           return_url: Configuration.SiteUrl + 'subscriptionsuccess?cc=' + user,
+          payment_method_data:{
+            billing_details:{
+              name:extraFields.cardHolderName
+            }
+          },
         },
         clientSecret: resp
       });
@@ -51,6 +57,16 @@ const PaymentCard = (props: any) => {
   const paymentElementOptions: any = {
     layout: "tabs",
   };
+
+  const isValidate = () => {
+    let error = false;
+    if(!extraFields.cardHolderName){
+      validationError.cardHolderName = 'Name is required';
+      error = true;
+      setValidationError({...validationError});
+    }
+    return error;
+  }
   return (
     <>
       <>
@@ -59,6 +75,17 @@ const PaymentCard = (props: any) => {
           <h4 className='text-center fw-600'>Clearly a Pro </h4>
         </div>
         <form id="payment-form" onSubmit={handle_submit}>
+        <label className='label'>Card Holder Name</label>
+          <input
+            type="text"
+            className={validationError.cardHolderName ? 'invalid' : ''}
+            placeholder="Cardholder Name"   
+            onChange={(e)=> { 
+              setExtraFields({...extraFields,cardHolderName:e.target.value});
+              setValidationError({...validationError,cardHolderName:''});
+            }}       
+          />
+          <span className='Error'>{validationError.cardHolderName}</span>
           <PaymentElement id="payment-element" options={paymentElementOptions} />
           <button disabled={isLoading || !stripe || !elements} id="submit">
             <span id="button-text">

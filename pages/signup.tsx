@@ -27,6 +27,8 @@ import ITrialData from "@interface/ITrialData";
 import VerifyEmail from "@components/verifyemail";
 import UserLead from "@components/userlead";
 import { IProductStateGrades } from "@interface/IProductStateGrades";
+import { SecureService } from "guard/secureService";
+import { ISchoolPaidAccount } from "@interface/ISchoolPaidAccount";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -58,7 +60,7 @@ const Signup = () => {
     districtName: "",
     streetAddress: "",
     productId: 2,
-    typeOfClassroom: "selfcontained"
+    typeOfClassroom: ""
   };
   const [submitButton, showSubmitStep] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
@@ -79,12 +81,13 @@ const Signup = () => {
   const [districtEmailExt, SetdistrictEmailExt] = useState<string>();
   const [signupData, setSignupData] = useState<UserRegisterData>(initial_data);
   const [showMessageModal, setShowMessageModal] = useState<boolean>(false);
-  const [currentStep, setCurrentStep] = useState<number>(3);
+  const [currentStep, setCurrentStep] = useState<number>(1);
   const [trialData, setTrialData] = useState<ITrialData>({ trialName: "" });
   const [gradeOptions, setGradeOptions] = useState<type[]>();
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedTypeOfClassroom, setSelectedTypeOfClassroom] = useState(null);
-
+  const [schoolLicense, setSchoolLicense] = useState<string>();
+  const [paidAccounts, setPaidAccounts] = useState<ISchoolPaidAccount[]>([]);
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
       ...styles,
@@ -211,6 +214,8 @@ const Signup = () => {
         schoolId: 0,
       });
     } else if (e.name === "schoolId") {
+      getSchoolLicense(e.value);
+      getSchoolPaidAccount(e.value);
       setSignupData({ ...signupData, [e.name]: e.value });
       setSelectedSchool(e);
     }
@@ -264,22 +269,28 @@ const Signup = () => {
         delete data["schoolName"];
         delete data["districtName"];
       }
-      console.log(data);
-      return;
       setShowLoader(true);
       CommonService.user_registration(data)
         .then((resp: any) => {
           if (resp) {
+            SecureService.encryptsetItem(
+              'email',
+              signupData.email
+            );
             reset_form();
             setShowLoader(false);
             showSubmitStep(false);
             setShowExtraFieldFlag(false);
-            // if (showExtraFieldFlag) {
-            //   ToastrService.success(ALERTMESSAGES.Registration_Info);
-            // } else {
-            //   ToastrService.success(ALERTMESSAGES.Registration);
-            // }
-            setCurrentStep(currentStep + 1);
+            if (schoolLicense !== 'CR-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0) {
+              setCurrentStep(currentStep + 1);
+            } else {
+              router.push({
+                pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+                query: {
+                  email: signupData.email
+                }
+              }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+            }
           }
         })
         .catch((res: any) => {
@@ -402,15 +413,21 @@ const Signup = () => {
   };
 
   const after_set_free = () => {
-    ToastrService.success("Free licenese activated")
-    setShowMessageModal(true);
-    reset_form();
-    setCurrentStep(1);
-    setSignupData(initial_data);
-    setTimeout(() => {
-      router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
+    router.push({
+      pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+      query: {
+        email: signupData.email
+      }
+    }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+    // ToastrService.success("Free licenese activated")
+    // setShowMessageModal(true);
+    // reset_form();
+    // setCurrentStep(1);
+    // setSignupData(initial_data);
+    // setTimeout(() => {
+    //   router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
 
-    }, 2000)
+    // }, 2000)
   }
 
   const getGradeOptions = (stateId: number) => {
@@ -422,6 +439,18 @@ const Signup = () => {
       }));
       setGradeOptions(grades);
     });
+  }
+
+  const getSchoolLicense = (school_id: number) => {
+    CommonService.getSchoolLicense(school_id).then((resp) => {
+      setSchoolLicense(resp);
+    })
+  }
+
+  const getSchoolPaidAccount = (school_id: number) => {
+    CommonService.getSchoolPaidAccount(school_id).then((resp) => {
+      setPaidAccounts(resp);
+    })
   }
 
   console.log(signupData);
@@ -464,7 +493,7 @@ const Signup = () => {
                                 <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
                                 <p>Step 2</p>
                               </div>
-                              {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
+                              {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CR-PREM' && paidAccounts.length < 2 &&
                                 <div className="d-flex flex-column step-2 ">
                                   <div className="circle">3</div>
                                   <p>Step 3</p>
@@ -754,7 +783,7 @@ const Signup = () => {
                                   <Select
                                     name="typeOfClassroom"
                                     value={selectedTypeOfClassroom}
-                                    options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: "selfcontained", name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: "departmentalized ", name: "typeOfClassroom" }]}
+                                    options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED, name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED, name: "typeOfClassroom" }]}
                                     onChange={handle_dropdown}
                                     placeholder="Select Type of Classroom"
                                     id="typeOfClassroom"

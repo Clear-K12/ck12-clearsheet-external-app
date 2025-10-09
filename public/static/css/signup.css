@@ -453,7 +453,7 @@
     align-items: stretch;
     justify-content: stretch;
     position: relative;
-    background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/underwatermath/underwater_plants.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png);
+    /* background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/underwatermath/underwater_plants.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png); */
     background-position: top, bottom, bottom;
     background-size: contain, contain, cover;
     background-repeat: no-repeat, no-repeat, no-repeat;
