@@ -21,7 +21,7 @@ const SubscriptionSuccess = () => {
       let user_parse = JSON.parse(Security.decryption(cc?.toString()));
       let user_data = user_parse.userData;
       if (user_data && setup_intent) {
-        setShowContent(true);
+        // setShowContent(true);
         let reqobj = {
           subscriptionId: 2,
           userId: 0,

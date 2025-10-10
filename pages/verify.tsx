@@ -45,7 +45,7 @@ const VerifyEmail = () => {
       </Head>
       {email &&
       <>
-      <div className="text-center w-100"><img src={Configuration.ImageUrl+'ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
+      <div className="text-center w-100  pt-4"><img src={Configuration.ImageUrl+'ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
       <div className="verification-container mt-4">
         <div className="illustration-container">
           <div className="app-img">
@@ -111,9 +111,10 @@ const VerifyEmail = () => {
           A verify link is waiting in your inbox. Click “<strong>Verify</strong>” and we’ll roll out the red carpet
           </p>
 
-          <div className="support-box">
-            <p>Problems getting the email?<br />
-              Email <a href="mailto:hi@cleark12.com">hi@cleark12.com</a> for support.
+          <div className="support-box flex-column align-items-start">
+            <p>
+            <b className="mb-0">Problems getting the email? </b> <br />
+               Email <a href="mailto:hi@cleark12.com">hi@cleark12.com</a> for support.
             </p>
             <button onClick={resendEmail} className={`${loading ? 'resend-blur' : ''}`} disabled={loading}>{loading ? 'Resending...' : 'Resend'}</button>
           </div>

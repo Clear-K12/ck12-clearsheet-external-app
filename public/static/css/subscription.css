@@ -28,25 +28,30 @@ body {
   flex-direction: column;
   align-items: flex-start;
   border-radius: 6px;
-  border: 1px solid rgba(78, 71, 77, 0.19);
-  background: var(--white, #fff);
-  height: 250px;
-  justify-content: space-between;
+  border: 1px solid rgb(255 203 255);
+  background: #fef6ff;
+  min-height: 270px;
+  justify-content: flex-start;
+  gap: 3px !important;
+}
+
+.subscripion-box.classcade-pro{
+  background: linear-gradient(180deg, #fef6ff 8.19%, #f8e2f9 100%);
 }
 
 
 .g-price {
-  color: #41b92d;
+  color: #f857e0;
   text-align: center;
   font-size: 34px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .p-price {
-  color: #f952e4;
+  color: #000;
   text-align: center;
   font-size: 34px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .current-plan {
@@ -66,9 +71,9 @@ body {
   align-items: center;
   gap: 10px;
   border-radius: 7px;
-  border: 2px solid #fa52e4;
-  background: #fff;
-  color: #fa52e4;
+  border: 2px solid #333;
+  background: #333;
+  color: #fff;
   text-align: center;
   font-size: 16px;
   font-weight: 700;
@@ -82,13 +87,29 @@ body {
   align-items: center;
   gap: 10px;
   border-radius: 7px;
-  border: 2px solid #41b92d;
-  background: #fff;
-  color: #41b92d;
+  border: 2px solid #fa52e4;
+  background: #fa52e4;
+  color: #fff;
   text-align: center;
   font-size: 16px;
   font-weight: 700;
+  margin-top: auto;
   width: 100%;
+}
+
+.upgrade-btn,
+.upgrade-btn{
+  margin-top: 20px;
+}
+
+.getstarted-btn:hover{
+  color: #fff;
+  background: #ff39e5;
+}
+
+.upgrade-btn:hover{
+  color: #fff;
+  background: #000;
 }
 
 .outline-btn {
@@ -339,8 +360,9 @@ body {
   align-items: center;
 }
 
-.pricing-plan-wrap{
-  max-width: 800px;
+.pricing-plan-wrap {
+  max-width: 850px;
+  width: 100%;
 }
 
 @media (max-width:991px){
@@ -569,4 +591,44 @@ font-size: 20px;
   font-weight: 400;
   letter-spacing: 0.45px;
   opacity: 0.9;
+}
+
+body:has(.pricing-plan-wrap){
+  background-image: url(https://dev-ck12-auth.azurewebsites.net/Content/login-bg.jpg);
+  min-height: 100vh;
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+}
+
+.bullet-custom {
+  margin: 0;
+  padding-left: 18px;
+  position: relative;
+}
+
+.bullet-custom::after {
+  content: '' !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: transparent;
+  top: 9px;
+  left: 0;
+  border: 1px solid #797979;
+}
+
+.subscripion-box h5 {
+  margin: 0;
+}
+
+img.pro-img {
+  position: absolute;
+  right: 29px;
+  opacity: 0.7;
+  width: 70px;
+  top: 9px;
 }

@@ -14,7 +14,7 @@ APICONSTANT = {
   ADD_SCHOOL_DISTRICT_QUOTE:Configuration.StudentUrl+"/api/WebsiteQuote",
   GETPRODUCTSTATEGRADES:Configuration.StudentUrl+"/api/Users/GetProductStateGrades",
   ResendEmail:Configuration.StudentUrl+"/api/Users/ResendEmail",
-  GET_SCHOOL_LICENSE:"https://localhost:44393/api/School/GetSchoolLicense",
+  GET_SCHOOL_LICENSE:Configuration.CrmUrl+"/api/School/GetSchoolLicense",
   GET_SCHOOL_PAID_ACCOUNT:Configuration.StudentUrl+"/api/Subscription/GetSchoolPaidAccount",
 }
 

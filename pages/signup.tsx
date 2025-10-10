@@ -281,7 +281,7 @@ const Signup = () => {
             setShowLoader(false);
             showSubmitStep(false);
             setShowExtraFieldFlag(false);
-            if (schoolLicense !== 'CR-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0) {
+            if (schoolLicense === 'CS-FREE' && paidAccounts.length < 2 && signupData.schoolId > 0) {
               setCurrentStep(currentStep + 1);
             } else {
               router.push({
@@ -357,6 +357,7 @@ const Signup = () => {
   const checkEmailExtension = (current_email: string, validEmailExt: any) => {
     let errors: any = {};
     let ext = current_email.split("@");
+    console.log(ext, "sdsd");
     if (
       ext[1] != "" &&
       ext[1] != null &&
@@ -368,7 +369,7 @@ const Signup = () => {
       return true;
     } else if (validEmailExt == null || validEmailExt == "") {
       let arr = COMMONCONSTANT.COMMONEMAILLIST;
-      let emailext = ext[1].trim().toLocaleLowerCase();
+      let emailext = ext[1]?.trim().toLocaleLowerCase();
       if (arr.includes(emailext)) {
         errors.email = "Personal email is not allowed.";
       } else {
@@ -453,7 +454,7 @@ const Signup = () => {
     })
   }
 
-  console.log(signupData);
+  console.log(schoolLicense);
   return (
     <>
       <Head>
@@ -493,7 +494,7 @@ const Signup = () => {
                                 <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
                                 <p>Step 2</p>
                               </div>
-                              {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CR-PREM' && paidAccounts.length < 2 &&
+                              {(schoolLicense === 'CS-FREE' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER  && paidAccounts.length < 2) &&
                                 <div className="d-flex flex-column step-2 ">
                                   <div className="circle">3</div>
                                   <p>Step 3</p>
