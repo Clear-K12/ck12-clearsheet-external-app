@@ -281,7 +281,7 @@ const Signup = () => {
             setShowLoader(false);
             showSubmitStep(false);
             setShowExtraFieldFlag(false);
-            if (schoolLicense === 'CS-FREE' && paidAccounts.length < 2 && signupData.schoolId > 0) {
+            if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0) {
               setCurrentStep(currentStep + 1);
             } else {
               router.push({
@@ -485,7 +485,10 @@ const Signup = () => {
                           <>
                             <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
                             <div className="progress-container">
-                              <div className={`progress ${currentStep > 1 ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER) ? 'w100' : '' : ''}`} id="progress"></div>
+                              <div className={`progress ${currentStep > 1 
+                              ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CS-PREM' && paidAccounts.length < 2
+                              ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER || (schoolLicense !== 'CS-PREM' || paidAccounts.length < 2)) 
+                              ? 'w100' : '' : ''}`} id="progress"></div>
                               <div className="d-flex flex-column justify-content-center">
                                 <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
                                 <p>Step 1</p>
@@ -494,7 +497,7 @@ const Signup = () => {
                                 <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
                                 <p>Step 2</p>
                               </div>
-                              {(schoolLicense === 'CS-FREE' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER  && paidAccounts.length < 2) &&
+                              {(schoolLicense !== 'CS-PREM' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER  && paidAccounts.length < 2) &&
                                 <div className="d-flex flex-column step-2 ">
                                   <div className="circle">3</div>
                                   <p>Step 3</p>
