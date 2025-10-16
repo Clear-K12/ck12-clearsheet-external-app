@@ -64,7 +64,7 @@ const Signup = () => {
     streetAddress: "",
     productId: 2,
     typeOfClassroom: "",
-    gradeId:0
+    gradeId: 0
   };
   const [submitButton, showSubmitStep] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
@@ -93,7 +93,8 @@ const Signup = () => {
   const [schoolLicense, setSchoolLicense] = useState<string>();
   const [paidAccounts, setPaidAccounts] = useState<ISchoolPaidAccount[]>([]);
   const [isExistingSignUp, setIsExistingSignUp] = useState<boolean>(false);
-  
+  const [showLeadModal, setShowLeadModal] = useState<boolean>(false);
+
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
       ...styles,
@@ -118,9 +119,9 @@ const Signup = () => {
   useEffect(() => {
     if (router.query.cc) {
       let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
-      setSignupData({...signupData,email:parsedata.email, gradeId:parsedata.gradeId, typeOfClassroom:parsedata.typeOfClassroom ,firstName:parsedata.firstName, lastName:parsedata.lastName});
+      setSignupData({ ...signupData, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
       setIsExistingSignUp(true);
-      getGradeOptions(parsedata.stateId);     
+      getGradeOptions(parsedata.stateId);
       getSchoolLicense(parsedata.schoolId);
       getSchoolPaidAccount(parsedata.schoolId);
     } else {
@@ -237,7 +238,7 @@ const Signup = () => {
     }
     if (e.name === "gradeId") {
       setSelectedGrade(e);
-      setSignupData({ ...signupData, [e.name]: e.value });     
+      setSignupData({ ...signupData, [e.name]: e.value });
     }
     if (e.name === "typeOfClassroom") {
       setSelectedTypeOfClassroom(e);
@@ -299,13 +300,15 @@ const Signup = () => {
             setShowExtraFieldFlag(false);
             if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0) {
               setCurrentStep(currentStep + 1);
-            } else {
+            } else if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               router.push({
                 pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
                 query: {
                   email: signupData.email
                 }
               }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+            } else {
+              setShowLeadModal(true);
             }
           }
         })
@@ -463,43 +466,43 @@ const Signup = () => {
 
   const nextExistingSignUp = () => {
     let anyerror = false;
-    if(!signupData.gradeId){
+    if (!signupData.gradeId) {
       anyerror = true
-      validationError.gradeId = "Grade is required";      
+      validationError.gradeId = "Grade is required";
     }
-    if(!signupData.typeOfClassroom){
+    if (!signupData.typeOfClassroom) {
       anyerror = true
       validationError.typeOfClassroom = "Type of Classroom is required";
     }
-    if(anyerror){     
+    if (anyerror) {
       setValidationError(validationError);
-    }else{
+    } else {
       setShowLoader(true);
-      CommonService.giveAccessToProduct(signupData.userId,signupData.gradeId,signupData.typeOfClassroom || '').then((resp) => {
-        if(resp){
-          if(schoolLicense !== 'CS-PREM' && paidAccounts.length < 2){
+      CommonService.giveAccessToProduct(signupData.userId, signupData.gradeId, signupData.typeOfClassroom || '').then((resp) => {
+        if (resp) {
+          if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2) {
             setCurrentStep(currentStep + 1);
-          }else{
+          } else {
             window.location.href = COMMONCONSTANT.ROUTEPATH.SiteUrl;
-          }          
-        }else{
+          }
+        } else {
           ToastrService.error("Something went wrong.");
           setTimeout(() => {
             router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
-          },2000)
+          }, 2000)
         }
       }).catch((err) => {
         ToastrService.error("Something went wrong.");
         setTimeout(() => {
           router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
-        },2000)
+        }, 2000)
       })
-      .finally(() => {
-        setShowLoader(false);
-      })
+        .finally(() => {
+          setShowLoader(false);
+        })
     }
   }
-console.log(signupData,"signupData");
+  console.log(signupData, "signupData");
   return (
     <>
       <Head>
@@ -512,26 +515,463 @@ console.log(signupData,"signupData");
       </Head>
       {/* {showLoader && <Loader />} */}
       <ToastContainer />
-      {!isExistingSignUp ? 
-      <div className="site-wrapper">
-        <div className="content content-div">
-          <div className="page-container inner-page-container-div">
-            <div className="signupContainer">
-              <div className="signupContainerInner">
-                <div className="loginTop d-flex justify-content-center align-items-center m-auto">
-                  <div className="singupSection w-100">
-                    <div className="wrapper d-flex flex-wrap">
-                      <div className="w-100">
-                        {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3
-                          ? <div className="mt-5"></div>
-                          :
+      {!isExistingSignUp && !showLeadModal ?
+        <div className="site-wrapper">
+          <div className="content content-div">
+            <div className="page-container inner-page-container-div">
+              <div className="signupContainer">
+                <div className="signupContainerInner">
+                  <div className="loginTop d-flex justify-content-center align-items-center m-auto">
+                    <div className="singupSection w-100">
+                      <div className="wrapper d-flex flex-wrap">
+                        <div className="w-100">
+                          {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3
+                            ? <div className="mt-5"></div>
+                            :
+                            <>
+                              <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
+                              <div className="progress-container">
+                                <div className={`progress ${currentStep > 1
+                                  ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CS-PREM' && paidAccounts.length < 2
+                                    ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER || (schoolLicense !== 'CS-PREM' || paidAccounts.length < 2))
+                                      ? 'w100' : '' : ''}`} id="progress"></div>
+                                <div className="d-flex flex-column justify-content-center">
+                                  <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
+                                  <p>Step 1</p>
+                                </div>
+                                <div className="d-flex flex-column step-2 ">
+                                  <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
+                                  <p>Step 2</p>
+                                </div>
+                                {(schoolLicense !== 'CS-PREM' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && paidAccounts.length < 2) &&
+                                  <div className="d-flex flex-column step-2 ">
+                                    <div className="circle">3</div>
+                                    <p>Step 3</p>
+                                  </div>
+                                }
+                              </div>
+                            </>
+                          }
+                        </div>
+                        {currentStep === 1 ? (
+                          <div className="signup-box">
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6 ">
+                                <label>First Name</label>
+                                <input
+                                  type="text"
+                                  name="firstName"
+                                  id="firstName"
+                                  value={signupData.firstName}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.firstName ? (
+                                  <span className="validation-error">
+                                    {validationError.firstName}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+
+                              <div className="form-group col-md-6">
+                                <label>Last Name</label>
+                                <input
+                                  type="text"
+                                  name="lastName"
+                                  id="lastName"
+                                  value={signupData.lastName}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.lastName ? (
+                                  <span className="validation-error">
+                                    {validationError.lastName}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+
+                            </div>
+
+
+                            <div className="form-row w-100">
+                              <div className="form-group  col-md-6">
+                                <label>State</label>
+                                <div className="">
+                                  <Select
+                                    name="stateId"
+                                    value={selectedState}
+                                    options={selectoptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select State"
+                                    id="stateId"
+                                    styles={colourStyles}
+                                  />
+                                  {note != "" ? (
+                                    <div className="info">{note}</div>
+                                  ) : null}
+                                  {validationError.stateId ? (
+                                    <span className="validation-error">
+                                      {validationError.stateId}
+                                    </span>
+                                  ) : null}
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>District</label>
+                                <div className="">
+                                  <Select
+                                    name="districtId"
+                                    value={selectedDistrict}
+                                    options={districtOptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select District"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.districtId ? (
+                                    <span className="validation-error">
+                                      {validationError.districtId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="form-row w-100">
+                              <div className="form-group col-md-12">
+                                <label>School </label>
+                                <div className="">
+                                  <Select
+                                    name="schoolId"
+                                    value={selectedSchool}
+                                    options={selectschoolOption}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select School"
+                                    styles={colourStyles}
+                                    isDisabled={showExtraFieldFlag}
+                                  />
+                                  {validationError.schoolId ? (
+                                    <span className="validation-error">
+                                      {validationError.schoolId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                {!showExtraFieldFlag ? (
+                                  <div className="info">
+                                    Don’t see your school or district,{" "}
+                                    <span
+                                      className="info-link"
+                                      onClick={showExtraField}
+                                    >
+                                      click here
+                                    </span>{" "}
+                                    to add it
+                                  </div>
+                                ) : null}
+                                {showExtraFieldFlag ? (
+                                  <div className="extrafield">
+                                    <div className="form-row w-100" >
+                                      <div className="form-group col-md-6 ">
+                                        <label>District Name</label>
+                                        <input
+                                          type="text"
+                                          name="districtName"
+                                          id="districtName"
+                                          value={signupData.districtName}
+                                          onChange={handle_filter}
+                                          disabled
+                                        />
+                                        {validationError.districtName ? (
+                                          <span className="validation-error">
+                                            {validationError.districtName}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+
+                                      <div className="form-group col-md-6 ">
+                                        <label>School Name</label>
+                                        <input
+                                          type="text"
+                                          name="schoolName"
+                                          id="schoolName"
+                                          value={signupData.schoolName}
+                                          onChange={handle_filter}
+                                          autoComplete="off"
+                                        />
+                                        {validationError.schoolName ? (
+                                          <span className="validation-error">
+                                            {validationError.schoolName}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="form-row w-100" >
+                                      <div className="form-group col-md-12">
+                                        <label>Street Address</label>
+                                        <input
+                                          type="text"
+                                          name="streetAddress"
+                                          id="streetAddress"
+                                          value={signupData.streetAddress}
+                                          onChange={handle_filter}
+                                          autoComplete="off"
+                                        />
+                                        {validationError.streetAddress ? (
+                                          <span className="validation-error">
+                                            {validationError.streetAddress}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+
+                                      </div>
+                                    </div>
+
+
+                                    {showExtraFieldFlag ? (
+                                      <div className="info">
+                                        If you find your school,{" "}
+                                        <span
+                                          className="info-link"
+                                          onClick={showExtraField}
+                                        >
+                                          click here
+                                        </span>{" "}
+                                        to remove this field.
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                ) : null}
+                              </div>
+                            </div>
+                          </div>) : currentStep === 2 ?
+                          (<div className="signup-box">
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6">
+                                <label>Email</label>
+                                <input
+                                  type="text"
+                                  name="email"
+                                  id="email"
+                                  value={signupData.email}
+                                  onChange={handle_filter}
+                                  onBlur={(e) => {
+                                    checkEmailExtension(
+                                      signupData.email,
+                                      districtEmailExt
+                                    );
+                                  }}
+                                  autoComplete="off"
+                                />
+                                {validationError.email ? (
+                                  <span className="validation-error">
+                                    {validationError.email}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>Role</label>
+                                <div className="">
+                                  <Select
+                                    name="roleId"
+                                    value={selectedRole}
+                                    options={roleOptions}
+                                    onChange={handle_dropdown}
+                                    placeholder="Select Title"
+                                    id="roleId"
+                                    styles={colourStyles}
+                                  />
+                                  {validationError.roleId ? (
+                                    <span className="validation-error">
+                                      {validationError.roleId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                            {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
+                              <div className="form-row w-100 ">
+                                <div className="form-group col-md-6">
+                                  <label>Which Grade do you teach?</label>
+                                  <div className="">
+                                    <Select
+                                      name="gradeId"
+                                      value={selectedGrade}
+                                      options={gradeOptions}
+                                      onChange={handle_dropdown}
+                                      placeholder="Select Title"
+                                      id="gradeId"
+                                      styles={colourStyles}
+                                    />
+                                    {validationError.gradeId ? (
+                                      <span className="validation-error">
+                                        {validationError.gradeId}
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="form-group col-md-6">
+                                  <label>What type of classroom do you teach?</label>
+                                  <div className="">
+                                    <Select
+                                      name="typeOfClassroom"
+                                      value={selectedTypeOfClassroom}
+                                      options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED, name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED, name: "typeOfClassroom" }]}
+                                      onChange={handle_dropdown}
+                                      placeholder="Select Type of Classroom"
+                                      id="typeOfClassroom"
+                                      styles={colourStyles}
+                                    />
+                                    {validationError.typeOfClassroom ? (
+                                      <span className="validation-error">
+                                        {validationError.typeOfClassroom}
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            }
+
+                            <div className="form-row w-100 ">
+                              <div className="form-group col-md-6">
+                                <label>Password</label>
+                                <input
+                                  type="password"
+                                  name="password"
+                                  id="password"
+                                  value={signupData.password}
+                                  onChange={handle_filter}
+                                  onBlur={(e) => {
+                                    checkPassword(signupData.password);
+                                  }}
+                                  autoComplete="off"
+                                />
+                                {validationError.password ? (
+                                  <span className="validation-error">
+                                    {validationError.password}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label>Confirm password </label>
+                                <input
+                                  type="password"
+                                  name="confirm_password"
+                                  id="confirm_password"
+                                  value={signupData.confirm_password}
+                                  onChange={handle_filter}
+                                  autoComplete="off"
+                                />
+                                {validationError.confirm_password ? (
+                                  <span className="validation-error">
+                                    {validationError.confirm_password}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="captcha">
+                              <ReCAPTCHA
+                                ref={recaptchaRef}
+                                sitekey={Configuration.siteKey}
+                                onChange={onChange}
+                              />
+                            </div>
+                          </div>) : currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER
+                          // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
+                          &&
+                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
+                          // : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
+                        }
+                      </div>
+                      {currentStep < 3 && !showLeadModal &&
+                        <div className="row loginFooter">
+                          <div className="col-12 text-center">
+                            {!submitButton ? (
+                              <button
+                                type="button"
+                                className="btn btn-primary "
+                                onClick={next}
+                              >
+                                Next
+                              </button>
+                            ) : (
+                              <div>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary previousBtn"
+                                  onClick={() => {
+                                    showSubmitStep(false);
+                                    setCurrentStep(currentStep - 1)
+                                  }}
+                                >
+                                  Previous
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary"
+                                  onClick={submit}
+                                  disabled={captchaValue ? false : true}
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <CommonMessageModal
+              showMessageModal={showMessageModal}
+              setShowMessageModal={setShowMessageModal}
+              showPropsMessage={true}
+              title={"Verify Your Email"}
+              message={ALERTMESSAGES.VERIFYEMAIL}
+            />
+          </div>
+        </div>
+        : !showLeadModal &&
+        <div className="site-wrapper">
+          <div className="content content-div">
+            <div className="page-container inner-page-container-div">
+              <div className="signupContainer">
+                <div className="signupContainerInner">
+                  <div className="loginTop d-flex justify-content-center align-items-center m-auto">
+                    <div className="singupSection w-100">
+                      <div className="wrapper d-flex flex-wrap">
+                        <div className="w-100">
                           <>
                             <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
                             <div className="progress-container">
-                              <div className={`progress ${currentStep > 1 
-                              ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CS-PREM' && paidAccounts.length < 2
-                              ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER || (schoolLicense !== 'CS-PREM' || paidAccounts.length < 2)) 
-                              ? 'w100' : '' : ''}`} id="progress"></div>
+                              <div className={`progress ${currentStep > 1
+                                ? 'w1000' : ''}`} id="progress"></div>
                               <div className="d-flex flex-column justify-content-center">
                                 <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
                                 <p>Step 1</p>
@@ -540,269 +980,12 @@ console.log(signupData,"signupData");
                                 <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
                                 <p>Step 2</p>
                               </div>
-                              {(schoolLicense !== 'CS-PREM' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER  && paidAccounts.length < 2) &&
-                                <div className="d-flex flex-column step-2 ">
-                                  <div className="circle">3</div>
-                                  <p>Step 3</p>
-                                </div>
-                              }
                             </div>
                           </>
-                        }
-                      </div>
-                      {currentStep === 1 ? (
-                        <div className="signup-box">
-                          <div className="form-row w-100 ">
-                            <div className="form-group col-md-6 ">
-                              <label>First Name</label>
-                              <input
-                                type="text"
-                                name="firstName"
-                                id="firstName"
-                                value={signupData.firstName}
-                                onChange={handle_filter}
-                                autoComplete="off"
-                              />
-                              {validationError.firstName ? (
-                                <span className="validation-error">
-                                  {validationError.firstName}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-
-                            <div className="form-group col-md-6">
-                              <label>Last Name</label>
-                              <input
-                                type="text"
-                                name="lastName"
-                                id="lastName"
-                                value={signupData.lastName}
-                                onChange={handle_filter}
-                                autoComplete="off"
-                              />
-                              {validationError.lastName ? (
-                                <span className="validation-error">
-                                  {validationError.lastName}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-
-                          </div>
-
-
-                          <div className="form-row w-100">
-                            <div className="form-group  col-md-6">
-                              <label>State</label>
-                              <div className="">
-                                <Select
-                                  name="stateId"
-                                  value={selectedState}
-                                  options={selectoptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select State"
-                                  id="stateId"
-                                  styles={colourStyles}
-                                />
-                                {note != "" ? (
-                                  <div className="info">{note}</div>
-                                ) : null}
-                                {validationError.stateId ? (
-                                  <span className="validation-error">
-                                    {validationError.stateId}
-                                  </span>
-                                ) : null}
-                              </div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label>District</label>
-                              <div className="">
-                                <Select
-                                  name="districtId"
-                                  value={selectedDistrict}
-                                  options={districtOptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select District"
-                                  styles={colourStyles}
-                                />
-                                {validationError.districtId ? (
-                                  <span className="validation-error">
-                                    {validationError.districtId}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="form-row w-100">
-                            <div className="form-group col-md-12">
-                              <label>School </label>
-                              <div className="">
-                                <Select
-                                  name="schoolId"
-                                  value={selectedSchool}
-                                  options={selectschoolOption}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select School"
-                                  styles={colourStyles}
-                                  isDisabled={showExtraFieldFlag}
-                                />
-                                {validationError.schoolId ? (
-                                  <span className="validation-error">
-                                    {validationError.schoolId}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                              {!showExtraFieldFlag ? (
-                                <div className="info">
-                                  Don’t see your school or district,{" "}
-                                  <span
-                                    className="info-link"
-                                    onClick={showExtraField}
-                                  >
-                                    click here
-                                  </span>{" "}
-                                  to add it
-                                </div>
-                              ) : null}
-                              {showExtraFieldFlag ? (
-                                <div className="extrafield">
-                                  <div className="form-row w-100" >
-                                    <div className="form-group col-md-6 ">
-                                      <label>District Name</label>
-                                      <input
-                                        type="text"
-                                        name="districtName"
-                                        id="districtName"
-                                        value={signupData.districtName}
-                                        onChange={handle_filter}
-                                        disabled
-                                      />
-                                      {validationError.districtName ? (
-                                        <span className="validation-error">
-                                          {validationError.districtName}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-
-                                    <div className="form-group col-md-6 ">
-                                      <label>School Name</label>
-                                      <input
-                                        type="text"
-                                        name="schoolName"
-                                        id="schoolName"
-                                        value={signupData.schoolName}
-                                        onChange={handle_filter}
-                                        autoComplete="off"
-                                      />
-                                      {validationError.schoolName ? (
-                                        <span className="validation-error">
-                                          {validationError.schoolName}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className="form-row w-100" >
-                                    <div className="form-group col-md-12">
-                                      <label>Street Address</label>
-                                      <input
-                                        type="text"
-                                        name="streetAddress"
-                                        id="streetAddress"
-                                        value={signupData.streetAddress}
-                                        onChange={handle_filter}
-                                        autoComplete="off"
-                                      />
-                                      {validationError.streetAddress ? (
-                                        <span className="validation-error">
-                                          {validationError.streetAddress}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-
-                                    </div>
-                                  </div>
-
-
-                                  {showExtraFieldFlag ? (
-                                    <div className="info">
-                                      If you find your school,{" "}
-                                      <span
-                                        className="info-link"
-                                        onClick={showExtraField}
-                                      >
-                                        click here
-                                      </span>{" "}
-                                      to remove this field.
-                                    </div>
-                                  ) : null}
-                                </div>
-                              ) : null}
-                            </div>
-                          </div>
-                        </div>) : currentStep === 2 ?
-                        (<div className="signup-box">
-                          <div className="form-row w-100 ">
-                            <div className="form-group col-md-6">
-                              <label>Email</label>
-                              <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                value={signupData.email}
-                                onChange={handle_filter}
-                                onBlur={(e) => {
-                                  checkEmailExtension(
-                                    signupData.email,
-                                    districtEmailExt
-                                  );
-                                }}
-                                autoComplete="off"
-                              />
-                              {validationError.email ? (
-                                <span className="validation-error">
-                                  {validationError.email}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label>Role</label>
-                              <div className="">
-                                <Select
-                                  name="roleId"
-                                  value={selectedRole}
-                                  options={roleOptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select Title"
-                                  id="roleId"
-                                  styles={colourStyles}
-                                />
-                                {validationError.roleId ? (
-                                  <span className="validation-error">
-                                    {validationError.roleId}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                          </div>
-
-                          {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
-                            <div className="form-row w-100 ">
+                        </div>
+                        {currentStep === 1 ? (
+                          <div className="signup-box">
+                            <div className="form-row w-100">
                               <div className="form-group col-md-6">
                                 <label>Which Grade do you teach?</label>
                                 <div className="">
@@ -846,238 +1029,64 @@ console.log(signupData,"signupData");
                                 </div>
                               </div>
                             </div>
-                          }
-
-                          <div className="form-row w-100 ">
-                            <div className="form-group col-md-6">
-                              <label>Password</label>
-                              <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                value={signupData.password}
-                                onChange={handle_filter}
-                                onBlur={(e) => {
-                                  checkPassword(signupData.password);
-                                }}
-                                autoComplete="off"
-                              />
-                              {validationError.password ? (
-                                <span className="validation-error">
-                                  {validationError.password}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label>Confirm password </label>
-                              <input
-                                type="password"
-                                name="confirm_password"
-                                id="confirm_password"
-                                value={signupData.confirm_password}
-                                onChange={handle_filter}
-                                autoComplete="off"
-                              />
-                              {validationError.confirm_password ? (
-                                <span className="validation-error">
-                                  {validationError.confirm_password}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="captcha">
-                            <ReCAPTCHA
-                              ref={recaptchaRef}
-                              sitekey={Configuration.siteKey}
-                              onChange={onChange}
-                            />
-                          </div>
-                        </div>) : currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER
+                          </div>) : currentStep === 2
                           // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
                           ?
                           <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                          : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
+                          : <VerifyEmail />
+                        }
+                      </div>
+                      {currentStep < 2 &&
+                        <div className="row loginFooter">
+                          <div className="col-12 text-center">
+                            {!submitButton ? (
+                              <button
+                                type="button"
+                                className="btn btn-primary "
+                                onClick={nextExistingSignUp}
+                              >
+                                Next
+                              </button>
+                            ) : (
+                              <div>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary previousBtn"
+                                  onClick={() => {
+                                    showSubmitStep(false);
+                                    setCurrentStep(currentStep - 1)
+                                  }}
+                                >
+                                  Previous
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary"
+                                  onClick={submit}
+                                  disabled={captchaValue ? false : true}
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       }
                     </div>
-                    {currentStep < 3 &&
-                      <div className="row loginFooter">
-                        <div className="col-12 text-center">
-                          {!submitButton ? (
-                            <button
-                              type="button"
-                              className="btn btn-primary "
-                              onClick={next}
-                            >
-                              Next
-                            </button>
-                          ) : (
-                            <div>
-                              <button
-                                type="button"
-                                className="btn btn-primary previousBtn"
-                                onClick={() => {
-                                  showSubmitStep(false);
-                                  setCurrentStep(currentStep - 1)
-                                }}
-                              >
-                                Previous
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={submit}
-                                disabled={captchaValue ? false : true}
-                              >
-                                Submit
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    }
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <CommonMessageModal
-            showMessageModal={showMessageModal}
-            setShowMessageModal={setShowMessageModal}
-            showPropsMessage={true}
-            title={"Verify Your Email"}
-            message={ALERTMESSAGES.VERIFYEMAIL}
-          />
-        </div>
-      </div>
-      : 
-      <div className="site-wrapper">
-        <div className="content content-div">
-          <div className="page-container inner-page-container-div">
-            <div className="signupContainer">
-              <div className="signupContainerInner">
-                <div className="loginTop d-flex justify-content-center align-items-center m-auto">
-                  <div className="singupSection w-100">
-                    <div className="wrapper d-flex flex-wrap">
-                      <div className="w-100">
-                        <>
-                          <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
-                          <div className="progress-container">
-                            <div className={`progress ${currentStep > 1
-                              ? 'w1000' : ''}`} id="progress"></div>
-                            <div className="d-flex flex-column justify-content-center">
-                              <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
-                              <p>Step 1</p>
-                            </div>
-                            <div className="d-flex flex-column step-2 ">
-                              <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
-                              <p>Step 2</p>
-                            </div>
-                          </div>
-                        </>
-                      </div>
-                      {currentStep === 1 ? (
-                        <div className="signup-box">
-                          <div className="form-row w-100">
-                            <div className="form-group col-md-6">
-                              <label>Which Grade do you teach?</label>
-                              <div className="">
-                                <Select
-                                  name="gradeId"
-                                  value={selectedGrade}
-                                  options={gradeOptions}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select Title"
-                                  id="gradeId"
-                                  styles={colourStyles}
-                                />
-                                {validationError.gradeId ? (
-                                  <span className="validation-error">
-                                    {validationError.gradeId}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label>What type of classroom do you teach?</label>
-                              <div className="">
-                                <Select
-                                  name="typeOfClassroom"
-                                  value={selectedTypeOfClassroom}
-                                  options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED, name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED, name: "typeOfClassroom" }]}
-                                  onChange={handle_dropdown}
-                                  placeholder="Select Type of Classroom"
-                                  id="typeOfClassroom"
-                                  styles={colourStyles}
-                                />
-                                {validationError.typeOfClassroom ? (
-                                  <span className="validation-error">
-                                    {validationError.typeOfClassroom}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>) : currentStep === 2
-                        // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
-                        ?
-                        <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                        : <VerifyEmail /> 
-                      }
-                    </div>
-                    {currentStep < 2 &&
-                      <div className="row loginFooter">
-                        <div className="col-12 text-center">
-                          {!submitButton ? (
-                            <button
-                              type="button"
-                              className="btn btn-primary "
-                              onClick={nextExistingSignUp}
-                            >
-                              Next
-                            </button>
-                          ) : (
-                            <div>
-                              <button
-                                type="button"
-                                className="btn btn-primary previousBtn"
-                                onClick={() => {
-                                  showSubmitStep(false);
-                                  setCurrentStep(currentStep - 1)
-                                }}
-                              >
-                                Previous
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={submit}
-                                disabled={captchaValue ? false : true}
-                              >
-                                Submit
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-      }      
+      }
+
+      {showLeadModal &&
+        <div className="mt-4">
+          <UserLead />
+        </div>
+      }
     </>
   );
 };
