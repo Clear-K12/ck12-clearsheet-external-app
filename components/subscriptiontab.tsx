@@ -17,7 +17,7 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
       }
     });
   }
-console.log(signupData,"kdksdfl");
+
   return (
     <>
       <Head>

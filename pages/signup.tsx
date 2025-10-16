@@ -29,6 +29,8 @@ import UserLead from "@components/userlead";
 import { IProductStateGrades } from "@interface/IProductStateGrades";
 import { SecureService } from "guard/secureService";
 import { ISchoolPaidAccount } from "@interface/ISchoolPaidAccount";
+import { Security } from "guard/security";
+import { IExistingSignup } from "@interface/IExistingSignup";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -47,6 +49,7 @@ const Signup = () => {
   }
   let rowkey = 0;
   let initial_data: UserRegisterData = {
+    userId: 0,
     firstName: "",
     lastName: "",
     stateId: 0,
@@ -60,7 +63,8 @@ const Signup = () => {
     districtName: "",
     streetAddress: "",
     productId: 2,
-    typeOfClassroom: ""
+    typeOfClassroom: "",
+    gradeId:0
   };
   const [submitButton, showSubmitStep] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
@@ -88,6 +92,8 @@ const Signup = () => {
   const [selectedTypeOfClassroom, setSelectedTypeOfClassroom] = useState(null);
   const [schoolLicense, setSchoolLicense] = useState<string>();
   const [paidAccounts, setPaidAccounts] = useState<ISchoolPaidAccount[]>([]);
+  const [isExistingSignUp, setIsExistingSignUp] = useState<boolean>(false);
+  
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
       ...styles,
@@ -107,12 +113,22 @@ const Signup = () => {
       ...base,
       color: "#fff",
     }),
-  };
+  }
+
   useEffect(() => {
-    getStateList();
-    getRoleList();
-    setShowLoader(false);
-  }, []);
+    if (router.query.cc) {
+      let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
+      setSignupData({...signupData,email:parsedata.email, gradeId:parsedata.gradeId, typeOfClassroom:parsedata.typeOfClassroom ,firstName:parsedata.firstName, lastName:parsedata.lastName});
+      setIsExistingSignUp(true);
+      getGradeOptions(parsedata.stateId);     
+      getSchoolLicense(parsedata.schoolId);
+      getSchoolPaidAccount(parsedata.schoolId);
+    } else {
+      getStateList();
+      getRoleList();
+      setShowLoader(false);
+    }
+  }, [router.query]);
   const getStateList = () => {
     let state_option_list: Array<type> = [];
     CommonService.get_state_listByActive(true).then((resp: StateList[]) => {
@@ -221,7 +237,7 @@ const Signup = () => {
     }
     if (e.name === "gradeId") {
       setSelectedGrade(e);
-      setSignupData({ ...signupData, [e.name]: e.value });
+      setSignupData({ ...signupData, [e.name]: e.value });     
     }
     if (e.name === "typeOfClassroom") {
       setSelectedTypeOfClassroom(e);
@@ -420,15 +436,6 @@ const Signup = () => {
         email: signupData.email
       }
     }, COMMONCONSTANT.ROUTEPATH.VERIFY);
-    // ToastrService.success("Free licenese activated")
-    // setShowMessageModal(true);
-    // reset_form();
-    // setCurrentStep(1);
-    // setSignupData(initial_data);
-    // setTimeout(() => {
-    //   router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
-
-    // }, 2000)
   }
 
   const getGradeOptions = (stateId: number) => {
@@ -454,7 +461,45 @@ const Signup = () => {
     })
   }
 
-  console.log(schoolLicense);
+  const nextExistingSignUp = () => {
+    let anyerror = false;
+    if(!signupData.gradeId){
+      anyerror = true
+      validationError.gradeId = "Grade is required";      
+    }
+    if(!signupData.typeOfClassroom){
+      anyerror = true
+      validationError.typeOfClassroom = "Type of Classroom is required";
+    }
+    if(anyerror){     
+      setValidationError(validationError);
+    }else{
+      setShowLoader(true);
+      CommonService.giveAccessToProduct(signupData.userId,signupData.gradeId,signupData.typeOfClassroom || '').then((resp) => {
+        if(resp){
+          if(schoolLicense !== 'CS-PREM' && paidAccounts.length < 2){
+            setCurrentStep(currentStep + 1);
+          }else{
+            window.location.href = COMMONCONSTANT.ROUTEPATH.SiteUrl;
+          }          
+        }else{
+          ToastrService.error("Something went wrong.");
+          setTimeout(() => {
+            router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
+          },2000)
+        }
+      }).catch((err) => {
+        ToastrService.error("Something went wrong.");
+        setTimeout(() => {
+          router.push(COMMONCONSTANT.ROUTEPATH.SIGNUP);
+        },2000)
+      })
+      .finally(() => {
+        setShowLoader(false);
+      })
+    }
+  }
+console.log(signupData,"signupData");
   return (
     <>
       <Head>
@@ -467,16 +512,14 @@ const Signup = () => {
       </Head>
       {/* {showLoader && <Loader />} */}
       <ToastContainer />
+      {!isExistingSignUp ? 
       <div className="site-wrapper">
         <div className="content content-div">
-
           <div className="page-container inner-page-container-div">
-
             <div className="signupContainer">
               <div className="signupContainerInner">
                 <div className="loginTop d-flex justify-content-center align-items-center m-auto">
                   <div className="singupSection w-100">
-
                     <div className="wrapper d-flex flex-wrap">
                       <div className="w-100">
                         {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3
@@ -774,7 +817,7 @@ const Signup = () => {
                                   />
                                   {validationError.gradeId ? (
                                     <span className="validation-error">
-                                      {validationError.roleId}
+                                      {validationError.gradeId}
                                     </span>
                                   ) : (
                                     ""
@@ -793,9 +836,9 @@ const Signup = () => {
                                     id="typeOfClassroom"
                                     styles={colourStyles}
                                   />
-                                  {validationError.gradeId ? (
+                                  {validationError.typeOfClassroom ? (
                                     <span className="validation-error">
-                                      {validationError.roleId}
+                                      {validationError.typeOfClassroom}
                                     </span>
                                   ) : (
                                     ""
@@ -911,6 +954,130 @@ const Signup = () => {
           />
         </div>
       </div>
+      : 
+      <div className="site-wrapper">
+        <div className="content content-div">
+          <div className="page-container inner-page-container-div">
+            <div className="signupContainer">
+              <div className="signupContainerInner">
+                <div className="loginTop d-flex justify-content-center align-items-center m-auto">
+                  <div className="singupSection w-100">
+                    <div className="wrapper d-flex flex-wrap">
+                      <div className="w-100">
+                        <>
+                          <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
+                          <div className="progress-container">
+                            <div className={`progress ${currentStep > 1
+                              ? 'w1000' : ''}`} id="progress"></div>
+                            <div className="d-flex flex-column justify-content-center">
+                              <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
+                              <p>Step 1</p>
+                            </div>
+                            <div className="d-flex flex-column step-2 ">
+                              <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
+                              <p>Step 2</p>
+                            </div>
+                          </div>
+                        </>
+                      </div>
+                      {currentStep === 1 ? (
+                        <div className="signup-box">
+                          <div className="form-row w-100">
+                            <div className="form-group col-md-6">
+                              <label>Which Grade do you teach?</label>
+                              <div className="">
+                                <Select
+                                  name="gradeId"
+                                  value={selectedGrade}
+                                  options={gradeOptions}
+                                  onChange={handle_dropdown}
+                                  placeholder="Select Title"
+                                  id="gradeId"
+                                  styles={colourStyles}
+                                />
+                                {validationError.gradeId ? (
+                                  <span className="validation-error">
+                                    {validationError.gradeId}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label>What type of classroom do you teach?</label>
+                              <div className="">
+                                <Select
+                                  name="typeOfClassroom"
+                                  value={selectedTypeOfClassroom}
+                                  options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED, name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED, name: "typeOfClassroom" }]}
+                                  onChange={handle_dropdown}
+                                  placeholder="Select Type of Classroom"
+                                  id="typeOfClassroom"
+                                  styles={colourStyles}
+                                />
+                                {validationError.typeOfClassroom ? (
+                                  <span className="validation-error">
+                                    {validationError.typeOfClassroom}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>) : currentStep === 2
+                        // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
+                        ?
+                        <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
+                        : <VerifyEmail /> 
+                      }
+                    </div>
+                    {currentStep < 2 &&
+                      <div className="row loginFooter">
+                        <div className="col-12 text-center">
+                          {!submitButton ? (
+                            <button
+                              type="button"
+                              className="btn btn-primary "
+                              onClick={nextExistingSignUp}
+                            >
+                              Next
+                            </button>
+                          ) : (
+                            <div>
+                              <button
+                                type="button"
+                                className="btn btn-primary previousBtn"
+                                onClick={() => {
+                                  showSubmitStep(false);
+                                  setCurrentStep(currentStep - 1)
+                                }}
+                              >
+                                Previous
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={submit}
+                                disabled={captchaValue ? false : true}
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      }      
     </>
   );
 };

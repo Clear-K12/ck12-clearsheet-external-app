@@ -16,6 +16,7 @@ APICONSTANT = {
   ResendEmail:Configuration.StudentUrl+"/api/Users/ResendEmail",
   GET_SCHOOL_LICENSE:Configuration.CrmUrl+"/api/School/GetSchoolLicense",
   GET_SCHOOL_PAID_ACCOUNT:Configuration.StudentUrl+"/api/Subscription/GetSchoolPaidAccount",
+  GIVE_ACCESS_TO_PRODUCT:"https://localhost:7169/api/Subscription/GiveAccessToProduct",
 }
 
 export default APICONSTANT;

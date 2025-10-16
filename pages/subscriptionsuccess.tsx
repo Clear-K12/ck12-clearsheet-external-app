@@ -24,15 +24,12 @@ const SubscriptionSuccess = () => {
         // setShowContent(true);
         let reqobj = {
           subscriptionId: 2,
-          userId: 0,
+          userId: user_data.userId,
           name: user_data.firstName + ' ' + user_data.lastName,
           email: user_data.email,
           intent: setup_intent
         }
         CommonService.add_subscription(reqobj).then(async () => {
-          // setTimeout(() => {
-          //   window.location.href = COMMONCONSTANT.ROUTEPATH.AFTERSUBSCRIPTION;
-          // }, 1000);
           router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
         }).catch((e)=>{
           ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");

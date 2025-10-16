@@ -22,7 +22,8 @@ export const CommonService = {
   GetProductStateGrades,
   resendEmail,
   getSchoolLicense,
-  getSchoolPaidAccount
+  getSchoolPaidAccount,
+  giveAccessToProduct
 };
 function get_district_list(stateid: number) {
   let promise = new Promise((resolve, reject) => {
@@ -178,4 +179,15 @@ function getSchoolPaidAccount(school_id:number){
     })
   })
   return promise as Promise<ISchoolPaidAccount[]>;
+}
+
+function giveAccessToProduct(userId:number,gradeId:number,typeOfClassroom:string){
+  let promise = new Promise((resolve, reject) => {
+    axios.post(APICONSTANT.GIVE_ACCESS_TO_PRODUCT, {userId:userId,gradeId:gradeId,classRoomType:typeOfClassroom}).then(resp => {
+      resolve(resp.data)
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+  return promise as Promise<number>;
 }
