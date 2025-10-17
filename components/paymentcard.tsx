@@ -18,6 +18,7 @@ const PaymentCard = (props: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [validationError,setValidationError] = useState<{cardHolderName:string}>({cardHolderName:''})
   const [extraFields,setExtraFields] = useState<{cardHolderName:string}>({cardHolderName:''});
+  
   const handle_submit = async (event: any) => {
     event.preventDefault();
     if (!stripe || !elements) {

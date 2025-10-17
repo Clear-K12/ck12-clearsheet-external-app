@@ -1,6 +1,7 @@
 
 import ALERTMESSAGES from "@constants/alertMessages";
 import COMMONCONSTANT from "@constants/commonConstant";
+import { Configuration } from "@environment/startUp";
 import { ToastrService } from "@services/Toastr";
 import { CommonService } from "@services/api/common_service";
 import { Security } from "guard/security";
@@ -29,8 +30,13 @@ const SubscriptionSuccess = () => {
           email: user_data.email,
           intent: setup_intent
         }
+        debugger;
         CommonService.add_subscription(reqobj).then(async () => {
-          router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
+          if(user_data.userId > 0){
+            window.location.href = Configuration.LoginUrl;
+          }else{
+            router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
+          }          
         }).catch((e)=>{
           ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");
         });

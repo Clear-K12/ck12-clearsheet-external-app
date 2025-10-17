@@ -119,7 +119,7 @@ const Signup = () => {
   useEffect(() => {
     if (router.query.cc) {
       let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
-      setSignupData({ ...signupData, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
+      setSignupData({ ...signupData,userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
       setIsExistingSignUp(true);
       getGradeOptions(parsedata.stateId);
       getSchoolLicense(parsedata.schoolId);
@@ -478,12 +478,16 @@ const Signup = () => {
       setValidationError(validationError);
     } else {
       setShowLoader(true);
+      console.log(signupData, "signupData");
+      debugger;
       CommonService.giveAccessToProduct(signupData.userId, signupData.gradeId, signupData.typeOfClassroom || '').then((resp) => {
         if (resp) {
           if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2) {
+            debugger
             setCurrentStep(currentStep + 1);
           } else {
-            window.location.href = COMMONCONSTANT.ROUTEPATH.SiteUrl;
+            debugger
+            window.location.href = Configuration.LoginUrl;
           }
         } else {
           ToastrService.error("Something went wrong.");
