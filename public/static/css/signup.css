@@ -453,11 +453,12 @@
     align-items: stretch;
     justify-content: stretch;
     position: relative;
-    background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/underwatermath/underwater_plants.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png);
+    /* background-image: url(https://assets.underwatermath.com/underwatermath/page_content_top.png), url(https://assets.underwatermath.com/underwatermath/underwatermath/underwater_plants.png), url(https://assets.underwatermath.com/underwatermath/sea_bottom.png); */
     background-position: top, bottom, bottom;
     background-size: contain, contain, cover;
     background-repeat: no-repeat, no-repeat, no-repeat;
     overflow: hidden;
+    height: 100%;
 }
 
 .content-back {
@@ -609,13 +610,13 @@
 }
 
 
-.content .page-container {
-    
+.content .page-container {    
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: center;
     z-index: 1;
+    height: 100%;
 }
 
 .page-container .page {
@@ -1116,16 +1117,31 @@ h3.heading {
 
 
 /* Verify Email Section Start*/
+body:has(.verification-container){
+    background-image: url(https://dev-ck12-auth.azurewebsites.net/Content/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    min-height: 100vh;
+}
 .verification-container {
     border-radius: 7px;
-    border: 1px solid #D9D9D9;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) -0.17%, rgba(255, 243, 253, 0.90) 103.92%);
+    border: 1px solid #ffbaf5;
+    background: linear-gradient(359deg, rgba(255, 255, 255, 0.90) -0.17%, rgba(255, 243, 253, 0.90) 103.92%);
     display: flex;
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
     padding: 24px 30px;
     gap: 35px;
     overflow: hidden;
+    margin: 0 auto;
+    border-top-width: 10px;
+}
+
+.verification-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .app-img {
@@ -1135,9 +1151,11 @@ h3.heading {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 8px 8px 0 0;
+    border-bottom: 3px solid rgb(253 124 234);
     background: #FFF;
+    min-width: 310px;
+    height: 310px;
 }
 
 .verification-content h1 {
@@ -1153,10 +1171,10 @@ h3.heading {
 }
 
 .intro-text {
-    color: #F61BDA;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
+    color: #2f2e40;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
     line-height: normal;
     text-transform: capitalize;
 }
@@ -1170,15 +1188,15 @@ h3.heading {
     letter-spacing: 0.16px;
 }
 
-.support-box {
+/* .support-box {
     border-radius: 6px;
-    border: 1px solid rgba(250, 82, 228, 0.20);
-    background: #FFE8FC;
+    border: 1px solid rgb(250 82 228 / 0%);
+    background: #fff1fd;
     display: flex;
-    padding: 12px 14px;
+    padding: 16px;
     align-items: center;
-    gap: 10px;
-}
+    gap: 3px;
+} */
 
 .support-box p {
     color: #495057;
@@ -1194,6 +1212,21 @@ h3.heading {
 
 .support-box a:hover {
     text-decoration: underline;
+}
+
+.support-box button {
+    background-color: #151617;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 140px;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
 }
 
 @media (max-width: 650px) {
