@@ -298,7 +298,7 @@ const Signup = () => {
             setShowLoader(false);
             showSubmitStep(false);
             setShowExtraFieldFlag(false);
-            if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0) {
+            if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               setCurrentStep(currentStep + 1);
             } else if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               router.push({
