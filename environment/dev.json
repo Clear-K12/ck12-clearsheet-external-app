@@ -2,7 +2,7 @@
   "configuration": {    
     "CrmUrl": "https://dev-ck12-crm-api-f7awdshuemhrgkg6.centralus-01.azurewebsites.net",
     "ImageUrl": "https://devstorageassets.blob.core.windows.net/clearlearning/",
-    "StudentUrl":"https://dev-ck12-clearssheet-api.azurewebsites.net",
+    "StudentUrl":"https://dev-ck12-clearssheet-api.azurewebsites.net/",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://devclclearsheet.z19.web.core.windows.net/login",

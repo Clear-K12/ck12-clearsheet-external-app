@@ -2,11 +2,11 @@
   "configuration": {
     "CrmUrl":"https://prod-ck12-crm-api.azurewebsites.net/" ,
     "ImageUrl":"https://prod-ck12-clearsheet-api.azurewebsites.net/",
-    "StudentUrl":"https://prod-ck12-clearsheet-api.azurewebsites.net",
+    "StudentUrl":"https://cs.api.cleark12.com",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://cs.cleark12.com/login",
-    "StripePublicKey":"pk_test_51P4PRn1nkYoNSGoCkVdAwmw6RAzQlrlt1GJA7U70pUIlrpUBaFN0REZMVeguwiZveUvlZbTdZEXXlDd6f5oLYNgI00CyNATj6C",
+    "StripePublicKey":"pk_live_51N8VF7EVRV0jjDOcsEAZ9TrLRIurIB12qgNbiWzygT4l5PlsDXGJXXWo7igJS2phEbI9dZ27q7qza5o8TaRNo9rO00mqvkFuce",
     "SiteUrl":"https://prodclcsexternalapp.z19.web.core.windows.net/",
     "ProductId":2
   }

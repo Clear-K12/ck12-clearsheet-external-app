@@ -33,6 +33,7 @@ export interface ReqInsertData{
     districtName:string
 }
 export interface UserRegisterData{
+    userId: number,
     firstName:string,
     lastName:string,
     stateId: number,
@@ -45,5 +46,7 @@ export interface UserRegisterData{
     schoolName: string,
     districtName: string,
     streetAddress: string,
-    productId: number
+    productId: number,
+    gradeId: number,
+    typeOfClassroom?: string
 }
