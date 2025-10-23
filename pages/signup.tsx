@@ -24,13 +24,13 @@ import { useRouter } from "next/router";
 import Subscription from "@components/subscriptiontab";
 import SubscriptionTab from "@components/subscriptiontab";
 import ITrialData from "@interface/ITrialData";
-import VerifyEmail from "@components/verifyemail";
 import UserLead from "@components/userlead";
 import { IProductStateGrades } from "@interface/IProductStateGrades";
 import { SecureService } from "guard/secureService";
 import { ISchoolPaidAccount } from "@interface/ISchoolPaidAccount";
 import { Security } from "guard/security";
 import { IExistingSignup } from "@interface/IExistingSignup";
+import VerifyEmail from "@components/verifyemail";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -94,6 +94,7 @@ const Signup = () => {
   const [paidAccounts, setPaidAccounts] = useState<ISchoolPaidAccount[]>([]);
   const [isExistingSignUp, setIsExistingSignUp] = useState<boolean>(false);
   const [showLeadModal, setShowLeadModal] = useState<boolean>(false);
+  const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
 
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
@@ -119,7 +120,7 @@ const Signup = () => {
   useEffect(() => {
     if (router.query.cc) {
       let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
-      setSignupData({ ...signupData,userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
+      setSignupData({ ...signupData, userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
       setIsExistingSignUp(true);
       getGradeOptions(parsedata.stateId);
       getSchoolLicense(parsedata.schoolId);
@@ -301,12 +302,13 @@ const Signup = () => {
             if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               setCurrentStep(currentStep + 1);
             } else if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
-              router.push({
-                pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
-                query: {
-                  email: signupData.email
-                }
-              }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+              // router.push({
+              //   pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+              //   query: {
+              //     email: signupData.email
+              //   }
+              // }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+              setShowVerifyEmail(true);
             } else {
               setShowLeadModal(true);
             }
@@ -433,12 +435,13 @@ const Signup = () => {
   };
 
   const after_set_free = () => {
-    router.push({
-      pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
-      query: {
-        email: signupData.email
-      }
-    }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+    // router.push({
+    //   pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+    //   query: {
+    //     email: signupData.email
+    //   }
+    // }, COMMONCONSTANT.ROUTEPATH.VERIFY);
+    setShowVerifyEmail(true);
   }
 
   const getGradeOptions = (stateId: number) => {
@@ -519,7 +522,7 @@ const Signup = () => {
       </Head>
       {/* {showLoader && <Loader />} */}
       <ToastContainer />
-      {!isExistingSignUp && !showLeadModal ?
+      {!isExistingSignUp && !showLeadModal && !showVerifyEmail ?
         <div className="site-wrapper">
           <div className="content content-div">
             <div className="page-container inner-page-container-div">
@@ -911,7 +914,7 @@ const Signup = () => {
                           // : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
                         }
                       </div>
-                      {currentStep < 3 && !showLeadModal &&
+                      {currentStep < 3 && !showLeadModal && !showVerifyEmail &&
                         <div className="row loginFooter">
                           <div className="col-12 text-center">
                             {!submitButton ? (
@@ -961,7 +964,7 @@ const Signup = () => {
             />
           </div>
         </div>
-        : !showLeadModal &&
+        : !showLeadModal && !showVerifyEmail &&
         <div className="site-wrapper">
           <div className="content content-div">
             <div className="page-container inner-page-container-div">
@@ -1034,10 +1037,9 @@ const Signup = () => {
                               </div>
                             </div>
                           </div>) : currentStep === 2
-                          // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
-                          ?
-                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                          : <VerifyEmail />
+                        // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
+                        &&
+                        <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
                         }
                       </div>
                       {currentStep < 2 &&
@@ -1089,6 +1091,12 @@ const Signup = () => {
       {showLeadModal &&
         <div className="mt-4">
           <UserLead />
+        </div>
+      }
+      {
+        showVerifyEmail &&
+        <div className="mt-4">
+          <VerifyEmail email={signupData.email} />
         </div>
       }
     </>

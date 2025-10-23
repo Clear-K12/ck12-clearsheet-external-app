@@ -1,7 +1,42 @@
 import { Configuration } from "@environment/startUp";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { ToastrService } from "@services/Toastr";
+import { SecureService } from "guard/secureService";
+import { CommonService } from "@services/api/common_service";
+type Props = {
+  email: string;
+}
+const VerifyEmail = ({email}: Props) => {
+  // const [email, setEmail] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    // const email: any = SecureService.encryptgetItem('email');
+    if (!email || email === 'undefined' || email === 'null' || email === '') {
+     window.location.href = "/signup";
+    }
+    // else{     
+    //   setEmail(email);
+    // }
+    return () => {
+      SecureService.storageRemove('email');
+    };
+  }, [email]);
 
-const VerifyEmail = () => {
+  const resendEmail = () => {
+    setLoading(true);
+    CommonService.resendEmail(email).then((resp) => {
+      if (resp) {
+        ToastrService.success("Your email has been sent successfully. Please check your inbox.");
+        SecureService.storageRemove('email');
+      } else {
+        ToastrService.error("Something went wrong");
+      }
+      setLoading(false);
+    });
+  }
+ 
   return (
     <>
       <Head>
@@ -11,7 +46,9 @@ const VerifyEmail = () => {
           key="signupcss"
         ></link>
       </Head>
-      <div className="text-center w-100"><img src={Configuration.ImageUrl+'ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
+      {email &&
+      <>
+      <div className="text-center w-100  pt-4"><img src={Configuration.ImageUrl+'ClearSheetAppAsset/clearsheet/clearLogo.svg'}></img></div>
       <div className="verification-container mt-4">
         <div className="illustration-container">
           <div className="app-img">
@@ -69,20 +106,25 @@ const VerifyEmail = () => {
         </div>
 
         <div className="verification-content">
-          <p className="intro-text">{"Verify your email."}</p>
+          <p className="intro-text">Prove You’re You (Real Fast)</p>
 
-          <h1>{"You've got the keys"}<br />to ClearSheets Beta... almost.</h1>
+          {/* <h1>{"You've got the keys"}<br />to ClearSheets Beta... almost.</h1> */}
 
           <p className="instructions">
-            {"Check your email and click the verify email link to unlock everything we've got — full access, no         holding back."}
+          A verify link is waiting in your inbox. Click “<strong>Verify</strong>” and we’ll roll out the red carpet
           </p>
 
-          <div className="support-box">
-            <p>Problems getting the email?<br />
-              Email <a href="mailto:hi@cleark12.com">hi@cleark12.com</a> for support.</p>
+          <div className="support-box flex-column align-items-start">
+            <p>
+            <b className="mb-0">Problems getting the email? </b> <br />
+               Email <a href="mailto:hi@cleark12.com">hi@cleark12.com</a> for support.
+            </p>
+            <button onClick={resendEmail} className={`${loading ? 'resend-blur' : ''}`} disabled={loading}>{loading ? 'Resending...' : 'Resend'}</button>
           </div>
         </div>
       </div>
+      </>
+      }
     </>
   )
 }

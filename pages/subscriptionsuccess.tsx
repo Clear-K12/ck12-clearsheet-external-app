@@ -1,4 +1,5 @@
 
+import VerifyEmail from "@components/verifyemail";
 import ALERTMESSAGES from "@constants/alertMessages";
 import COMMONCONSTANT from "@constants/commonConstant";
 import { Configuration } from "@environment/startUp";
@@ -17,25 +18,26 @@ const SubscriptionSuccess = () => {
   const router = useRouter();
   const { setup_intent, cc } = router.query;
   const [showContent,setShowContent] = useState<boolean>(false);
+  const [email,setEmail] = useState<string>('');
   useEffect(() => {
     if (cc) {
       let user_parse = JSON.parse(Security.decryption(cc?.toString()));
       let user_data = user_parse.userData;
-      if (user_data && setup_intent) {
-        // setShowContent(true);
+      setEmail(user_data.email);
+      if (user_data && setup_intent) {        
         let reqobj = {
           subscriptionId: 2,
           userId: user_data.userId,
           name: user_data.firstName + ' ' + user_data.lastName,
           email: user_data.email,
           intent: setup_intent
-        }
-        debugger;
+        }        
         CommonService.add_subscription(reqobj).then(async () => {
           if(user_data.userId > 0){
             window.location.href = Configuration.LoginUrl;
           }else{
-            router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
+            setShowContent(true);
+            // router.push(COMMONCONSTANT.ROUTEPATH.VERIFY);
           }          
         }).catch((e)=>{
           ToastrService.error(ALERTMESSAGES.DEFAULT+" login to your account and activate subscription from account settings");
@@ -51,7 +53,8 @@ const SubscriptionSuccess = () => {
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
       </Head>
       {showContent &&  <div>
-        <DynamicSubscriptionModal />
+        {/* <DynamicSubscriptionModal /> */}
+        <VerifyEmail email={email} />
       </div>}     
       <ToastContainer limit={1} />
     </>

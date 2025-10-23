@@ -7,7 +7,7 @@
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
     "LoginUrl": "https://devclclearsheet.z19.web.core.windows.net/login",
     "StripePublicKey":"pk_test_51P4PRn1nkYoNSGoCkVdAwmw6RAzQlrlt1GJA7U70pUIlrpUBaFN0REZMVeguwiZveUvlZbTdZEXXlDd6f5oLYNgI00CyNATj6C",
-    "SiteUrl":"https://devclcsexternalapp.z19.web.core.windows.net/",
+    "SiteUrl":"http://localhost:3000/",
     "ProductId":2
   }
 }
