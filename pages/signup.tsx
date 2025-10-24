@@ -481,7 +481,6 @@ const Signup = () => {
       setValidationError(validationError);
     } else {
       setShowLoader(true);
-      window.parent.location.href = Configuration.LoginUrl;
       CommonService.giveAccessToProduct(signupData.userId, signupData.gradeId, signupData.typeOfClassroom || '').then((resp) => {
         if (resp) {          
           if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2) {
