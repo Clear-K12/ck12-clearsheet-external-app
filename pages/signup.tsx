@@ -30,7 +30,6 @@ import { SecureService } from "guard/secureService";
 import { ISchoolPaidAccount } from "@interface/ISchoolPaidAccount";
 import { Security } from "guard/security";
 import { IExistingSignup } from "@interface/IExistingSignup";
-import VerifyEmail from "@components/verifyemail";
 const Signup = () => {
   let router = useRouter();
   let recaptchaRef: any = React.createRef();
@@ -94,7 +93,7 @@ const Signup = () => {
   const [paidAccounts, setPaidAccounts] = useState<ISchoolPaidAccount[]>([]);
   const [isExistingSignUp, setIsExistingSignUp] = useState<boolean>(false);
   const [showLeadModal, setShowLeadModal] = useState<boolean>(false);
-  const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
+
 
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
@@ -118,8 +117,10 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if (router.query.cc) {
-      let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
+    const params = new URLSearchParams(window.location.search);
+    const cc = params.get('cc');
+    if (cc) {
+      let parsedata = JSON.parse(Security.decryption(cc));
       setSignupData({ ...signupData, userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
       setIsExistingSignUp(true);
       getGradeOptions(parsedata.stateId);
@@ -130,7 +131,8 @@ const Signup = () => {
       getRoleList();
       setShowLoader(false);
     }
-  }, [router.query]);
+  }, []);
+
   const getStateList = () => {
     let state_option_list: Array<type> = [];
     CommonService.get_state_listByActive(true).then((resp: StateList[]) => {
@@ -302,13 +304,12 @@ const Signup = () => {
             if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               setCurrentStep(currentStep + 1);
             } else if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
-              // router.push({
-              //   pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
-              //   query: {
-              //     email: signupData.email
-              //   }
-              // }, COMMONCONSTANT.ROUTEPATH.VERIFY);
-              setShowVerifyEmail(true);
+              router.push({
+                pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+                query: {
+                  email: signupData.email
+                }
+              }, COMMONCONSTANT.ROUTEPATH.VERIFY);
             } else {
               setShowLeadModal(true);
             }
@@ -435,13 +436,12 @@ const Signup = () => {
   };
 
   const after_set_free = () => {
-    // router.push({
-    //   pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
-    //   query: {
-    //     email: signupData.email
-    //   }
-    // }, COMMONCONSTANT.ROUTEPATH.VERIFY);
-    setShowVerifyEmail(true);
+    router.push({
+      pathname: COMMONCONSTANT.ROUTEPATH.VERIFY,
+      query: {
+        email: signupData.email
+      }
+    }, COMMONCONSTANT.ROUTEPATH.VERIFY);
   }
 
   const getGradeOptions = (stateId: number) => {
@@ -481,16 +481,13 @@ const Signup = () => {
       setValidationError(validationError);
     } else {
       setShowLoader(true);
-      console.log(signupData, "signupData");
-      debugger;
+      window.parent.location.href = Configuration.LoginUrl;
       CommonService.giveAccessToProduct(signupData.userId, signupData.gradeId, signupData.typeOfClassroom || '').then((resp) => {
-        if (resp) {
+        if (resp) {          
           if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2) {
-            debugger
             setCurrentStep(currentStep + 1);
           } else {
-            debugger
-            window.location.href = Configuration.LoginUrl;
+            window.parent.location.href = COMMONCONSTANT.ROUTEPATH.LOGINURL;
           }
         } else {
           ToastrService.error("Something went wrong.");
@@ -522,7 +519,7 @@ const Signup = () => {
       </Head>
       {/* {showLoader && <Loader />} */}
       <ToastContainer />
-      {!isExistingSignUp && !showLeadModal && !showVerifyEmail ?
+      {!isExistingSignUp && !showLeadModal ?
         <div className="site-wrapper">
           <div className="content content-div">
             <div className="page-container inner-page-container-div">
@@ -914,7 +911,7 @@ const Signup = () => {
                           // : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
                         }
                       </div>
-                      {currentStep < 3 && !showLeadModal && !showVerifyEmail &&
+                      {currentStep < 3 && !showLeadModal &&
                         <div className="row loginFooter">
                           <div className="col-12 text-center">
                             {!submitButton ? (
@@ -964,7 +961,7 @@ const Signup = () => {
             />
           </div>
         </div>
-        : !showLeadModal && !showVerifyEmail &&
+        : !showLeadModal &&
         <div className="site-wrapper">
           <div className="content content-div">
             <div className="page-container inner-page-container-div">
@@ -1091,12 +1088,6 @@ const Signup = () => {
       {showLeadModal &&
         <div className="mt-4">
           <UserLead />
-        </div>
-      }
-      {
-        showVerifyEmail &&
-        <div className="mt-4">
-          <VerifyEmail email={signupData.email} />
         </div>
       }
     </>

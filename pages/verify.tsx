@@ -5,24 +5,24 @@ import { useRouter } from "next/router";
 import { ToastrService } from "@services/Toastr";
 import { SecureService } from "guard/secureService";
 import { CommonService } from "@services/api/common_service";
-type Props = {
-  email: string;
-}
-const VerifyEmail = ({email}: Props) => {
-  // const [email, setEmail] = useState<string>('');
+import { ToastContainer } from "react-toastify";
+
+const VerifyEmail = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    // const email: any = SecureService.encryptgetItem('email');
-    if (!email || email === 'undefined' || email === 'null' || email === '') {
+    const useremail: any = SecureService.encryptgetItem('email');
+    if (!useremail || useremail === 'undefined' || useremail === 'null' || useremail === '') {
      window.location.href = "/signup";
     }
-    // else{     
-    //   setEmail(email);
-    // }
+    else{     
+      setEmail(useremail);
+    }
     return () => {
       SecureService.storageRemove('email');
     };
-  }, [email]);
+  }, []);
 
   const resendEmail = () => {
     setLoading(true);
@@ -123,6 +123,7 @@ const VerifyEmail = ({email}: Props) => {
           </div>
         </div>
       </div>
+      <ToastContainer limit={1} />
       </>
       }
     </>
