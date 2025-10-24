@@ -40,22 +40,19 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
           <div className="pricing-plan-wrap mx-auto">
             <div className="my-account mb-4">
               <div className="justify-content-between">
-                <div className="row">
-                  <div className="col-md-6">
+                <div className="subscripion-flex">
                     <div className="subscripion-box">
                       <h5 className="f-16 fw-600">Free <span className="fw-300">(Limited Features)</span></h5>
                       <span className="g-price">$0</span>
                       <p className="grey-text bullet-custom">
                       3 Free Lessons Up Front </p>
                       <p className="grey-text bullet-custom">1 Free Lesson Monthly Thereafter.</p>
-                      <p className="grey-text bullet-custom">Full Access to Most Features
+                      <p className="grey-text bullet-custom">Access to Most Features
                       </p>
                       <button className="btn getstarted-btn cursor-pointer" onClick={after_set_free}>
                         Get Started
                       </button>
                     </div>
-                  </div>
-                  <div className="col-md-6">
                     <div className="subscripion-box classcade-pro">
                       <h5 className="d-flex align-items-center f-16 fw-600">
                         <img
@@ -79,7 +76,6 @@ const SubscriptionTab = ({signupData,after_set_free}:Props) => {
                         Upgrade to Clearly a Pro
                       </button>                      
                     </div>
-                  </div>
                 </div>
               </div>
             </div>
