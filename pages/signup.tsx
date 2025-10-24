@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 import Subscription from "@components/subscriptiontab";
 import SubscriptionTab from "@components/subscriptiontab";
 import ITrialData from "@interface/ITrialData";
-import VerifyEmail from "@components/verifyemail";
 import UserLead from "@components/userlead";
 import { IProductStateGrades } from "@interface/IProductStateGrades";
 import { SecureService } from "guard/secureService";
@@ -95,6 +94,7 @@ const Signup = () => {
   const [isExistingSignUp, setIsExistingSignUp] = useState<boolean>(false);
   const [showLeadModal, setShowLeadModal] = useState<boolean>(false);
 
+
   const colourStyles: StylesConfig<any> = {
     control: (styles, { isDisabled }) => ({
       ...styles,
@@ -117,9 +117,11 @@ const Signup = () => {
   }
 
   useEffect(() => {
-    if (router.query.cc) {
-      let parsedata = JSON.parse(Security.decryption(router.query.cc as string));
-      setSignupData({ ...signupData,userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
+    const params = new URLSearchParams(window.location.search);
+    const cc = params.get('cc');
+    if (cc) {
+      let parsedata = JSON.parse(Security.decryption(cc));
+      setSignupData({ ...signupData, userId: parsedata.userId, email: parsedata.email, gradeId: parsedata.gradeId, typeOfClassroom: parsedata.typeOfClassroom, firstName: parsedata.firstName, lastName: parsedata.lastName });
       setIsExistingSignUp(true);
       getGradeOptions(parsedata.stateId);
       getSchoolLicense(parsedata.schoolId);
@@ -129,7 +131,8 @@ const Signup = () => {
       getRoleList();
       setShowLoader(false);
     }
-  }, [router.query]);
+  }, []);
+
   const getStateList = () => {
     let state_option_list: Array<type> = [];
     CommonService.get_state_listByActive(true).then((resp: StateList[]) => {
@@ -478,16 +481,12 @@ const Signup = () => {
       setValidationError(validationError);
     } else {
       setShowLoader(true);
-      console.log(signupData, "signupData");
-      debugger;
       CommonService.giveAccessToProduct(signupData.userId, signupData.gradeId, signupData.typeOfClassroom || '').then((resp) => {
-        if (resp) {
+        if (resp) {          
           if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2) {
-            debugger
             setCurrentStep(currentStep + 1);
           } else {
-            debugger
-            window.location.href = Configuration.LoginUrl;
+            window.parent.location.href = COMMONCONSTANT.ROUTEPATH.LOGINURL;
           }
         } else {
           ToastrService.error("Something went wrong.");
@@ -1034,10 +1033,9 @@ const Signup = () => {
                               </div>
                             </div>
                           </div>) : currentStep === 2
-                          // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
-                          ?
-                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                          : <VerifyEmail />
+                        // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
+                        &&
+                        <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
                         }
                       </div>
                       {currentStep < 2 &&

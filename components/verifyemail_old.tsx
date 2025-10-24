@@ -1,7 +1,7 @@
 import { Configuration } from "@environment/startUp";
 import Head from "next/head";
 
-const VerifyEmail = () => {
+const VerifyEmailOld = () => {
   return (
     <>
       <Head>
@@ -86,4 +86,4 @@ const VerifyEmail = () => {
     </>
   )
 }
-export default VerifyEmail;
+export default VerifyEmailOld;

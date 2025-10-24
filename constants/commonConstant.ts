@@ -12,7 +12,8 @@ COMMONCONSTANT = {
     PAYMENT:"/payment",
     SUBSCRIPTION:"/subscription",
     AFTERSUBSCRIPTION:"https://clearsheets.net",
-    VERIFY:"/verify"
+    VERIFY:"/verify",
+    LOGINURL:"https://devclclearsheet.z19.web.core.windows.net/login"
   },
   USERROLESIGNUP:[
     {
