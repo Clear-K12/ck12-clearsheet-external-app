@@ -24,6 +24,10 @@ const SubscriptionSuccess = () => {
       let user_parse = JSON.parse(Security.decryption(cc?.toString()));
       let user_data = user_parse.userData;
       setEmail(user_data.email);
+      SecureService.encryptsetItem(
+        'email',
+        user_data.email
+      );
       if (user_data && setup_intent) {   
         let reqobj = {
           subscriptionId: 2,
