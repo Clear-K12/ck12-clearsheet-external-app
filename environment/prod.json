@@ -1,6 +1,6 @@
 {
   "configuration": {
-    "CrmUrl":"https://prod-ck12-crm-api.azurewebsites.net/" ,
+    "CrmUrl":"https://admin.api.cleark12.com/" ,
     "ImageUrl":"https://assets.cleark12.com/clearlearning/",
     "StudentUrl":"https://cs.api.cleark12.com",
     "httpUrl":"",
