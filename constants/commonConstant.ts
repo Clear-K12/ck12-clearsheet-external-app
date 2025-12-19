@@ -22,15 +22,20 @@ COMMONCONSTANT = {
       "name": "District Admin"
     },
     {
-      "roleId": 8,
-      "roleName": "InstructionalCoach",
-      "name": "Instructional Coach"
+      "roleId": 1,
+      "roleName": "SchoolAdmin",
+      "name": "School Admin"
     },
-    {
-      "roleId": 10,
-      "roleName": "Principal",
-      "name": "Principal"
-    },
+    // {
+    //   "roleId": 8,
+    //   "roleName": "InstructionalCoach",
+    //   "name": "Instructional Coach"
+    // },
+    // {
+    //   "roleId": 10,
+    //   "roleName": "Principal",
+    //   "name": "Principal"
+    // },
     {
       "roleId": 2,
       "roleName": "Teacher",
