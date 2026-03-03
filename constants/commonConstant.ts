@@ -13,7 +13,7 @@ COMMONCONSTANT = {
     SUBSCRIPTION:"/subscription",
     AFTERSUBSCRIPTION:"https://clearsheets.net",
     VERIFY:"/verify",
-    LOGINURL:"https://devclclearsheet.z19.web.core.windows.net/login"
+    LOGINURL:"https://cs.cleark12.com/login"
   },
   USERROLESIGNUP:[
     {
