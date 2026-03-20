@@ -142,6 +142,14 @@ body {
     margin-bottom: 8px;
 }
 
+.cls-header-launch {
+  border-radius:12px 12px 0px 0px;
+  background: #83114c;
+  text-align: center;
+  padding: 18px 0;
+  color: #fff;
+  margin-bottom: 8px;
+}
 .cls-header h1 {
   color: #fff;
   font-size: 32px;
@@ -162,7 +170,7 @@ body {
 }
 
 .offer-box > div {
-    background: #3972e1 url(../imgs/offer-pattern-bg.svg) no-repeat;
+    background: #d53498 url(../imgs/offer-pattern-bg.svg) no-repeat;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -225,7 +233,7 @@ body {
   background-color: #fff;
 }
 .table-row:nth-child(even) .cell {
-  background-color: #edf8ff;
+  background-color: #ffedf8;
 }
 .feature-list .upgrade-btn {
   padding: 8px !important;

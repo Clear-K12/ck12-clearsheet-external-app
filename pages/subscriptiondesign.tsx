@@ -57,8 +57,10 @@ const Subscription = () => {
                       <h5 className="f-16 fw-600">Free <span className="fw-300">(Limited Features)</span></h5>
                       <span className="g-price">$0</span>
                       <p className="grey-text">
-                        Lifetime access. <br />
-                        No credit card needed.
+                        2 Free ClearLessons Up Front<br />
+                        2 Free ClearSheets Assignments Up Front<br />
+                        +1 Additional each month for both<br />
+                        Renews monthly.
                       </p>
                       <button className="btn getstarted-btn">
                         Get Started
@@ -74,7 +76,7 @@ const Subscription = () => {
                           alt=""
                           style={{ width: "30px" }}
                         />
-                        Clearly a Pro  <span className="fw-300">(Full Featured)</span>
+                        Crystal Instruction Pro  <span className="fw-300">(Full Featured)</span>
                       </h5>
                       <span className="p-price">
                         $9 <sub>/month</sub>
@@ -82,10 +84,10 @@ const Subscription = () => {
                       <p className="grey-text">
                         Billed monthly.{" "}
                         <span className="pink-text">1st Month Free</span>.
-                        <br /> Everything in free, plus more.
+                        <br /> Unlimited ClearLessons and ClearSheets activity.
                       </p>
                       <button className="btn upgrade-btn">
-                        Upgrade to Clearly a Pro
+                        Upgrade to Crystal Instruction Pro
                       </button>
                     </div>
                   </div>
@@ -94,7 +96,7 @@ const Subscription = () => {
             </div>
 
             <div className="clearsheet-launch-section mb-3">
-              <div className="cls-header">
+              <div className="cls-header-launch">
                 <h1 className="text-center mb-0">ClearSheets Launch Special</h1>
                 <p className="text-center">For a limited time only.</p>
               </div>
@@ -106,7 +108,7 @@ const Subscription = () => {
                     ClearSheets is offering the <span>
                       First Month Free
                     </span>{" "}
-                    for all Clearly a Pro account signups
+                    for all Crystal Instruction Pro account signups
                   </h2>
                   <p className="f-16 text-center">
                     This allows a worry-free opportunity to try all premium features for 30 days at no cost or obligation.
@@ -121,7 +123,7 @@ const Subscription = () => {
             <div className="compare-feature-section">
               <div className="py-3">
                 <h4 className="text-center f-18 fw-600">
-                  Compare features with Clearly a Pro Plan
+                  Compare features with Crystal Instruction Pro
                 </h4>
                 <p className="text-center">
                   Find the subscription that makes the most sense for you or
@@ -131,71 +133,156 @@ const Subscription = () => {
 
               <div className="feature-list">
                 <div className="table-row">
-                  <div className="header">Features list</div>
+                  <div className="header">Crystal Instruction</div>
                   <div className="header">Free</div>
-                  <div className="header">Clearly a Pro</div>
+                  <div className="header">Crystal Instruction Pro</div>
                 </div>
 
                 <div className="table-row">
                   <div className="cell">User Limits</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
-                    Unlimited
+                    Unlimited Students
                   </div>
 
 
                   <div className="cell">
-                    <div className="plan-name ">Clearly a Pro</div>
-                    Unlimited
-                    <p>
-                      (Max 2 teachers per school, then must get a school
-                      license.)
-                    </p>
+                    <div className="plan-name ">Crystal Instruction Pro</div>
+                    Single Grade &amp; Subject - 125 Students
+                    <br />
+                    Self-Contained &amp; All Subjects - 30 Students
+                    <p>(Max 2 Pro accounts per school)</p>
                   </div>
                 </div>
 
                 <div className="table-row">
-                  <div className="cell">Number of Worksheets Allowed</div>
+                  <div className="cell">Monthly Activity Limit</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
-                    Unlimited
+                    2 Free ClearLessons
+                    <br />
+                    2 Free ClearSheets Assignments
+                    <br />
+                    +1 Additional each month for both
                   </div>
                   <div className="cell">
-                    <div className="plan-name ">Clearly a Pro</div>
-                    Unlimited</div>
+                    <div className="plan-name ">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Unlimited
+                    </span>
+                  </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">Assignments</div>
+                  <div className="cell">ClearLessons</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
-                    Unlimited
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/not-included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Limited
+                    </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name ">Clearly a Pro</div>
-                    Unlimited</div>
+                    <div className="plan-name ">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Unlimited
+                    </span>
+                  </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">AI Tokens</div>
-                  <div className="cell">
-                    <div className="plan-name">Free</div>10 Free AI Tokens</div>
-                  <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>50 AI Tokens per month</div>
-                </div>
-                <div className="table-row">
-                  <div className="cell">Games</div>
+                  <div className="cell">ClearSheets Auto-Graded</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
-                    Try Games 3 times</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/not-included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Limited
+                    </span>
+                  </div>
                   <div className="cell">
-                    <div className="plan-name">Free</div>
-                    Unlimited Game Usage</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Unlimited
+                    </span>
+                  </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">Assignment Reports</div>
+                  <div className="cell">ClearSheets Printable Worksheet Library</div>
+                  <div className="cell">
+                    <div className="plan-name">Free</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Unlimited
+                    </span>
+                  </div>
+                  <div className="cell">
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Unlimited
+                    </span>
+                  </div>
+                </div>
+                <div className="table-row">
+                  <div className="cell">ClearSheets Video Feedback</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
 
+                      <img
+                        src="/static/imgs/not-included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Limited
+                    </span>
+                  </div>
+                  <div className="cell">
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                </div>
+                <div className="table-row">
+                  <div className="cell">Skill Builder ClearSheets</div>
+                  <div className="cell">
+                    <div className="plan-name">Free</div>
+                    <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
                         className="mr-2"
@@ -205,7 +292,7 @@ const Subscription = () => {
                     </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
                     <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
@@ -217,7 +304,7 @@ const Subscription = () => {
                   </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">Crystal Reports</div>
+                  <div className="cell">TEKS Based Lessons and Worksheets</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
@@ -230,7 +317,7 @@ const Subscription = () => {
                     </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
                     <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
@@ -241,13 +328,89 @@ const Subscription = () => {
                     </span>
                   </div>
                 </div>
+                <div className="table-row">
+                  <div className="cell">Luna's Knowledge Hub</div>
+                  <div className="cell">
+                    <div className="plan-name">Free</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                  <div className="cell">
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                </div>
+                <div className="table-row">
+                  <div className="cell">Crytal Reports</div>
+                  <div className="cell">
+                    <div className="plan-name">Free</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                  <div className="cell">
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                </div>
+                <div className="table-row">
+                  <div className="cell">Lesson Summaries</div>
+                  <div className="cell">
+                    <div className="plan-name">Free</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                  <div className="cell">
+                    <div className="plan-name">Crystal Instruction Pro</div>
+                    <span className="d-flex">
+                      <img
+                        src="/static/imgs/included-icon.svg"
+                        className="mr-2"
+                        alt=""
+                      />
+                      Included
+                    </span>
+                  </div>
+                </div>
+
                 <div className="table-row">
                   <div className="cell">Clear Monitor</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
                       <img
-                        src="/static/imgs/not-included-icon.svg"
+                        src="/static/imgs/included-icon.svg"
                         className="mr-2"
                         alt=""
                       />
@@ -255,7 +418,7 @@ const Subscription = () => {
                     </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
                     <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
@@ -266,8 +429,9 @@ const Subscription = () => {
                     </span>
                   </div>
                 </div>
+
                 <div className="table-row">
-                  <div className="cell">Clear Curriculum</div>
+                  <div className="cell">My Lessons</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
@@ -276,11 +440,11 @@ const Subscription = () => {
                         className="mr-2"
                         alt=""
                       />
-                      Included
+                      Not Included
                     </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
                     <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
@@ -291,13 +455,14 @@ const Subscription = () => {
                     </span>
                   </div>
                 </div>
+
                 <div className="table-row">
-                  <div className="cell">Clearsheets Studio</div>
+                  <div className="cell">Small Groups Creation</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
                       <img
-                        src="/static/imgs/not-included-icon.svg"
+                        src="/static/imgs/included-icon.svg"
                         className="mr-2"
                         alt=""
                       />
@@ -305,7 +470,7 @@ const Subscription = () => {
                     </span>
                   </div>
                   <div className="cell">
-                    <div className="plan-name">Clearly a Pro</div>
+                    <div className="plan-name">Crystal Instruction Pro</div>
                     <span className="d-flex">
                       <img
                         src="/static/imgs/included-icon.svg"
@@ -323,8 +488,8 @@ const Subscription = () => {
                     <button className=" btn outline-btn">Get Started</button>
                   </div>
                   <div>
-                    <div className="plan-name text-center mb-2">Clearly a Pro</div>
-                    <button className=" btn outline-btn ">Get Started</button>
+                    <div className="plan-name text-center mb-2">Crystal Instruction Pro</div>
+                    <button className=" btn outline-btn ">Upgrade</button>
                   </div>
                 </div>
               </div>
