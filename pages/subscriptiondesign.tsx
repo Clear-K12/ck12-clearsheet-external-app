@@ -41,7 +41,6 @@ const Subscription = () => {
             <div className="circle active">3</div>
             <p>Step 3</p>
           </div>
-
         </div>
       </div>
       <div className="col-md-12 px-4">
@@ -49,17 +48,20 @@ const Subscription = () => {
           <div className="pricing-plan-wrap mx-auto">
             <div className="my-account mb-4">
               <div className="justify-content-between">
-
-
                 <div className="row">
                   <div className="col-md-6">
                     <div className="subscripion-box">
-                      <h5 className="f-16 fw-600">Free <span className="fw-300">(Limited Features)</span></h5>
+                      <h5 className="f-16 fw-600">
+                        Free <span className="fw-300">(Limited Features)</span>
+                      </h5>
                       <span className="g-price">$0</span>
                       <p className="grey-text">
-                        2 Free ClearLessons Up Front<br />
-                        2 Free ClearSheets Assignments Up Front<br />
-                        +1 Additional each month for both<br />
+                        2 Free ClearLessons Up Front
+                        <br />
+                        2 Free ClearSheets Assignments Up Front
+                        <br />
+                        +1 Additional each month for both
+                        <br />
                         Renews monthly.
                       </p>
                       <button className="btn getstarted-btn">
@@ -76,7 +78,8 @@ const Subscription = () => {
                           alt=""
                           style={{ width: "30px" }}
                         />
-                        Crystal Instruction Pro  <span className="fw-300">(Full Featured)</span>
+                        Crystal Instruction Pro{" "}
+                        <span className="fw-300">(Full Featured)</span>
                       </h5>
                       <span className="p-price">
                         $9 <sub>/month</sub>
@@ -111,7 +114,8 @@ const Subscription = () => {
                     for all Crystal Instruction Pro account signups
                   </h2>
                   <p className="f-16 text-center">
-                    This allows a worry-free opportunity to try all premium features for 30 days at no cost or obligation.
+                    This allows a worry-free opportunity to try all premium
+                    features for 30 days at no cost or obligation.
                   </p>
                   <span className="plan-cancel mx-auto">
                     Cancel anytime to avoid being charged.
@@ -144,7 +148,6 @@ const Subscription = () => {
                     <div className="plan-name">Free</div>
                     Unlimited Students
                   </div>
-
 
                   <div className="cell">
                     <div className="plan-name ">Crystal Instruction Pro</div>
@@ -228,7 +231,9 @@ const Subscription = () => {
                   </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">ClearSheets Printable Worksheet Library</div>
+                  <div className="cell">
+                    ClearSheets Printable Worksheet Library
+                  </div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
@@ -257,7 +262,6 @@ const Subscription = () => {
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
-
                       <img
                         src="/static/imgs/not-included-icon.svg"
                         className="mr-2"
@@ -329,7 +333,7 @@ const Subscription = () => {
                   </div>
                 </div>
                 <div className="table-row">
-                  <div className="cell">Luna's Knowledge Hub</div>
+                  <div className="cell">Luna&apos;s Knowledge Hub</div>
                   <div className="cell">
                     <div className="plan-name">Free</div>
                     <span className="d-flex">
@@ -488,7 +492,9 @@ const Subscription = () => {
                     <button className=" btn outline-btn">Get Started</button>
                   </div>
                   <div>
-                    <div className="plan-name text-center mb-2">Crystal Instruction Pro</div>
+                    <div className="plan-name text-center mb-2">
+                      Crystal Instruction Pro
+                    </div>
                     <button className=" btn outline-btn ">Upgrade</button>
                   </div>
                 </div>
