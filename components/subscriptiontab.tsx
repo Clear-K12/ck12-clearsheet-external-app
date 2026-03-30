@@ -374,7 +374,7 @@ const SubscriptionTab = ({ signupData, after_set_free }: Props) => {
 
               <div className="feature-list">
                 <div className="table-row">
-                  <div className="header">Crystal Instruction</div>
+                  <div className="header">Features List</div>
                   <div className="header">Free</div>
                   <div className="header">Crystal Instruction Pro</div>
                 </div>
