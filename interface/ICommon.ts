@@ -50,3 +50,25 @@ export interface UserRegisterData{
     gradeId: number,
     typeOfClassroom?: string
 }
+
+export interface IParentSignup {
+  firstName: string;
+  lastName: string;
+  stateId: number;
+  email: string;
+  confirmEmail: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface IParentSubscriptionReqObj {
+    subscriptionId: number;
+    firstName : string;
+    lastName : string;
+    email: string;
+    password: string;
+    stateId: number;
+    intent: string;
+    productId: number;
+    childrenCount: number;
+}
