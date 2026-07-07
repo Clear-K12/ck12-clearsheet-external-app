@@ -6,14 +6,14 @@ import {
   useElements,
   useStripe
 } from '@stripe/react-stripe-js';
-import { useEffect, useState } from 'react';
-import Loader from './common/loader';
+import { useState } from 'react';
 import { Configuration } from '@environment/startUp';
 import { Security } from 'guard/security';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 
 const ParentPaymentCard = (props: any) => {
   const { userData } = props;
+  const navigation = useRouter();
   const stripe: any = useStripe();
   const elements: any = useElements();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -87,7 +87,7 @@ const ParentPaymentCard = (props: any) => {
           />
           <span className='Error'>{validationError.cardHolderName}</span>
           <PaymentElement id="payment-element" options={paymentElementOptions} />
-          <button disabled={isLoading || !stripe || !elements} id="submit">
+          <button disabled={isLoading || !stripe || !elements} id="submit" style={{backgroundColor: "#e84dc1"}}>
             <span id="button-text">
               {isLoading ? <div className="buttonspinner"></div> : "Complete Purchase"}
             </span>

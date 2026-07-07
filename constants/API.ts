@@ -17,6 +17,8 @@ APICONSTANT = {
   GET_SCHOOL_LICENSE:Configuration.CrmUrl+"/api/School/GetSchoolLicense",
   GET_SCHOOL_PAID_ACCOUNT:Configuration.StudentUrl+"/api/Subscription/GetSchoolPaidAccount",
   GIVE_ACCESS_TO_PRODUCT:Configuration.StudentUrl+"/api/Users/GiveAccessToProduct",
+  ADDPARENTSUBSCRIPTION:Configuration.StudentUrl+"/api/Subscription/AddParentSubscription",
+  CHECK_DUPLICATE_EMAIL:Configuration.StudentUrl+"/api/Users/IsDuplicateEmail",
 }
 
 export default APICONSTANT;

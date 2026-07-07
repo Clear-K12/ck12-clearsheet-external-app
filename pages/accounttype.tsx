@@ -149,7 +149,7 @@ const AccountType = () => {
                 <FamilyIllustration />
                 <h2 className="at-card-title">Parents &amp; Guardians</h2>
                 <p className="at-card-desc text-center">
-                  Support your child&apos;s writing growth <br /> at home.
+                  Support your child&apos;s learning <br /> at home.
                 </p>
                 <hr className="at-card-border" />
                 <div className="at-for-section w-100">

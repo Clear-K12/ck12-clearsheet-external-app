@@ -1,7 +1,7 @@
 {
   "configuration": {
     "CrmUrl":"https://admin.api.cleark12.com/" ,
-    "ImageUrl":"https://assets.cleark12.com/clearlearning/",
+    "ImageUrl":"https://prodstorageassets.blob.core.windows.net/clearlearning/",
     "StudentUrl":"https://cs.api.cleark12.com",
     "httpUrl":"",
     "siteKey":"6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",

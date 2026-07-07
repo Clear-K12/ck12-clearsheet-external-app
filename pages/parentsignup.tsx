@@ -37,15 +37,15 @@ const EyeOffIcon = () => (
 
 const EmailHintIcon = () => (
   <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-input-hint-icon">
-    <rect x="1" y="3" width="14" height="10" rx="2" stroke="#1a9b8e" strokeWidth="1.2" fill="none" />
-    <path d="M1 5 L8 9.5 L15 5" stroke="#1a9b8e" strokeWidth="1.2" fill="none" />
+    <rect x="1" y="3" width="14" height="10" rx="2" stroke="#d50aa2" strokeWidth="1.2" fill="none" />
+    <path d="M1 5 L8 9.5 L15 5" stroke="#d50aa2" strokeWidth="1.2" fill="none" />
   </svg>
 );
 
 const ShieldIcon = () => (
   <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-trust-icon">
-    <path d="M18 3 L32 9 L32 18 C32 25 25 31 18 33 C11 31 4 25 4 18 L4 9 Z" stroke="#1a9b8e" strokeWidth="2" fill="none" />
-    <path d="M12 18 L16 22 L24 14" stroke="#1a9b8e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M18 3 L32 9 L32 18 C32 25 25 31 18 33 C11 31 4 25 4 18 L4 9 Z" stroke="#d50aa2" strokeWidth="2" fill="none" />
+    <path d="M12 18 L16 22 L24 14" stroke="#d50aa2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
   </svg>
 );
 
@@ -53,43 +53,43 @@ const ShieldIcon = () => (
 
 const HomeGradeIcon = () => (
   <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-trust-icon">
-    <path d="M5 18 L18 6 L31 18" stroke="#1a9b8e" strokeWidth="2" fill="none" strokeLinecap="round" />
-    <rect x="10" y="18" width="16" height="12" rx="1" stroke="#1a9b8e" strokeWidth="2" fill="none" />
-    <rect x="15" y="22" width="6" height="8" rx="1" stroke="#1a9b8e" strokeWidth="1.5" fill="none" />
-    <circle cx="14" cy="15" r="2" fill="#1a9b8e" opacity="0.6" />
+    <path d="M5 18 L18 6 L31 18" stroke="#d50aa2" strokeWidth="2" fill="none" strokeLinecap="round" />
+    <rect x="10" y="18" width="16" height="12" rx="1" stroke="#d50aa2" strokeWidth="2" fill="none" />
+    <rect x="15" y="22" width="6" height="8" rx="1" stroke="#d50aa2" strokeWidth="1.5" fill="none" />
+    <circle cx="14" cy="15" r="2" fill="#d50aa2" opacity="0.6" />
   </svg>
 );
 
 const BookIcon = () => (
   <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-info-icon">
-    <rect x="4" y="4" width="28" height="28" rx="3" stroke="#1a9b8e" strokeWidth="2" fill="none" />
-    <line x1="18" y1="4" x2="18" y2="32" stroke="#1a9b8e" strokeWidth="2" />
-    <line x1="4" y1="11" x2="18" y2="11" stroke="#1a9b8e" strokeWidth="1.5" />
-    <line x1="4" y1="18" x2="18" y2="18" stroke="#1a9b8e" strokeWidth="1.5" />
-    <line x1="4" y1="25" x2="18" y2="25" stroke="#1a9b8e" strokeWidth="1.5" />
+    <rect x="4" y="4" width="28" height="28" rx="3" stroke="#d50aa2" strokeWidth="2" fill="none" />
+    <line x1="18" y1="4" x2="18" y2="32" stroke="#d50aa2" strokeWidth="2" />
+    <line x1="4" y1="11" x2="18" y2="11" stroke="#d50aa2" strokeWidth="1.5" />
+    <line x1="4" y1="18" x2="18" y2="18" stroke="#d50aa2" strokeWidth="1.5" />
+    <line x1="4" y1="25" x2="18" y2="25" stroke="#d50aa2" strokeWidth="1.5" />
   </svg>
 );
 
 const ShieldCheckIcon = () => (
   <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-info-icon">
-    <path d="M18 3 L32 9 L32 18 C32 25 25 31 18 33 C11 31 4 25 4 18 L4 9 Z" stroke="#1a9b8e" strokeWidth="2" fill="none" />
-    <path d="M12 18 L16 22 L24 14" stroke="#1a9b8e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M18 3 L32 9 L32 18 C32 25 25 31 18 33 C11 31 4 25 4 18 L4 9 Z" stroke="#d50aa2" strokeWidth="2" fill="none" />
+    <path d="M12 18 L16 22 L24 14" stroke="#d50aa2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
   </svg>
 );
 
 const MultiStudentIcon = () => (
   <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-trust-icon">
-    <circle cx="12" cy="12" r="5" stroke="#1a9b8e" strokeWidth="1.8" fill="none" />
-    <circle cx="24" cy="12" r="5" stroke="#1a9b8e" strokeWidth="1.8" fill="none" />
-    <path d="M3 30 C3 23 21 23 21 30" stroke="#1a9b8e" strokeWidth="1.8" fill="none" />
-    <path d="M21 26 C21 21 33 21 33 28" stroke="#1a9b8e" strokeWidth="1.8" fill="none" />
+    <circle cx="12" cy="12" r="5" stroke="#d50aa2" strokeWidth="1.8" fill="none" />
+    <circle cx="24" cy="12" r="5" stroke="#d50aa2" strokeWidth="1.8" fill="none" />
+    <path d="M3 30 C3 23 21 23 21 30" stroke="#d50aa2" strokeWidth="1.8" fill="none" />
+    <path d="M21 26 C21 21 33 21 33 28" stroke="#d50aa2" strokeWidth="1.8" fill="none" />
   </svg>
 );
 
 const CheckIcon = () => (
   <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="ps-check-icon">
-    <circle cx="10" cy="10" r="9" fill="#1a9b8e" opacity="0.15" />
-    <path d="M6 10 L9 13 L14 7" stroke="#1a9b8e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <circle cx="10" cy="10" r="9" fill="#d50aa2" opacity="0.15" />
+    <path d="M6 10 L9 13 L14 7" stroke="#d50aa2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
   </svg>
 );
 
@@ -103,18 +103,18 @@ interface StateOption {
 const selectStyles: StylesConfig<any> = {
   control: (styles, { isFocused }) => ({
     ...styles,
-    borderColor: isFocused ? '#1a9b8e' : '#d0d8e0',
+    borderColor: isFocused ? '#d50aa2' : '#d0d8e0',
     borderRadius: '8px',
     fontSize: '0.9rem',
     boxShadow: 'none',
     minHeight: '36px',
-    '&:hover': { borderColor: '#1a9b8e' },
+    '&:hover': { borderColor: '#d50aa2' },
   }),
   placeholder: (styles) => ({ ...styles, color: '#999', fontSize: '0.9rem' }),
   singleValue: (styles) => ({ ...styles, color: '#333' }),
   option: (styles, { isFocused, isSelected }) => ({
     ...styles,
-    backgroundColor: isSelected ? '#1a9b8e' : isFocused ? '#f0faf9' : undefined,
+    backgroundColor: isSelected ? '#d50aa2' : isFocused ? '#f0faf9' : undefined,
     color: isSelected ? '#fff' : '#333',
     fontSize: '0.9rem',
   }),
@@ -373,7 +373,7 @@ const ParentSignup = () => {
                       ) : (
                         <p className="ps-input-hint">
                           <EmailHintIcon />
-                          Your email address will also be your username when signing in to Crystal Writing.
+                          Your email address will also be your username when signing in to Crystal Instruction.
                         </p>
                       )}
                     </div>
@@ -546,7 +546,7 @@ const ParentSignup = () => {
                         <div className="ps-children-header">
                           <MultiStudentIcon />
                           <div className="ml-3">
-                            <p className="ps-children-title">How many children will use Crystal Writing?</p>
+                            <p className="ps-children-title">How many children will use Crystal Instruction?</p>
                             <p className="ps-children-sub">
                               You&apos;ll be able to add and manage each child inside your parent dashboard.
                             </p>
@@ -572,33 +572,34 @@ const ParentSignup = () => {
                               &#43;
                             </button>
                           </div>
-                          <p className="ps-stepper-hint">$199 per child, per year</p>
+                          <p className="ps-stepper-hint">$249 per child, per year</p>
                         </div>
 
                         {/* Grades info box */}
                         <div className="ps-info-box">
                           <BookIcon />
                           <div className="ml-3">
-                            <p className="ps-info-box-title">For Students in Grades 2–8</p>
+                            <p className="ps-info-box-title">For Students in Grades 2–5</p>
                             <p className="ps-info-box-sub">
-                              Crystal Writing is designed specifically for students in grades 2 through 8
-                              and aligns with TEKS writing standards.
+                              Crystal Instruction is designed for students in grades 2–5
+                              with interactive lessons and digital worksheets aligned to TEKS.
                             </p>
                           </div>
                         </div>
 
                         {/* What's included */}
                         <div className="ps-included-section">
-                          <ShieldCheckIcon />
+                          {/* <ShieldCheckIcon /> */}
                           <div className="w-100">
                             <p className="ps-included-title">What&apos;s included with each child:</p>
                             <div className="row">
                               {[
-                                "Unlimited Assignment Creation",
-                                "Automated Scaffolding",
-                                "Built for TEKS and TX Writing",
-                                "Integrated Data and Analytics",
-                                "Instant Grading and Feedback",
+                                "Adaptive Lessons",
+                                "Digital Worksheets",
+                                "Built to the TEKS",
+                                "Math, Elar and Science",
+                                "Actionable Reporting",
+                                "Free ClassCade Access"
                               ].map((feat) => (
                                 <div key={feat} className="col-md-12">
                                   <p className="ps-included-item d-flex align-items-center">
@@ -627,7 +628,7 @@ const ParentSignup = () => {
                           </div>
                           <div className="ps-order-row">
                             <span className="ps-order-label">Price per child</span>
-                            <span className="ps-order-value">$199.00</span>
+                            <span className="ps-order-value">$249.00</span>
                           </div>
                           <hr className="ps-divider-border" />
                           <div className="ps-order-total">
@@ -635,7 +636,7 @@ const ParentSignup = () => {
                               <p className="ps-order-total-label">Total Due Today</p>
                               <p className="ps-order-billed">Billed annually</p>
                             </div>
-                            <span className="ps-order-total-amount">${(childrenCount * 199).toFixed(2)}</span>
+                            <span className="ps-order-total-amount">${(childrenCount * 249).toFixed(2)}</span>
                           </div>
                         </div>
 
@@ -672,8 +673,8 @@ const ParentSignup = () => {
                         <div className="ps-trust-item flex-fill">
                           <HomeGradeIcon />
                           <div>
-                            <p className="ps-trust-label">For Grades 2–8</p>
-                            <p className="ps-trust-sub">Built for students in grades 2 through 8 and aligned to TEKS writing standards.</p>
+                            <p className="ps-trust-label">For Grades 2–5</p>
+                            <p className="ps-trust-sub">Interactive lessons and digital worksheets aligned to TEKS.</p>
                         </div>
                       </div>
                       </>

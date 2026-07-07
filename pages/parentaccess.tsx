@@ -89,7 +89,7 @@ const ParentAccess = () => {
               <h1 className="pa-title">Parent Access</h1>
               <p className="pa-subtitle">
                 Support your child&apos;s writing growth at home with Crystal Instruction.<br />
-                Full access to powerful tools and insights for just{" "}
+                Full access to powerful tools and resources for just{" "}
                 <span className="pa-subtitle-price">$249 per year.</span>
               </p>
             </div>
@@ -230,8 +230,8 @@ const ParentAccess = () => {
                 <div className="pa-trust-item flex-fill">
                   <HomeGradeIcon />
                   <div>
-                    <p className="pa-trust-label">For Grades 2–8</p>
-                    <p className="pa-trust-sub">Crystal Instruction is designed for students in grades 2 through 8.</p>
+                    <p className="pa-trust-label">For Grades 2–5</p>
+                    <p className="pa-trust-sub">Crystal Instruction is designed for students in grades 2 through 5.</p>
                   </div>
                 </div>
               </div>
