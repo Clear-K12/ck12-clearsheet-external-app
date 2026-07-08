@@ -13,7 +13,10 @@ COMMONCONSTANT = {
     SUBSCRIPTION:"/subscription",
     AFTERSUBSCRIPTION:"https://clearsheets.net",
     VERIFY:"/verify",
-    LOGINURL:"https://cs.cleark12.com/login"
+    LOGINURL:"https://cs.cleark12.com/login",
+    ACCOUNTTYPE: "/accounttype",
+    PARENTACCESS: "/parentaccess",
+    PARENTSIGNUP: "/parentsignup",
   },
   USERROLESIGNUP:[
     {
