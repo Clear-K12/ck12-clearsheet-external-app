@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/Zaid/CrystalInstructionForParents
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
