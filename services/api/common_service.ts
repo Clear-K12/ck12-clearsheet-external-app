@@ -1,5 +1,5 @@
 import APICONSTANT from "@constants/API";
-import { DistrictList, RoleList, SchoolList, StateList } from "@interface/ICommon";
+import { DistrictList, IParentSubscriptionReqObj, RoleList, SchoolList, StateList } from "@interface/ICommon";
 import axios from "axios";
 import { setupInterceptorsTo } from "../api_Interceptors";
 import { Configuration } from "@environment/startUp";
@@ -23,7 +23,9 @@ export const CommonService = {
   resendEmail,
   getSchoolLicense,
   getSchoolPaidAccount,
-  giveAccessToProduct
+  giveAccessToProduct,
+  is_duplicate_email,
+  add_parent_subscription
 };
 function get_district_list(stateid: number) {
   let promise = new Promise((resolve, reject) => {
@@ -190,4 +192,26 @@ function giveAccessToProduct(userId:number,gradeId:number,typeOfClassroom:string
     })
   })
   return promise as Promise<number>;
+}
+
+function is_duplicate_email(email: string) {
+  let promise = new Promise((resolve, reject) => {
+    axios.get(APICONSTANT.CHECK_DUPLICATE_EMAIL + "?email=" + email).then(resp => {
+      resolve(resp.data)
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+  return promise as Promise<boolean>;
+}
+
+function add_parent_subscription(request_obj: IParentSubscriptionReqObj) {
+  let promise = new Promise((resolve, reject) => {
+    axios.post(APICONSTANT.ADDPARENTSUBSCRIPTION, request_obj).then(resp => {
+      resolve(resp.data)
+    }).catch((err) => {
+      reject(err);
+    })
+  })
+  return promise as Promise<boolean>;
 }
