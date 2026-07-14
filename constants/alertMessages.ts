@@ -5,6 +5,7 @@ ALERTMESSAGES = {
    Registration:"User register successfully.",
    Registration_Info:"User register successfully, We will verify your school and get back to you.",
    DEFAULT:"Something went wrong...",
-   VERIFYEMAIL:"Welcome to ClearSheets. You are almost ready to stop grading papers and to start your Worksheet Revolution! We sent you an email, please check your email and click the verify email link we sent. Check your spam folder if you do not find the email."
+   VERIFYEMAIL:"Welcome to ClearSheets. You are almost ready to stop grading papers and to start your Worksheet Revolution! We sent you an email, please check your email and click the verify email link we sent. Check your spam folder if you do not find the email.",
+   FORMSUBMITTED: "Form Submitted Successfully"
 }
 export default ALERTMESSAGES;
