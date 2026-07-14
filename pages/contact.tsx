@@ -211,7 +211,7 @@ export const RequestMoreInfo = () => {
           if (resp) {
             reset_form();
             setShowLoader(false);
-            ToastrService.success(ALERTMESSAGES.LeadInsertSuccess);
+            ToastrService.success(ALERTMESSAGES.FORMSUBMITTED);
           }
         }
       );
