@@ -379,13 +379,16 @@ const Signup = () => {
   const checkEmailExtension = (current_email: string, validEmailExt: any) => {
     let errors: any = {};
     let ext = current_email.split("@");
-    console.log(ext, "sdsd");
+    let validEmailExtList = validEmailExt
+      ? validEmailExt.split(",").map((item: any) => item.trim().toLocaleLowerCase())
+      : [];
+
     if (
       ext[1] != "" &&
       ext[1] != null &&
       validEmailExt != "" &&
       validEmailExt != null &&
-      ext[1] === validEmailExt
+      validEmailExtList.includes(ext[1].trim().toLocaleLowerCase())
     ) {
       delete validationError["email"];
       return true;
