@@ -1,0 +1,40 @@
+name: Clearsheet External App - Deploy to Azure Storage
+
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: develop
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm i --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Clear existing blobs
+        run: |
+          az storage blob delete-batch \
+            --source '$web' \
+            --connection-string "${{ secrets.CRYSTALINSTRUCTION_WEBSITE_DEV_SECRET }}"
+
+      - name: Upload to Azure Storage
+        run: |
+          az storage blob upload-batch \
+            --destination '$web' \
+            --source './out' \
+            --overwrite \
+            --connection-string "${{ secrets.CRYSTALINSTRUCTION_WEBSITE_DEV_SECRET }}"
