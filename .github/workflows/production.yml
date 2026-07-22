@@ -3,11 +3,11 @@ name: Clearsheet External App - Deploy to Azure Storage
 on:
   push:
     branches:
-      - develop
+      - main
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: develop
+    environment: main
 
     steps:
       - name: Checkout code
