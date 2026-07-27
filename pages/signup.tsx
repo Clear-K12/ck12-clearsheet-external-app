@@ -133,6 +133,15 @@ const Signup = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isExistingSignUp && !signupData.stateId && selectoptions && selectoptions.length) {
+      const texas = selectoptions.find((item) => item.label.trim().toLowerCase() === "texas");
+      if (texas) {
+        handle_dropdown(texas);
+      }
+    }
+  }, [selectoptions]);
+
   const getStateList = () => {
     let state_option_list: Array<type> = [];
     CommonService.get_state_listByActive(true).then((resp: StateList[]) => {
@@ -251,6 +260,30 @@ const Signup = () => {
   };
   const submit = () => {
     let errors: any = {};
+    if (!signupData.firstName) {
+      errors.firstName = "First Name is required";
+    }
+    if (!signupData.lastName) {
+      errors.lastName = "Last Name is required";
+    }
+    if (!signupData.districtId) {
+      errors.districtId = "District is required";
+    }
+    if (showExtraFieldFlag) {
+      if (!signupData.districtName) {
+        errors.districtName = "District Name is required";
+      }
+      if (!signupData.schoolName) {
+        errors.schoolName = "School Name is required";
+      }
+      if (!signupData.streetAddress) {
+        errors.streetAddress = "Address is required";
+      }
+    } else {
+      if (!signupData.schoolId) {
+        errors.schoolId = "School is required";
+      }
+    }
     let regex = /^[a-zA-Z0-9+_.-]+@(?:[a-zA-Z0-9+_.-]+\.)+[A-Za-z]+$/;
     if (!signupData.email) {
       errors.email = "Email is required";
@@ -263,6 +296,14 @@ const Signup = () => {
     }
     if (!signupData.roleId) {
       errors.roleId = "Title is required";
+    }
+    if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
+      if (!signupData.gradeId) {
+        errors.gradeId = "Grade is required";
+      }
+      if (!signupData.typeOfClassroom) {
+        errors.typeOfClassroom = "Type of Classroom is required";
+      }
     }
     if (!signupData.password) {
       errors.password = "Password is required";
@@ -280,6 +321,9 @@ const Signup = () => {
       signupData.password !== signupData.confirm_password
     ) {
       errors.confirm_password = "Password and Confirm password does not match";
+    }
+    if (!captchaValue) {
+      errors.captcha = "Please verify that you are not a robot";
     }
     setValidationError(errors);
     if (Object.keys(errors).length === 0) {
@@ -299,8 +343,6 @@ const Signup = () => {
             );
             reset_form();
             setShowLoader(false);
-            showSubmitStep(false);
-            setShowExtraFieldFlag(false);
             if (schoolLicense !== 'CS-PREM' && paidAccounts.length < 2 && signupData.schoolId > 0 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
               setCurrentStep(currentStep + 1);
             } else if (signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) {
@@ -323,44 +365,6 @@ const Signup = () => {
           }
           setShowLoader(false);
         });
-    }
-  };
-
-  const next = () => {
-    let errors: any = {};
-    if (!signupData.firstName) {
-      errors.firstName = "First Name is required";
-    }
-    if (!signupData.lastName) {
-      errors.lastName = "Last Name is required";
-    }
-    if (!signupData.stateId) {
-      errors.stateId = "State is required";
-    }
-    if (!signupData.districtId) {
-      errors.districtId = "District is required";
-    }
-    if (showExtraFieldFlag) {
-      if (!signupData.districtName) {
-        errors.districtName = "District Name is required";
-      }
-      if (!signupData.schoolName) {
-        errors.schoolName = "School Name is required";
-      }
-      if (!signupData.streetAddress) {
-        errors.streetAddress = "Address is required";
-      }
-    } else {
-      if (!signupData.schoolId) {
-        errors.schoolId = "School is required";
-      }
-    }
-    setValidationError(errors);
-    if (Object.keys(errors).length === 0) {
-      showSubmitStep(true);
-      document.getElementById("firstName")?.focus();
-      document.getElementById("roleId")?.focus();
-      setCurrentStep(currentStep + 1);
     }
   };
   const reset_form = () => {
@@ -508,7 +512,7 @@ const Signup = () => {
         })
     }
   }
-  console.log(signupData, "signupData");
+  
   return (
     <>
       <Head>
@@ -531,31 +535,24 @@ const Signup = () => {
                     <div className="singupSection w-100">
                       <div className="wrapper d-flex flex-wrap">
                         <div className="w-100">
-                          {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 3
+                          {(trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.FULL || trialData.trialName === COMMONCONSTANT.TRIALCONSTANT.TRIAL) && currentStep === 2
                             ? <div className="mt-5"></div>
                             :
                             <>
                               <h1 className="text-center h3 mt-3 mb-4">Sign Up</h1>
-                              <div className="progress-container">
-                                <div className={`progress ${currentStep > 1
-                                  ? signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && schoolLicense !== 'CS-PREM' && paidAccounts.length < 2
-                                    ? 'w50' : ((currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER) || signupData.roleId !== COMMONCONSTANT.USERROLES.TEACHER || (schoolLicense !== 'CS-PREM' || paidAccounts.length < 2))
-                                      ? 'w100' : '' : ''}`} id="progress"></div>
-                                <div className="d-flex flex-column justify-content-center">
-                                  <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
-                                  <p>Step 1</p>
-                                </div>
-                                <div className="d-flex flex-column step-2 ">
-                                  <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
-                                  <p>Step 2</p>
-                                </div>
-                                {(schoolLicense !== 'CS-PREM' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && paidAccounts.length < 2) &&
-                                  <div className="d-flex flex-column step-2 ">
-                                    <div className="circle">3</div>
-                                    <p>Step 3</p>
+                              {(schoolLicense !== 'CS-PREM' && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER && paidAccounts.length < 2) &&
+                                <div className="progress-container">
+                                  <div className={`progress ${currentStep > 1 ? 'w100' : ''}`} id="progress"></div>
+                                  <div className="d-flex flex-column justify-content-center">
+                                    <div className={`circle ${currentStep >= 1 ? "active" : ""}`}>1</div>
+                                    <p>Step 1</p>
                                   </div>
-                                }
-                              </div>
+                                  <div className="d-flex flex-column step-2 ">
+                                    <div className={`circle ${currentStep >= 2 ? "active" : ""}`}>2</div>
+                                    <p>Step 2</p>
+                                  </div>
+                                </div>
+                              }
                             </>
                           }
                         </div>
@@ -602,32 +599,9 @@ const Signup = () => {
 
                             </div>
 
-
                             <div className="form-row w-100">
                               <div className="form-group  col-md-6">
-                                <label>State</label>
-                                <div className="">
-                                  <Select
-                                    name="stateId"
-                                    value={selectedState}
-                                    options={selectoptions}
-                                    onChange={handle_dropdown}
-                                    placeholder="Select State"
-                                    id="stateId"
-                                    styles={colourStyles}
-                                  />
-                                  {note != "" ? (
-                                    <div className="info">{note}</div>
-                                  ) : null}
-                                  {validationError.stateId ? (
-                                    <span className="validation-error">
-                                      {validationError.stateId}
-                                    </span>
-                                  ) : null}
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6">
-                                <label>District</label>
+                                <label>Texas District</label>
                                 <div className="">
                                   <Select
                                     name="districtId"
@@ -637,6 +611,9 @@ const Signup = () => {
                                     placeholder="Select District"
                                     styles={colourStyles}
                                   />
+                                  {note != "" ? (
+                                    <div className="info">{note}</div>
+                                  ) : null}
                                   {validationError.districtId ? (
                                     <span className="validation-error">
                                       {validationError.districtId}
@@ -646,10 +623,8 @@ const Signup = () => {
                                   )}
                                 </div>
                               </div>
-                            </div>
-                            <div className="form-row w-100">
-                              <div className="form-group col-md-12">
-                                <label>School </label>
+                              <div className="form-group col-md-6">
+                                <label>Texas School</label>
                                 <div className="">
                                   <Select
                                     name="schoolId"
@@ -670,14 +645,13 @@ const Signup = () => {
                                 </div>
                                 {!showExtraFieldFlag ? (
                                   <div className="info">
-                                    Don’t see your school or district,{" "}
+                                    Not listed?{" "}
                                     <span
                                       className="info-link"
                                       onClick={showExtraField}
                                     >
-                                      click here
-                                    </span>{" "}
-                                    to add it
+                                      Add your school
+                                    </span>
                                   </div>
                                 ) : null}
                                 {showExtraFieldFlag ? (
@@ -760,11 +734,10 @@ const Signup = () => {
                                 ) : null}
                               </div>
                             </div>
-                          </div>) : currentStep === 2 ?
-                          (<div className="signup-box">
+
                             <div className="form-row w-100 ">
                               <div className="form-group col-md-6">
-                                <label>Email</label>
+                                <label>Your District Provided Email Address</label>
                                 <input
                                   type="text"
                                   name="email"
@@ -779,6 +752,9 @@ const Signup = () => {
                                   }}
                                   autoComplete="off"
                                 />
+                                <div className="info">
+                                  Elementary teachers &amp; admins only — only district provided email accepted.
+                                </div>
                                 {validationError.email ? (
                                   <span className="validation-error">
                                     {validationError.email}
@@ -789,70 +765,77 @@ const Signup = () => {
                               </div>
                               <div className="form-group col-md-6">
                                 <label>Role</label>
-                                <div className="">
-                                  <Select
-                                    name="roleId"
-                                    value={selectedRole}
-                                    options={roleOptions}
-                                    onChange={handle_dropdown}
-                                    placeholder="Select Title"
-                                    id="roleId"
-                                    styles={colourStyles}
-                                  />
-                                  {validationError.roleId ? (
-                                    <span className="validation-error">
-                                      {validationError.roleId}
-                                    </span>
-                                  ) : (
-                                    ""
-                                  )}
+                                <div className="pill-group">
+                                  {roleOptions?.map((opt) => (
+                                    <button
+                                      type="button"
+                                      key={opt.value}
+                                      className={`pill-btn ${signupData.roleId === opt.value ? "active" : ""}`}
+                                      onClick={() => handle_dropdown(opt)}
+                                    >
+                                      {opt.label}
+                                    </button>
+                                  ))}
                                 </div>
+                                {validationError.roleId ? (
+                                  <span className="validation-error">
+                                    {validationError.roleId}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
 
                             {signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
                               <div className="form-row w-100 ">
-                                <div className="form-group col-md-6">
-                                  <label>Which Grade do you teach?</label>
-                                  <div className="">
-                                    <Select
-                                      name="gradeId"
-                                      value={selectedGrade}
-                                      options={gradeOptions}
-                                      onChange={handle_dropdown}
-                                      placeholder="Select Title"
-                                      id="gradeId"
-                                      styles={colourStyles}
-                                    />
-                                    {validationError.gradeId ? (
-                                      <span className="validation-error">
-                                        {validationError.gradeId}
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
+                                <div className="form-group col-md-4">
+                                  <label>Which grade do you teach?</label>
+                                  <div className="pill-group">
+                                    {gradeOptions?.map((opt) => (
+                                      <button
+                                        type="button"
+                                        key={opt.value}
+                                        className={`pill-btn ${signupData.gradeId === opt.value ? "active" : ""}`}
+                                        onClick={() => handle_dropdown(opt)}
+                                      >
+                                        {opt.label}
+                                      </button>
+                                    ))}
                                   </div>
+                                  {validationError.gradeId ? (
+                                    <span className="validation-error">
+                                      {validationError.gradeId}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-8">
                                   <label>What type of classroom do you teach?</label>
-                                  <div className="">
-                                    <Select
-                                      name="typeOfClassroom"
-                                      value={selectedTypeOfClassroom}
-                                      options={[{ label: " Self-Contained (I teach all subjects to the same group of students)", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED, name: "typeOfClassroom" }, { label: "Departmentalized (I teach one subject to multiple classes of students)", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED, name: "typeOfClassroom" }]}
-                                      onChange={handle_dropdown}
-                                      placeholder="Select Type of Classroom"
-                                      id="typeOfClassroom"
-                                      styles={colourStyles}
-                                    />
-                                    {validationError.typeOfClassroom ? (
-                                      <span className="validation-error">
-                                        {validationError.typeOfClassroom}
-                                      </span>
-                                    ) : (
-                                      ""
-                                    )}
+                                  <div className="classroom-group">
+                                    <div
+                                      className={`classroom-card ${signupData.typeOfClassroom === COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED ? "active" : ""}`}
+                                      onClick={() => handle_dropdown({ name: "typeOfClassroom", value: COMMONCONSTANT.CLASSROOMTYPE.SELFCONTAINED })}
+                                    >
+                                      <div className="classroom-title">Self-Contained</div>
+                                      <div className="classroom-subtitle">All subjects, same group of students</div>
+                                    </div>
+                                    <div
+                                      className={`classroom-card ${signupData.typeOfClassroom === COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED ? "active" : ""}`}
+                                      onClick={() => handle_dropdown({ name: "typeOfClassroom", value: COMMONCONSTANT.CLASSROOMTYPE.DEPARTMENTALIZED })}
+                                    >
+                                      <div className="classroom-title">Departmentalized</div>
+                                      <div className="classroom-subtitle">One subject, multiple classes</div>
+                                    </div>
                                   </div>
+                                  {validationError.typeOfClassroom ? (
+                                    <span className="validation-error">
+                                      {validationError.typeOfClassroom}
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
                               </div>
                             }
@@ -899,56 +882,35 @@ const Signup = () => {
                               </div>
                             </div>
 
-                            <div className="captcha">
-                              <ReCAPTCHA
-                                ref={recaptchaRef}
-                                sitekey={Configuration.siteKey}
-                                onChange={onChange}
-                              />
-                            </div>
-                          </div>) : currentStep === 3 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER
-                          // && (trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.FULL && trialData.trialName !== COMMONCONSTANT.TRIALCONSTANT.TRIAL) 
-                          &&
-                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
-                          // : signupData.roleId === COMMONCONSTANT.ROLES.TEACHER ? <VerifyEmail /> : <UserLead />
-                        }
-                      </div>
-                      {currentStep < 3 && !showLeadModal &&
-                        <div className="row loginFooter">
-                          <div className="col-12 text-center">
-                            {!submitButton ? (
-                              <button
-                                type="button"
-                                className="btn btn-primary "
-                                onClick={next}
-                              >
-                                Next
-                              </button>
-                            ) : (
-                              <div>
+                            <div className="form-row w-100 captcha-row">
+                              <div className="form-group col-md-6 captcha">
+                                <ReCAPTCHA
+                                  ref={recaptchaRef}
+                                  sitekey={Configuration.siteKey}
+                                  onChange={onChange}
+                                />
+                                {validationError.captcha ? (
+                                  <span className="validation-error">
+                                    {validationError.captcha}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                              <div className="form-group col-md-6 loginFooter">
                                 <button
                                   type="button"
-                                  className="btn btn-primary previousBtn"
-                                  onClick={() => {
-                                    showSubmitStep(false);
-                                    setCurrentStep(currentStep - 1)
-                                  }}
-                                >
-                                  Previous
-                                </button>
-                                <button
-                                  type="button"
-                                  className="btn btn-primary"
+                                  className="btn btn-primary "
                                   onClick={submit}
-                                  disabled={captchaValue ? false : true}
                                 >
-                                  Submit
+                                  Next
                                 </button>
                               </div>
-                            )}
-                          </div>
-                        </div>
-                      }
+                            </div>
+                          </div>) : currentStep === 2 && signupData.roleId === COMMONCONSTANT.USERROLES.TEACHER &&
+                          <SubscriptionTab signupData={signupData} after_set_free={after_set_free} />
+                        }
+                      </div>
                     </div>
                   </div>
                 </div>
