@@ -457,7 +457,8 @@
     background-position: top, bottom, bottom;
     background-size: contain, contain, cover;
     background-repeat: no-repeat, no-repeat, no-repeat;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -842,7 +843,7 @@ span.info-link {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    width: 200px;
+    width: 100%;
 }
 
 .css-tj5bde-Svg  path{
@@ -867,9 +868,92 @@ span.info-link {
 .singupSection [disabled]:hover {
     cursor: no-drop;
 }
-.captcha {  
+.captcha {
     margin-bottom: 10px;
-} 
+}
+
+.captcha-row {
+    align-items: center;
+}
+
+.captcha-row .captcha {
+    margin-bottom: 0;
+}
+
+.captcha-row .loginFooter {
+    margin-top: 0;
+    text-align: left;
+}
+
+.pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pill-btn {
+    padding: 15px 19px;
+    border-radius: 30px;
+    border: 1px solid #CFCFCF;
+    background-color: #fff;
+    color: #212529;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.pill-btn:hover {
+    border-color: #f83be0;
+}
+
+.pill-btn.active {
+    background-color: #f83be0;
+    border-color: #f83be0;
+    color: #fff;
+}
+
+.classroom-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.classroom-card {
+    flex: 1;
+    min-width: 160px;
+    border: 1px solid #CFCFCF;
+    border-radius: 30px;
+    padding: 6px 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.classroom-card:hover {
+    border-color: #f83be0;
+}
+
+.classroom-card .classroom-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #212529;
+}
+
+.classroom-card .classroom-subtitle {
+    font-size: 12px;
+    color: #798089;
+    margin-top: 2px;
+}
+
+.classroom-card.active {
+    background-color: #f83be0;
+    border-color: #f83be0;
+}
+
+.classroom-card.active .classroom-title,
+.classroom-card.active .classroom-subtitle {
+    color: #fff;
+}
 
 .css-1i0qyv-control {
     background-color: #fff !important;
