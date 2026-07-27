@@ -9,19 +9,23 @@ import { ToastContainer } from "react-toastify";
 
 const VerifyEmail = () => {
   const router = useRouter();
-  const [email, setEmail] = useState<string>("aa");
+  const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    //  const useremail: any = SecureService.encryptgetItem('email');
-    //  if (!useremail || useremail === 'undefined' || useremail === 'null' || useremail === '') {
-    //   window.location.href = "/signup";
-    //  }
-    //  else{
-    //    setEmail(useremail);
-    //  }
-    //  return () => {
-    //    SecureService.storageRemove('email');
-    //  };
+    const useremail: any = SecureService.encryptgetItem("email");
+    if (
+      !useremail ||
+      useremail === "undefined" ||
+      useremail === "null" ||
+      useremail === ""
+    ) {
+      window.location.href = "/signup";
+    } else {
+      setEmail(useremail);
+    }
+    return () => {
+      SecureService.storageRemove("email");
+    };
   }, []);
 
   const resendEmail = () => {
