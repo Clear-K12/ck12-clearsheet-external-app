@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/Zaid/TeacherSignUpFormCrystalInstruction
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
